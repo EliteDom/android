@@ -22,6 +22,8 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
@@ -40,6 +42,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -61,11 +66,16 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        Objects.requireNonNull(getSupportActionBar()).hide();
+
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
         final ConstraintLayout constraintLayout = findViewById(R.id.container);
+        TextView title = findViewById(R.id.title);
+
         atg = AnimationUtils.loadAnimation(this, R.anim.atg);
         atg2 = AnimationUtils.loadAnimation(this, R.anim.atg2);
         atg3 = AnimationUtils.loadAnimation(this, R.anim.atg3);
@@ -78,6 +88,7 @@ public class LoginActivity extends AppCompatActivity {
         usernameEditText.startAnimation(atg);
         passwordEditText.startAnimation(atg2);
         loginButton.startAnimation(atg3);
+        animateText("Elitedom", title);
 
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
@@ -153,11 +164,35 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void animateText(String string, final TextView txt_view) {
+        final char[] s = string.toCharArray();
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        new Thread(new Runnable() {
+            public void run() {
+                for (final char ch : s) {
+                    try {
+                        Thread.sleep(150);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    txt_view.post(new Runnable() {
+                        public void run() {
+                            txt_view.append("" + ch);
+                        }
+                    });
+                }
+            }
+        }).start();
+    }
+
     private void updateUiWithUser(LoggedInUserView model, final String email, final String password) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
         // TODO : initiate successful logged in experience
 
-        Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
         (mAuth.signInWithEmailAndPassword(email, password))
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -166,10 +201,7 @@ public class LoginActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
                         } else {
-                            Toast.makeText(LoginActivity.this, "Authentication failed. Registering as new user.",
-                                    Toast.LENGTH_SHORT).show();
                             addUser(email, password);
-
                         }
                     }
                 });
@@ -188,8 +220,6 @@ public class LoginActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
                         } else {
-                            Toast.makeText(LoginActivity.this, "Authentication failed. Try again soon? :)",
-                                    Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
                     }
