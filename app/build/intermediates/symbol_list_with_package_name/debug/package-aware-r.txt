@@ -40,6 +40,10 @@ anim fragment_open_exit
 anim mtrl_bottom_sheet_slide_in
 anim mtrl_bottom_sheet_slide_out
 anim mtrl_card_lowers_interpolator
+anim slide_in_left
+anim slide_in_right
+anim slide_out_left
+anim slide_out_right
 animator design_appbar_state_list_animator
 animator design_fab_hide_motion_spec
 animator design_fab_show_motion_spec
@@ -55,6 +59,9 @@ animator mtrl_fab_hide_motion_spec
 animator mtrl_fab_show_motion_spec
 animator mtrl_fab_transformation_sheet_collapse_spec
 animator mtrl_fab_transformation_sheet_expand_spec
+array sports_info
+array sports_titles
+array topic_images
 attr actionBarDivider
 attr actionBarItemBackground
 attr actionBarPopupTheme
@@ -741,9 +748,10 @@ color abc_background_cache_hint_selector_material_light
 color abc_btn_colored_borderless_text_material
 color abc_btn_colored_text_material
 color abc_color_highlight_material
+color abc_decor_view_status_guard
+color abc_decor_view_status_guard_light
 color abc_hint_foreground_material_dark
 color abc_hint_foreground_material_light
-color abc_input_method_navigation_guard
 color abc_primary_text_disable_only_material_dark
 color abc_primary_text_disable_only_material_light
 color abc_primary_text_material_dark
@@ -1410,6 +1418,18 @@ drawable ic_mtrl_checked_circle
 drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
+drawable ic_reset
+drawable img_badminton
+drawable img_baseball
+drawable img_basketball
+drawable img_bowling
+drawable img_cycling
+drawable img_golf
+drawable img_running
+drawable img_soccer
+drawable img_swimming
+drawable img_tabletennis
+drawable img_tennis
 drawable mtrl_dialog_background
 drawable mtrl_dropdown_arrow
 drawable mtrl_ic_arrow_drop_down
@@ -1548,6 +1568,7 @@ id direct
 id disableHome
 id dropdown_menu
 id edit_query
+id email
 id end
 id enterAlways
 id enterAlwaysCollapsed
@@ -1555,11 +1576,13 @@ id exitUntilCollapsed
 id expand_activities_button
 id expanded_menu
 id fade
+id feed_layout
 id fill
 id fill_horizontal
 id fill_vertical
 id filled
 id filter_chip
+id first_name
 id fitToContents
 id fixed
 id forever
@@ -1584,6 +1607,7 @@ id italic
 id item_touch_helper_previous_elevation
 id labeled
 id largeLabel
+id last_name
 id left
 id light
 id line1
@@ -1593,6 +1617,7 @@ id listMode
 id list_item
 id loading
 id login
+id login_layout
 id masked
 id message
 id middle
@@ -1626,6 +1651,8 @@ id mtrl_picker_title_text
 id multiply
 id navigation_header_container
 id never
+id new_user_layout
+id newsTitle
 id noScroll
 id none
 id normal
@@ -1648,6 +1675,7 @@ id pin
 id progress_circular
 id progress_horizontal
 id radio
+id recyclerView
 id right
 id right_icon
 id right_side
@@ -1686,6 +1714,7 @@ id snap
 id snapMargins
 id spacer
 id split_action_bar
+id sportsImage
 id spread
 id spread_inside
 id src_atop
@@ -1694,6 +1723,7 @@ id src_over
 id standard
 id start
 id stretch
+id subTitle
 id submenuarrow
 id submit_area
 id tabMode
@@ -1807,6 +1837,8 @@ layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_feed
 layout activity_login
+layout activity_new_user
+layout activity_topic_cards
 layout custom_dialog
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog
@@ -1823,6 +1855,7 @@ layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_end_icon
 layout design_text_input_start_icon
+layout list_topics
 layout mtrl_alert_dialog
 layout mtrl_alert_dialog_actions
 layout mtrl_alert_dialog_title
@@ -1937,6 +1970,7 @@ string exposed_dropdown_menu_content_description
 string fab_transformation_scrim_behavior
 string fab_transformation_sheet_behavior
 string firebase_database_url
+string first_name
 string gcm_defaultSenderId
 string google_api_key
 string google_app_id
@@ -1947,6 +1981,8 @@ string home_info
 string icon_content_description
 string invalid_password
 string invalid_username
+string last_name
+string log_out
 string login_failed
 string mtrl_badge_numberless_content_description
 string mtrl_chip_close_icon_content_description
@@ -1982,6 +2018,7 @@ string mtrl_picker_toggle_to_calendar_input_mode
 string mtrl_picker_toggle_to_day_selection
 string mtrl_picker_toggle_to_text_input_mode
 string mtrl_picker_toggle_to_year_selection
+string news_placeholder
 string password_toggle_content_description
 string path_password_eye
 string path_password_eye_mask_strike_through
@@ -1991,7 +2028,11 @@ string project_id
 string prompt_email
 string prompt_password
 string search_menu_title
+string sports_info_placeholder
 string status_bar_notification_info_overflow
+string subtitle_detail_text
+string title_placeholder
+string username
 string welcome
 style AlertDialog_AppCompat
 style AlertDialog_AppCompat_Light

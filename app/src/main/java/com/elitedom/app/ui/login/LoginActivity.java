@@ -1,28 +1,13 @@
 package com.elitedom.app.ui.login;
 
 import android.app.Activity;
-
-import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.Constraints;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
-import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -33,9 +18,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.elitedom.app.R;
-import com.elitedom.app.ui.login.LoginViewModel;
-import com.elitedom.app.ui.login.LoginViewModelFactory;
 import com.elitedom.app.ui.main.Feed;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -44,13 +35,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
     private FirebaseAuth mAuth;
     private Animation atg, atg2, atg3;
+    private EditText usernameEditText, passwordEditText;
+    private Button loginButton;
 
     @Override
     public void onStart() {
@@ -69,11 +61,11 @@ public class LoginActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
-        final EditText usernameEditText = findViewById(R.id.username);
-        final EditText passwordEditText = findViewById(R.id.password);
-        final Button loginButton = findViewById(R.id.login);
+        usernameEditText = findViewById(R.id.email);
+        passwordEditText = findViewById(R.id.password);
+        loginButton = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
-        final ConstraintLayout constraintLayout = findViewById(R.id.container);
+        final ConstraintLayout constraintLayout = findViewById(R.id.login_layout);
         TextView title = findViewById(R.id.title);
 
         atg = AnimationUtils.loadAnimation(this, R.anim.atg);
@@ -88,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
         usernameEditText.startAnimation(atg);
         passwordEditText.startAnimation(atg2);
         loginButton.startAnimation(atg3);
-        animateText("Elitedom", title);
+        animateText("Elitedom", title, 300);
 
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
@@ -164,10 +156,10 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void animateText(String string, final TextView txt_view) {
+    private void animateText(String string, final TextView txt_view, long delay) {
         final char[] s = string.toCharArray();
         try {
-            Thread.sleep(300);
+            Thread.sleep(delay);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -189,10 +181,26 @@ public class LoginActivity extends AppCompatActivity {
         }).start();
     }
 
-    private void updateUiWithUser(LoggedInUserView model, final String email, final String password) {
-        String welcome = getString(R.string.welcome) + model.getDisplayName();
-        // TODO : initiate successful logged in experience
+/*    private void removeTextAnimation(final EditText txt_view) {
+        new Thread(new Runnable() {
+            public void run() {
+                while (txt_view.getText().toString().length() > 1) {
+                    try {
+                        Thread.sleep(50);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    txt_view.post(new Runnable() {
+                        public void run() {
+                            txt_view.setText(txt_view.getText().toString().substring(0, txt_view.getText().toString().length() - 1));
+                        }
+                    });
+                }
+            }
+        }).start();
+    }*/
 
+    private void updateUiWithUser(LoggedInUserView model, final String email, final String password) {
         (mAuth.signInWithEmailAndPassword(email, password))
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -211,16 +219,16 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
     }
 
-    private void addUser (String email, String password) {
+    private void addUser(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
+                            newUI(user);
                         } else {
-                            updateUI(null);
+                            newUI(null);
                         }
                     }
                 });
@@ -231,9 +239,21 @@ public class LoginActivity extends AppCompatActivity {
             Intent mainscreen = new Intent(this, Feed.class);
             startActivity(mainscreen);
             setResult(Activity.RESULT_OK);
-            //Complete and destroy login activity once successful
             finish();
         }
     }
 
+    private void newUI(FirebaseUser user) {
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mainscreen = new Intent(LoginActivity.this, newUser.class);
+                startActivity(mainscreen);
+                overridePendingTransition(0,0);
+                //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                setResult(Activity.RESULT_OK);
+                finish();
+            }
+        });
+    }
 }
