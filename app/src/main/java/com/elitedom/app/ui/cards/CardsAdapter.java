@@ -3,10 +3,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.elitedom.app.R;
 
 import java.util.ArrayList;
@@ -41,24 +43,24 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder>  {
         return mTopicsData.size();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mTitleText;
         private TextView mInfoText;
+        private ImageView mTopicImage;
 
         ViewHolder(View itemView) {
             super(itemView);
 
-            // Initialize the views.
             mTitleText = itemView.findViewById(R.id.title);
             mInfoText = itemView.findViewById(R.id.subTitle);
+            mTopicImage = itemView.findViewById(R.id.sportsImage);
         }
 
         void bindTo(Cards currentSport){
-            // Populate the textviews with data.
             mTitleText.setText(currentSport.getTitle());
             mInfoText.setText(currentSport.getInfo());
-
+            Glide.with(mContext).load(currentSport.getImageResource()).into(mTopicImage);
         }
     }
 }

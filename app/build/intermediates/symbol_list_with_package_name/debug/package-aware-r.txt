@@ -1395,6 +1395,7 @@ drawable common_google_signin_btn_text_light_normal
 drawable common_google_signin_btn_text_light_normal_background
 drawable custom_button
 drawable custom_card
+drawable custom_relativelayout
 drawable design_bottom_navigation_item_background
 drawable design_fab_background
 drawable design_ic_visibility
@@ -1569,6 +1570,7 @@ id dialog_button
 id dimensions
 id direct
 id disableHome
+id divider
 id dropdown_menu
 id edit_query
 id email
@@ -1655,7 +1657,6 @@ id multiply
 id navigation_header_container
 id never
 id new_user_layout
-id newsTitle
 id noScroll
 id none
 id normal

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.res.TypedArray;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.view.ViewOutlineProvider;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
@@ -41,6 +42,9 @@ public class topic_cards extends AppCompatActivity {
         // Initialize the RecyclerView.
         mRecyclerView = findViewById(R.id.recyclerView);
 
+        mRecyclerView.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
+        mRecyclerView.setClipToOutline(true);
+
         // Set the Layout Manager.
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -55,9 +59,6 @@ public class topic_cards extends AppCompatActivity {
         initializeData();
     }
 
-    /**
-     * Initialize the sports data from resources.
-     */
     private void initializeData() {
         String[] sportsList = getResources()
                 .getStringArray(R.array.sports_titles);
