@@ -1,15 +1,20 @@
 package com.elitedom.app.ui.cards;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.res.TypedArray;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.view.WindowManager;
+import android.widget.RelativeLayout;
 
 import com.elitedom.app.R;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class topic_cards extends AppCompatActivity {
 
@@ -17,11 +22,21 @@ public class topic_cards extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private ArrayList<Cards> mSportsData;
     private CardsAdapter mAdapter;
+    private RelativeLayout relativeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topic_cards);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        Objects.requireNonNull(getSupportActionBar()).hide();
+
+        relativeLayout = findViewById(R.id.card_container);
+        AnimationDrawable animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
+        animationDrawable.setEnterFadeDuration(2000);
+        animationDrawable.setExitFadeDuration(4000);
+        animationDrawable.start();
 
         // Initialize the RecyclerView.
         mRecyclerView = findViewById(R.id.recyclerView);
