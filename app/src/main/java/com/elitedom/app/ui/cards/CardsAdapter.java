@@ -1,4 +1,5 @@
 package com.elitedom.app.ui.cards;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,7 @@ import com.elitedom.app.R;
 
 import java.util.ArrayList;
 
-class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder>  {
+class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
 
     private ArrayList<Cards> mTopicsData;
     private Context mContext;
@@ -43,7 +44,7 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder>  {
         return mTopicsData.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView mTitleText;
         private TextView mInfoText;
@@ -58,7 +59,7 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder>  {
             itemView.setOnClickListener(this);
         }
 
-        void bindTo(Cards currentTopic){
+        void bindTo(Cards currentTopic) {
             mTitleText.setText(currentTopic.getTitle());
             mInfoText.setText(currentTopic.getInfo());
             Glide.with(mContext).load(currentTopic.getImageResource()).into(mTopicImage);
@@ -66,10 +67,10 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder>  {
 
         @Override
         public void onClick(View view) {
-            if(mInfoText.getVisibility() == View.VISIBLE)
-            mInfoText.setVisibility(View.GONE);
+            if (mInfoText.getVisibility() == View.VISIBLE)
+                mInfoText.setVisibility(View.GONE);
             else
-            mInfoText.setVisibility(View.VISIBLE);
+                mInfoText.setVisibility(View.VISIBLE);
         }
     }
 }

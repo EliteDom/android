@@ -27,6 +27,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.elitedom.app.R;
+import com.elitedom.app.ui.cards.topic_cards;
 import com.elitedom.app.ui.main.Feed;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -236,7 +237,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser user) {
         if (user != null) {
-            Intent mainscreen = new Intent(this, Feed.class);
+            Intent mainscreen = new Intent(this, topic_cards.class);
             startActivity(mainscreen);
             setResult(Activity.RESULT_OK);
             finish();

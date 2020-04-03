@@ -1,11 +1,5 @@
 package com.elitedom.app.ui.cards;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.res.TypedArray;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
@@ -13,10 +7,14 @@ import android.view.ViewOutlineProvider;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.elitedom.app.R;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
 
@@ -62,26 +60,26 @@ public class topic_cards extends AppCompatActivity {
         initializeData();
 
         final ItemTouchHelper helper = new ItemTouchHelper(new
-                                                             ItemTouchHelper.SimpleCallback(ItemTouchHelper.LEFT  | ItemTouchHelper.RIGHT | ItemTouchHelper.UP | ItemTouchHelper.DOWN,
-                                                                     ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-                                                                 @Override
-                                                                 public boolean onMove(RecyclerView recyclerView,
-                                                                                       RecyclerView.ViewHolder viewHolder,
-                                                                                       RecyclerView.ViewHolder target) {
-                                                                     int from = viewHolder.getAdapterPosition();
-                                                                     int to = target.getAdapterPosition();
-                                                                     Collections.swap(mTopicData, from, to);
-                                                                     mAdapter.notifyItemMoved(from, to);
-                                                                     return true;
-                                                                 }
+                                                                   ItemTouchHelper.SimpleCallback(ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT | ItemTouchHelper.UP | ItemTouchHelper.DOWN,
+                                                                           ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+                                                                       @Override
+                                                                       public boolean onMove(RecyclerView recyclerView,
+                                                                                             RecyclerView.ViewHolder viewHolder,
+                                                                                             RecyclerView.ViewHolder target) {
+                                                                           int from = viewHolder.getAdapterPosition();
+                                                                           int to = target.getAdapterPosition();
+                                                                           Collections.swap(mTopicData, from, to);
+                                                                           mAdapter.notifyItemMoved(from, to);
+                                                                           return true;
+                                                                       }
 
-                                                                 @Override
-                                                                 public void onSwiped(RecyclerView.ViewHolder viewHolder,
-                                                                                      int direction) {
-                                                                     mTopicData.remove(viewHolder.getAdapterPosition());
-                                                                     mAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
-                                                                 }
-                                                             });
+                                                                       @Override
+                                                                       public void onSwiped(RecyclerView.ViewHolder viewHolder,
+                                                                                            int direction) {
+                                                                           mTopicData.remove(viewHolder.getAdapterPosition());
+                                                                           mAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                                                                       }
+                                                                   });
         helper.attachToRecyclerView(mRecyclerView);
     }
 
@@ -90,13 +88,13 @@ public class topic_cards extends AppCompatActivity {
                 .getStringArray(R.array.sports_titles);
         String[] sportsInfo = getResources()
                 .getStringArray(R.array.sports_info);
-        TypedArray topicTitleResources= getResources().obtainTypedArray(R.array.topic_images);
+        TypedArray topicTitleResources = getResources().obtainTypedArray(R.array.topic_images);
         mTopicData.clear();
 
         // Create the ArrayList of Sports objects with titles and
         // information about each sport.
-        for(int i=0;i<sportsList.length;i++){
-            mTopicData.add(new Cards(sportsList[i],sportsInfo[i],
+        for (int i = 0; i < sportsList.length; i++) {
+            mTopicData.add(new Cards(sportsList[i], sportsInfo[i],
                     topicTitleResources.getResourceId(i, 0)));
         }
 

@@ -41,11 +41,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/sportsImage"
+            android:background="@drawable/custom_card"
             android:fontFamily="monospace"
             android:padding="8dp"
             android:text="@string/sports_info_placeholder"
             android:textColor="@color/black"
-            android:background="@drawable/custom_card"
             android:textStyle="bold"
             android:visibility="gone" />
     </RelativeLayout>
