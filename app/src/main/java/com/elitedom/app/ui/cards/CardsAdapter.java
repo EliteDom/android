@@ -43,7 +43,7 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder>  {
         return mTopicsData.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private TextView mTitleText;
         private TextView mInfoText;
@@ -55,12 +55,21 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder>  {
             mTitleText = itemView.findViewById(R.id.title);
             mInfoText = itemView.findViewById(R.id.subTitle);
             mTopicImage = itemView.findViewById(R.id.sportsImage);
+            itemView.setOnClickListener(this);
         }
 
-        void bindTo(Cards currentSport){
-            mTitleText.setText(currentSport.getTitle());
-            mInfoText.setText(currentSport.getInfo());
-            Glide.with(mContext).load(currentSport.getImageResource()).into(mTopicImage);
+        void bindTo(Cards currentTopic){
+            mTitleText.setText(currentTopic.getTitle());
+            mInfoText.setText(currentTopic.getInfo());
+            Glide.with(mContext).load(currentTopic.getImageResource()).into(mTopicImage);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if(mInfoText.getVisibility() == View.VISIBLE)
+            mInfoText.setVisibility(View.GONE);
+            else
+            mInfoText.setVisibility(View.VISIBLE);
         }
     }
 }

@@ -1570,7 +1570,6 @@ id dialog_button
 id dimensions
 id direct
 id disableHome
-id divider
 id dropdown_menu
 id edit_query
 id email
