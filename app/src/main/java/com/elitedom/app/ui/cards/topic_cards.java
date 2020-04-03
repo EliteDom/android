@@ -2,6 +2,7 @@ package com.elitedom.app.ui.cards;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,7 +22,7 @@ public class topic_cards extends AppCompatActivity {
 
     // Member variables.
     private RecyclerView mRecyclerView;
-    private ArrayList<Cards> mSportsData;
+    private ArrayList<Cards> mTopicData;
     private CardsAdapter mAdapter;
     private RelativeLayout relativeLayout;
 
@@ -49,14 +50,32 @@ public class topic_cards extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Initialize the ArrayList that will contain the data.
-        mSportsData = new ArrayList<>();
+        mTopicData = new ArrayList<>();
 
         // Initialize the adapter and set it to the RecyclerView.
-        mAdapter = new CardsAdapter(this, mSportsData);
+        mAdapter = new CardsAdapter(this, mTopicData);
         mRecyclerView.setAdapter(mAdapter);
 
         // Get the data.
         initializeData();
+
+        final ItemTouchHelper helper = new ItemTouchHelper(new
+                                                             ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT  | ItemTouchHelper.RIGHT) {
+                                                                 @Override
+                                                                 public boolean onMove(RecyclerView recyclerView,
+                                                                                       RecyclerView.ViewHolder viewHolder,
+                                                                                       RecyclerView.ViewHolder target) {
+                                                                     return false;
+                                                                 }
+
+                                                                 @Override
+                                                                 public void onSwiped(RecyclerView.ViewHolder viewHolder,
+                                                                                      int direction) {
+                                                                     mTopicData.remove(viewHolder.getAdapterPosition());
+                                                                     mAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                                                                 }
+                                                             });
+        helper.attachToRecyclerView(mRecyclerView);
     }
 
     private void initializeData() {
@@ -65,12 +84,12 @@ public class topic_cards extends AppCompatActivity {
         String[] sportsInfo = getResources()
                 .getStringArray(R.array.sports_info);
         TypedArray topicTitleResources= getResources().obtainTypedArray(R.array.topic_images);
-        mSportsData.clear();
+        mTopicData.clear();
 
         // Create the ArrayList of Sports objects with titles and
         // information about each sport.
         for(int i=0;i<sportsList.length;i++){
-            mSportsData.add(new Cards(sportsList[i],sportsInfo[i],
+            mTopicData.add(new Cards(sportsList[i],sportsInfo[i],
                     topicTitleResources.getResourceId(i, 0)));
         }
 
