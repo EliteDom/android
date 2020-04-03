@@ -16,6 +16,8 @@ import android.widget.RelativeLayout;
 import com.elitedom.app.R;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Objects;
 
 public class topic_cards extends AppCompatActivity {
@@ -60,12 +62,17 @@ public class topic_cards extends AppCompatActivity {
         initializeData();
 
         final ItemTouchHelper helper = new ItemTouchHelper(new
-                                                             ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT  | ItemTouchHelper.RIGHT) {
+                                                             ItemTouchHelper.SimpleCallback(ItemTouchHelper.LEFT  | ItemTouchHelper.RIGHT | ItemTouchHelper.UP | ItemTouchHelper.DOWN,
+                                                                     ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
                                                                  @Override
                                                                  public boolean onMove(RecyclerView recyclerView,
                                                                                        RecyclerView.ViewHolder viewHolder,
                                                                                        RecyclerView.ViewHolder target) {
-                                                                     return false;
+                                                                     int from = viewHolder.getAdapterPosition();
+                                                                     int to = target.getAdapterPosition();
+                                                                     Collections.swap(mTopicData, from, to);
+                                                                     mAdapter.notifyItemMoved(from, to);
+                                                                     return true;
                                                                  }
 
                                                                  @Override
