@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +15,8 @@ import com.bumptech.glide.Glide;
 import com.elitedom.app.R;
 
 import java.util.ArrayList;
+
+import static android.view.View.GONE;
 
 class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
 
@@ -49,6 +53,7 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
         private TextView mTitleText;
         private TextView mInfoText;
         private ImageView mTopicImage;
+        private Animation in, out;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -56,6 +61,21 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
             mTitleText = itemView.findViewById(R.id.title);
             mInfoText = itemView.findViewById(R.id.subTitle);
             mTopicImage = itemView.findViewById(R.id.topicImage);
+
+            in = AnimationUtils.loadAnimation(mContext, R.anim.cards_subtext_in);
+            out = AnimationUtils.loadAnimation(mContext, R.anim.cards_subtext_out);
+
+            in.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {}
+                @Override
+                public void onAnimationEnd(Animation animation) { mInfoText.setVisibility(GONE); }
+                @Override
+                public void onAnimationRepeat(Animation animation) {}
+            });
+
+            mInfoText.setTranslationY(-170f);
+            mInfoText.setVisibility(GONE);
             itemView.setOnClickListener(this);
         }
 
@@ -67,10 +87,12 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
 
         @Override
         public void onClick(View view) {
-            if (mInfoText.getVisibility() == View.VISIBLE)
-                mInfoText.setVisibility(View.GONE);
-            else
+            if (mInfoText.getVisibility() != View.VISIBLE) {
                 mInfoText.setVisibility(View.VISIBLE);
+                mInfoText.startAnimation(out);
+            }
+            else
+            mInfoText.startAnimation(in);
         }
     }
 }

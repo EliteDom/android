@@ -45,17 +45,13 @@ public class topic_cards extends AppCompatActivity {
         mRecyclerView.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
         mRecyclerView.setClipToOutline(true);
 
-        // Set the Layout Manager.
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Initialize the ArrayList that will contain the data.
         mTopicData = new ArrayList<>();
 
-        // Initialize the adapter and set it to the RecyclerView.
         mAdapter = new CardsAdapter(this, mTopicData);
         mRecyclerView.setAdapter(mAdapter);
 
-        // Get the data.
         initializeData();
 
         final ItemTouchHelper helper = new ItemTouchHelper(new

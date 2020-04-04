@@ -28,7 +28,6 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.elitedom.app.R;
 import com.elitedom.app.ui.cards.topic_cards;
-import com.elitedom.app.ui.main.Feed;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -41,7 +40,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
     private FirebaseAuth mAuth;
-    private Animation atg, atg2, atg3;
     private EditText usernameEditText, passwordEditText;
     private Button loginButton;
 
@@ -69,9 +67,9 @@ public class LoginActivity extends AppCompatActivity {
         final ConstraintLayout constraintLayout = findViewById(R.id.login_layout);
         TextView title = findViewById(R.id.title);
 
-        atg = AnimationUtils.loadAnimation(this, R.anim.atg);
-        atg2 = AnimationUtils.loadAnimation(this, R.anim.atg2);
-        atg3 = AnimationUtils.loadAnimation(this, R.anim.atg3);
+        Animation atg = AnimationUtils.loadAnimation(this, R.anim.atg);
+        Animation atg2 = AnimationUtils.loadAnimation(this, R.anim.atg2);
+        Animation atg3 = AnimationUtils.loadAnimation(this, R.anim.atg3);
         mAuth = FirebaseAuth.getInstance();
 
         AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
@@ -82,7 +80,6 @@ public class LoginActivity extends AppCompatActivity {
         passwordEditText.startAnimation(atg2);
         loginButton.startAnimation(atg3);
         animateText("Elitedom", title, 300);
-
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -250,7 +247,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent mainscreen = new Intent(LoginActivity.this, newUser.class);
                 startActivity(mainscreen);
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
                 //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 setResult(Activity.RESULT_OK);
                 finish();

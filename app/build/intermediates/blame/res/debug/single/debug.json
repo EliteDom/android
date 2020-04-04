@@ -168,6 +168,10 @@
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/anim/slide_in_left.xml"
     },
     {
+        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/anim_cards_subtext_out.xml.flat",
+        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/anim/cards_subtext_out.xml"
+    },
+    {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/mipmap-xhdpi_ic_launcher_round.png.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png"
     },
@@ -178,5 +182,9 @@
     {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi_ic_launcher.png.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/anim_cards_subtext_in.xml.flat",
+        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/anim/cards_subtext_in.xml"
     }
 ]
