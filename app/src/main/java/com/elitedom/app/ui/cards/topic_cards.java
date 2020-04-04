@@ -20,7 +20,6 @@ import java.util.Objects;
 
 public class topic_cards extends AppCompatActivity {
 
-    // Member variables.
     private RecyclerView mRecyclerView;
     private ArrayList<Cards> mTopicData;
     private CardsAdapter mAdapter;
@@ -91,15 +90,11 @@ public class topic_cards extends AppCompatActivity {
         TypedArray topicTitleResources = getResources().obtainTypedArray(R.array.topic_images);
         mTopicData.clear();
 
-        // Create the ArrayList of Sports objects with titles and
-        // information about each sport.
         for (int i = 0; i < sportsList.length; i++) {
             mTopicData.add(new Cards(sportsList[i], sportsInfo[i],
                     topicTitleResources.getResourceId(i, 0)));
         }
-
         topicTitleResources.recycle();
         mAdapter.notifyDataSetChanged();
     }
-
 }

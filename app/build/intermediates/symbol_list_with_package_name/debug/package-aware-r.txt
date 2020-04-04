@@ -1536,6 +1536,7 @@ id button
 id buttonPanel
 id cancel_button
 id card_container
+id cardview
 id center
 id center_horizontal
 id center_vertical
@@ -1717,7 +1718,6 @@ id snap
 id snapMargins
 id spacer
 id split_action_bar
-id sportsImage
 id spread
 id spread_inside
 id src_atop
@@ -1758,6 +1758,7 @@ id titleDividerNoCustom
 id title_template
 id top
 id topPanel
+id topicImage
 id touch_outside
 id transition_current_scene
 id transition_layout_save

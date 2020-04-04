@@ -55,7 +55,7 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
 
             mTitleText = itemView.findViewById(R.id.title);
             mInfoText = itemView.findViewById(R.id.subTitle);
-            mTopicImage = itemView.findViewById(R.id.sportsImage);
+            mTopicImage = itemView.findViewById(R.id.topicImage);
             itemView.setOnClickListener(this);
         }
 
