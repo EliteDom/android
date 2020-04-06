@@ -1711,6 +1711,7 @@ id shortcut
 id showCustom
 id showHome
 id showTitle
+id singlecardlayout
 id skipCollapsed
 id slide
 id smallLabel

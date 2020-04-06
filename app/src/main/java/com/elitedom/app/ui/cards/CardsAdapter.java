@@ -1,5 +1,6 @@
 package com.elitedom.app.ui.cards;
 
+import android.animation.LayoutTransition;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -50,10 +52,10 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView mTitleText;
-        private TextView mInfoText;
+        private TextView mTitleText, mInfoText;
         private ImageView mTopicImage;
         private Animation in, out;
+        private RelativeLayout mCardLayout;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -61,6 +63,7 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
             mTitleText = itemView.findViewById(R.id.title);
             mInfoText = itemView.findViewById(R.id.subTitle);
             mTopicImage = itemView.findViewById(R.id.topicImage);
+            mCardLayout = itemView.findViewById(R.id.singlecardlayout);
 
             in = AnimationUtils.loadAnimation(mContext, R.anim.cards_subtext_in);
             out = AnimationUtils.loadAnimation(mContext, R.anim.cards_subtext_out);
@@ -76,6 +79,9 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
 
             mInfoText.setTranslationY(-170f);
             mInfoText.setVisibility(GONE);
+            ((ViewGroup) itemView.findViewById(R.id.cardview)).setLayoutTransition(null);
+            mCardLayout.getLayoutTransition()
+                    .enableTransitionType(LayoutTransition.CHANGING);
             itemView.setOnClickListener(this);
         }
 
@@ -87,12 +93,16 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
 
         @Override
         public void onClick(View view) {
+            mCardLayout.setLayoutTransition(new LayoutTransition());
+            mCardLayout.getLayoutTransition()
+                    .enableTransitionType(LayoutTransition.CHANGING);
             if (mInfoText.getVisibility() != View.VISIBLE) {
                 mInfoText.setVisibility(View.VISIBLE);
                 mInfoText.startAnimation(out);
             }
             else
             mInfoText.startAnimation(in);
+            ((ViewGroup) itemView.findViewById(R.id.singlecardlayout)).setLayoutTransition(null);
         }
     }
 }
