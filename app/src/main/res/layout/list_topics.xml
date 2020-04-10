@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/singlecardlayout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:id="@+id/singlecardlayout"
     android:animateLayoutChanges="true"
     android:orientation="vertical">
-
 
     <TextView
         android:id="@+id/subTitle"
@@ -22,40 +21,41 @@
         android:textColor="@color/black"
         android:textStyle="bold" />
 
-    <androidx.cardview.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/cardview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:layout_marginBottom="6dp"
-        app:cardBackgroundColor="@android:color/transparent"
-        app:cardCornerRadius="8dp"
-        android:animateLayoutChanges="false"
-        app:cardElevation="0dp">
-
-        <RelativeLayout
+        <androidx.cardview.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/cardview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_card">
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            app:cardBackgroundColor="@android:color/transparent"
+            app:cardCornerRadius="8dp"
+            android:animateLayoutChanges="false"
+            app:cardElevation="0dp">
 
-            <ImageView
-                android:id="@+id/topicImage"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:adjustViewBounds="true" />
+                android:background="@drawable/custom_card"
+                android:animateLayoutChanges="false">
 
-            <TextView
-                android:id="@+id/title"
-                style="@style/TextAppearance.AppCompat.Headline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/topicImage"
-                android:fontFamily="monospace"
-                android:padding="8dp"
-                android:text="@string/title_placeholder"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark" />
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+                <ImageView
+                    android:id="@+id/topicImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true" />
+
+                <TextView
+                    android:id="@+id/title"
+                    style="@style/TextAppearance.AppCompat.Headline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/topicImage"
+                    android:fontFamily="monospace"
+                    android:padding="8dp"
+                    android:text="@string/title_placeholder"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
 </RelativeLayout>

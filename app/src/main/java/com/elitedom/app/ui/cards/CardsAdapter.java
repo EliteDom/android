@@ -57,7 +57,7 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
         private Animation in, out;
         private RelativeLayout mCardLayout;
 
-        ViewHolder(View itemView) {
+        ViewHolder(final View itemView) {
             super(itemView);
 
             mTitleText = itemView.findViewById(R.id.title);
@@ -70,18 +70,26 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
 
             in.setAnimationListener(new Animation.AnimationListener() {
                 @Override
-                public void onAnimationStart(Animation animation) {}
+                public void onAnimationStart(Animation animation) { mCardLayout.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING); }
                 @Override
-                public void onAnimationEnd(Animation animation) { mInfoText.setVisibility(GONE); }
+                public void onAnimationEnd(Animation animation) {
+                    mCardLayout.setLayoutTransition(null);
+                    mInfoText.setVisibility(GONE);
+                }
+                @Override
+                public void onAnimationRepeat(Animation animation) {}
+            });
+            out.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) { mCardLayout.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING); }
+                @Override
+                public void onAnimationEnd(Animation animation) { mCardLayout.setLayoutTransition(null); }
                 @Override
                 public void onAnimationRepeat(Animation animation) {}
             });
 
             mInfoText.setTranslationY(-170f);
             mInfoText.setVisibility(GONE);
-            ((ViewGroup) itemView.findViewById(R.id.cardview)).setLayoutTransition(null);
-            mCardLayout.getLayoutTransition()
-                    .enableTransitionType(LayoutTransition.CHANGING);
             itemView.setOnClickListener(this);
         }
 
@@ -94,15 +102,12 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
         @Override
         public void onClick(View view) {
             mCardLayout.setLayoutTransition(new LayoutTransition());
-            mCardLayout.getLayoutTransition()
-                    .enableTransitionType(LayoutTransition.CHANGING);
             if (mInfoText.getVisibility() != View.VISIBLE) {
                 mInfoText.setVisibility(View.VISIBLE);
                 mInfoText.startAnimation(out);
             }
             else
             mInfoText.startAnimation(in);
-            ((ViewGroup) itemView.findViewById(R.id.singlecardlayout)).setLayoutTransition(null);
         }
     }
 }
