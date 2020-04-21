@@ -91,6 +91,19 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
             mInfoText.setTranslationY(-170f);
             mInfoText.setVisibility(GONE);
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    mCardLayout.setLayoutTransition(new LayoutTransition());
+                    if (mInfoText.getVisibility() != View.VISIBLE) {
+                        mInfoText.setVisibility(View.VISIBLE);
+                        mInfoText.startAnimation(out);
+                    }
+                    else
+                        mInfoText.startAnimation(in);
+                    return true;
+                }
+            });
         }
 
         void bindTo(Cards currentTopic) {
@@ -101,13 +114,7 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
 
         @Override
         public void onClick(View view) {
-            mCardLayout.setLayoutTransition(new LayoutTransition());
-            if (mInfoText.getVisibility() != View.VISIBLE) {
-                mInfoText.setVisibility(View.VISIBLE);
-                mInfoText.startAnimation(out);
-            }
-            else
-            mInfoText.startAnimation(in);
+            // TODO: Add card selection
         }
     }
 }
