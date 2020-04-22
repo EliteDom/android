@@ -32,6 +32,7 @@ anim design_bottom_sheet_slide_in
 anim design_bottom_sheet_slide_out
 anim design_snackbar_in
 anim design_snackbar_out
+anim fab_pop
 anim fragment_close_enter
 anim fragment_close_exit
 anim fragment_fade_enter
@@ -1414,6 +1415,7 @@ drawable gradient_1
 drawable gradient_2
 drawable gradient_3
 drawable gradient_list
+drawable ic_arrow_back_white_24dp
 drawable ic_calendar_black_24dp
 drawable ic_clear_black_24dp
 drawable ic_done_outline_white_24dp
@@ -1587,6 +1589,7 @@ id enterAlwaysCollapsed
 id exitUntilCollapsed
 id expand_activities_button
 id expanded_menu
+id fab
 id fade
 id feed_layout
 id fill

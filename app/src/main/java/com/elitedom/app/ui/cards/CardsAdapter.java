@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.elitedom.app.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -56,6 +57,8 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
         private ImageView mTopicImage, mTickView;
         private Animation in, out;
         private RelativeLayout mCardLayout;
+        private com.google.android.material.floatingactionbutton.FloatingActionButton fab;
+        private int flag;
 
         ViewHolder(final View itemView) {
             super(itemView);
@@ -66,7 +69,12 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
             mCardLayout = itemView.findViewById(R.id.singlecardlayout);
             mTickView = itemView.findViewById(R.id.tick);
 
+            View myLayout = LayoutInflater.from(mContext).inflate(R.layout.activity_topic_cards, null);
+            fab = myLayout.findViewById(R.id.fab);
+
+            fab.animate().alpha(0.0f);
             mTickView.animate().alpha(0.0f);
+            flag = 0;
 
             in = AnimationUtils.loadAnimation(mContext, R.anim.cards_subtext_in);
             out = AnimationUtils.loadAnimation(mContext, R.anim.cards_subtext_out);
@@ -117,6 +125,11 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
 
         @Override
         public void onClick(View view) {
+            if (flag == 0) {
+                Animation expandIn = AnimationUtils.loadAnimation(mContext, R.anim.fab_pop);
+                fab.startAnimation(expandIn);
+                flag = 1;
+            }
             if (mTickView.getAlpha() == 1.0f) mTickView.animate().alpha(0.0f);
             else mTickView.animate().alpha(1.0f);
         }

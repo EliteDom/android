@@ -1,10 +1,13 @@
 package com.elitedom.app.ui.cards;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
@@ -17,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.elitedom.app.R;
+import com.elitedom.app.ui.main.Feed;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -99,5 +103,12 @@ public class topic_cards extends AppCompatActivity {
         }
         topicTitleResources.recycle();
         mAdapter.notifyDataSetChanged();
+    }
+
+    public void feedActivity(View view) {
+        Intent feed = new Intent(this, Feed.class);
+        startActivity(feed);
+        setResult(Activity.RESULT_OK);
+        finish();
     }
 }
