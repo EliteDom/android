@@ -1,12 +1,16 @@
 package com.elitedom.app.ui.cards;
 
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.ViewOutlineProvider;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,10 +24,8 @@ import java.util.Objects;
 
 public class topic_cards extends AppCompatActivity {
 
-    private RecyclerView mRecyclerView;
     private ArrayList<Cards> mTopicData;
     private CardsAdapter mAdapter;
-    private RelativeLayout relativeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,16 +33,21 @@ public class topic_cards extends AppCompatActivity {
         setContentView(R.layout.activity_topic_cards);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        Objects.requireNonNull(getSupportActionBar()).hide();
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        Objects.requireNonNull(getSupportActionBar()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.abs_layout);
+        // Objects.requireNonNull(getSupportActionBar()).hide();
 
-        relativeLayout = findViewById(R.id.card_container);
+        RelativeLayout relativeLayout = findViewById(R.id.card_container);
         AnimationDrawable animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
         animationDrawable.setEnterFadeDuration(2000);
         animationDrawable.setExitFadeDuration(4000);
         animationDrawable.start();
 
         // Initialize the RecyclerView.
-        mRecyclerView = findViewById(R.id.recyclerView);
+        RecyclerView mRecyclerView = findViewById(R.id.recyclerView);
 
         mRecyclerView.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
         mRecyclerView.setClipToOutline(true);
@@ -58,9 +65,9 @@ public class topic_cards extends AppCompatActivity {
                                                                    ItemTouchHelper.SimpleCallback(ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT | ItemTouchHelper.UP | ItemTouchHelper.DOWN,
                                                                            ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
                                                                        @Override
-                                                                       public boolean onMove(RecyclerView recyclerView,
-                                                                                             RecyclerView.ViewHolder viewHolder,
-                                                                                             RecyclerView.ViewHolder target) {
+                                                                       public boolean onMove(@NonNull RecyclerView recyclerView,
+                                                                                             @NonNull RecyclerView.ViewHolder viewHolder,
+                                                                                             @NonNull RecyclerView.ViewHolder target) {
                                                                            int from = viewHolder.getAdapterPosition();
                                                                            int to = target.getAdapterPosition();
                                                                            Collections.swap(mTopicData, from, to);
@@ -69,7 +76,7 @@ public class topic_cards extends AppCompatActivity {
                                                                        }
 
                                                                        @Override
-                                                                       public void onSwiped(RecyclerView.ViewHolder viewHolder,
+                                                                       public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder,
                                                                                             int direction) {
                                                                            mTopicData.remove(viewHolder.getAdapterPosition());
                                                                            mAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
