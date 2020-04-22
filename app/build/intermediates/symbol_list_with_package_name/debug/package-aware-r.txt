@@ -772,6 +772,8 @@ color abc_tint_spinner
 color abc_tint_switch_track
 color accent_material_dark
 color accent_material_light
+color androidx_core_ripple_material_light
+color androidx_core_secondary_text_default_material_light
 color background_floating_material_dark
 color background_floating_material_light
 color background_material_dark
@@ -1842,6 +1844,7 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
+layout abs_layout
 layout activity_feed
 layout activity_login
 layout activity_new_user
@@ -2039,6 +2042,7 @@ string sports_info_placeholder
 string status_bar_notification_info_overflow
 string subtitle_detail_text
 string title_placeholder
+string topic_cards_action_bar
 string username
 string welcome
 style AlertDialog_AppCompat
@@ -2426,6 +2430,7 @@ style Theme_AppCompat_Dialog
 style Theme_AppCompat_Dialog_Alert
 style Theme_AppCompat_Dialog_MinWidth
 style Theme_AppCompat_DialogWhenLarge
+style Theme_AppCompat_Empty
 style Theme_AppCompat_Light
 style Theme_AppCompat_Light_DarkActionBar
 style Theme_AppCompat_Light_Dialog
