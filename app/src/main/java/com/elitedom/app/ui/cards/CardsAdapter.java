@@ -53,7 +53,7 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView mTitleText, mInfoText;
-        private ImageView mTopicImage;
+        private ImageView mTopicImage, mTickView;
         private Animation in, out;
         private RelativeLayout mCardLayout;
 
@@ -64,6 +64,9 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
             mInfoText = itemView.findViewById(R.id.subTitle);
             mTopicImage = itemView.findViewById(R.id.topicImage);
             mCardLayout = itemView.findViewById(R.id.singlecardlayout);
+            mTickView = itemView.findViewById(R.id.tick);
+
+            mTickView.animate().alpha(0.0f);
 
             in = AnimationUtils.loadAnimation(mContext, R.anim.cards_subtext_in);
             out = AnimationUtils.loadAnimation(mContext, R.anim.cards_subtext_out);
@@ -114,7 +117,8 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
 
         @Override
         public void onClick(View view) {
-            // TODO: Add card selection
+            if (mTickView.getAlpha() == 1.0f) mTickView.animate().alpha(0.0f);
+            else mTickView.animate().alpha(1.0f);
         }
     }
 }

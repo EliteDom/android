@@ -17,7 +17,7 @@
         android:background="@drawable/custom_card"
         android:fontFamily="monospace"
         android:padding="8dp"
-        android:text="@string/sports_info_placeholder"
+        android:text="@string/topic_info_placeholder"
         android:textColor="@color/black"
         android:textStyle="bold" />
 
@@ -56,6 +56,16 @@
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark" />
+
+            <ImageView
+                android:id="@+id/tick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:visibility="visible"
+                android:layout_alignTop="@id/topicImage"
+                android:layout_alignEnd="@id/topicImage"
+                android:src="@drawable/ic_done_outline_white_24dp" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

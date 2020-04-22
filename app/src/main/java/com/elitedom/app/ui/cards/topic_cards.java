@@ -86,15 +86,15 @@ public class topic_cards extends AppCompatActivity {
     }
 
     private void initializeData() {
-        String[] sportsList = getResources()
-                .getStringArray(R.array.sports_titles);
-        String[] sportsInfo = getResources()
-                .getStringArray(R.array.sports_info);
+        String[] topicList = getResources()
+                .getStringArray(R.array.topic_titles);
+        String[] topicInfo = getResources()
+                .getStringArray(R.array.topic_info);
         TypedArray topicTitleResources = getResources().obtainTypedArray(R.array.topic_images);
         mTopicData.clear();
 
-        for (int i = 0; i < sportsList.length; i++) {
-            mTopicData.add(new Cards(sportsList[i], sportsInfo[i],
+        for (int i = 0; i < topicList.length; i++) {
+            mTopicData.add(new Cards(topicList[i], topicInfo[i],
                     topicTitleResources.getResourceId(i, 0)));
         }
         topicTitleResources.recycle();
