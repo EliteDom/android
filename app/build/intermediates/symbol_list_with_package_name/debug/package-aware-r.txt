@@ -32,6 +32,7 @@ anim design_bottom_sheet_slide_in
 anim design_bottom_sheet_slide_out
 anim design_snackbar_in
 anim design_snackbar_out
+anim fab_pop
 anim fragment_close_enter
 anim fragment_close_exit
 anim fragment_fade_enter
@@ -63,9 +64,9 @@ animator mtrl_fab_hide_motion_spec
 animator mtrl_fab_show_motion_spec
 animator mtrl_fab_transformation_sheet_collapse_spec
 animator mtrl_fab_transformation_sheet_expand_spec
-array sports_info
-array sports_titles
 array topic_images
+array topic_info
+array topic_titles
 attr actionBarDivider
 attr actionBarItemBackground
 attr actionBarPopupTheme
@@ -1414,8 +1415,10 @@ drawable gradient_1
 drawable gradient_2
 drawable gradient_3
 drawable gradient_list
+drawable ic_arrow_back_white_24dp
 drawable ic_calendar_black_24dp
 drawable ic_clear_black_24dp
+drawable ic_done_outline_white_24dp
 drawable ic_edit_black_24dp
 drawable ic_keyboard_arrow_left_black_24dp
 drawable ic_keyboard_arrow_right_black_24dp
@@ -1586,6 +1589,7 @@ id enterAlwaysCollapsed
 id exitUntilCollapsed
 id expand_activities_button
 id expanded_menu
+id fab
 id fade
 id feed_layout
 id fill
@@ -1759,6 +1763,7 @@ id text_input_start_icon
 id textinput_counter
 id textinput_error
 id textinput_helper_text
+id tick
 id time
 id title
 id titleDividerNoCustom
@@ -2040,11 +2045,11 @@ string project_id
 string prompt_email
 string prompt_password
 string search_menu_title
-string sports_info_placeholder
 string status_bar_notification_info_overflow
 string subtitle_detail_text
 string title_placeholder
 string topic_cards_action_bar
+string topic_info_placeholder
 string username
 string welcome
 style AlertDialog_AppCompat
