@@ -1,6 +1,7 @@
 package com.elitedom.app.ui.main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.elitedom.app.R;
@@ -32,7 +36,6 @@ class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHolder> {
                 inflate(R.layout.post_preview, parent, false)) {
             @Override
             public void onClick(View v) {
-
             }
         };
     }
@@ -49,29 +52,31 @@ class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHolder> {
         return mTopicsData.size();
     }
 
-    abstract static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView mTitleText, mInfoText;
-        private RelativeLayout mCardLayout;
+        private CardView mCard;
 
         ViewHolder(final View itemView) {
             super(itemView);
-
             mTitleText = itemView.findViewById(R.id.title);
-            mCardLayout = itemView.findViewById(R.id.singlecardlayout);
-
+            mCard = itemView.findViewById(R.id.cardview);
             itemView.setOnClickListener(this);
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    return true;
-                }
-            });
         }
 
         void bindTo(PreviewCard currentTopic) {
             mTitleText.setText(currentTopic.getTitle());
 //            mInfoText.setText(currentTopic.getSubtext());
+        }
+
+        @Override
+        public void onClick(View v) {
+/*
+            Intent intent = new Intent(v.getContext(), PostView.class);
+            String transitionName = "post_expansion";
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, mCard, transitionName);
+            ActivityCompat.startActivity(v.getContext(), intent, options.toBundle());
+*/
         }
     }
 }

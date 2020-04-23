@@ -60,9 +60,9 @@
 
     <string-array name="dummy_posts">
         <item>Harnessing the modularity of Arch Linux</item>
-        <item>LFS and How it Beats out Arch</item>
         <item>Using Linear Regression to Differentiate the Iris Dataset</item>
         <item>Zoom\'s Vulnerabilities and What it means for Cybersecurity </item>
+        <item>LFS and How it Beats out Arch</item>
         <item>How Unpruned Decision Trees can Lead to Overfitting</item>
     </string-array>
 </resources>

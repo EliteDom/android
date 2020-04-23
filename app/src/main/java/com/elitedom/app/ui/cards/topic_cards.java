@@ -71,10 +71,12 @@ public class topic_cards extends AppCompatActivity {
                                                                        public boolean onMove(@NonNull RecyclerView recyclerView,
                                                                                              @NonNull RecyclerView.ViewHolder viewHolder,
                                                                                              @NonNull RecyclerView.ViewHolder target) {
-//                                                                           int from = viewHolder.getAdapterPosition();
-//                                                                           int to = target.getAdapterPosition();
-//                                                                           Collections.swap(mTopicData, from, to);
-//                                                                           mAdapter.notifyItemMoved(from, to);
+/*
+                                                                           int from = viewHolder.getAdapterPosition();
+                                                                           int to = target.getAdapterPosition();
+                                                                           Collections.swap(mTopicData, from, to);
+                                                                           mAdapter.notifyItemMoved(from, to);
+                                                                           Disallow Card Reorganisation*/
                                                                            return false;
                                                                        }
 
@@ -90,7 +92,7 @@ public class topic_cards extends AppCompatActivity {
 
     private void initializeData() {
         String[] topicList = getResources()
-                .getStringArray(R.array.dummy_posts);
+                .getStringArray(R.array.topic_titles);
         String[] topicInfo = getResources()
                 .getStringArray(R.array.topic_info);
         TypedArray topicTitleResources = getResources().obtainTypedArray(R.array.topic_images);

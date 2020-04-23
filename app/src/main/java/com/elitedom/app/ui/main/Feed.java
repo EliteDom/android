@@ -52,7 +52,7 @@ public class Feed extends AppCompatActivity {
 
     private void initializeData() {
         String[] topicList = getResources()
-                .getStringArray(R.array.topic_titles);
+                .getStringArray(R.array.dummy_posts);
         String[] topicInfo = getResources()
                 .getStringArray(R.array.topic_info);
         TypedArray topicTitleResources = getResources().obtainTypedArray(R.array.topic_images);
