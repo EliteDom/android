@@ -1854,6 +1854,7 @@ layout abs_layout
 layout activity_feed
 layout activity_login
 layout activity_new_user
+layout activity_post_view
 layout activity_topic_cards
 layout custom_dialog
 layout design_bottom_navigation_item

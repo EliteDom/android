@@ -1,5 +1,6 @@
 package com.elitedom.app.ui.main;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -62,6 +63,15 @@ class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHolder> {
             mTitleText = itemView.findViewById(R.id.title);
             mCard = itemView.findViewById(R.id.cardview);
             itemView.setOnClickListener(this);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), PostView.class);
+                    String transitionName = "post_expansion";
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity)mContext, mCard, transitionName);
+                    ActivityCompat.startActivity(v.getContext(), intent, options.toBundle());
+                }
+            });
         }
 
         void bindTo(PreviewCard currentTopic) {
@@ -71,12 +81,10 @@ class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHolder> {
 
         @Override
         public void onClick(View v) {
-/*
             Intent intent = new Intent(v.getContext(), PostView.class);
             String transitionName = "post_expansion";
-            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, mCard, transitionName);
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity)mContext, mCard, transitionName);
             ActivityCompat.startActivity(v.getContext(), intent, options.toBundle());
-*/
         }
     }
 }
