@@ -67,8 +67,8 @@ class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHolder> {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), PostView.class);
-                    String transitionName = "post_expansion";
-                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity)mContext, mCard, transitionName);
+                    intent.putExtra("title", mTitleText.getText().toString());
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity)mContext, mCard, "post_expansion");
                     ActivityCompat.startActivity(v.getContext(), intent, options.toBundle());
                 }
             });
