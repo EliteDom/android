@@ -1,6 +1,6 @@
 package com.elitedom.app.ui.cards;
 
-public class Cards {
+class Cards {
     // Member variables representing the title and information about the sport.
     private String title;
     private String info;
@@ -20,7 +20,7 @@ public class Cards {
         return info;
     }
 
-    public int getImageResource() {
+    int getImageResource() {
         return imageResource;
     }
 }

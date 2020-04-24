@@ -64,6 +64,7 @@ animator mtrl_fab_hide_motion_spec
 animator mtrl_fab_show_motion_spec
 animator mtrl_fab_transformation_sheet_collapse_spec
 animator mtrl_fab_transformation_sheet_expand_spec
+array dummy_posts
 array topic_images
 array topic_info
 array topic_titles
@@ -1541,7 +1542,6 @@ id barrier
 id beginning
 id blocking
 id bottom
-id button
 id buttonPanel
 id cancel_button
 id card_container
@@ -1591,7 +1591,7 @@ id expand_activities_button
 id expanded_menu
 id fab
 id fade
-id feed_layout
+id feed_container
 id fill
 id fill_horizontal
 id fill_vertical
@@ -1757,7 +1757,6 @@ id textEnd
 id textSpacerNoButtons
 id textSpacerNoTitle
 id textStart
-id textView
 id text_input_end_icon
 id text_input_start_icon
 id textinput_counter
@@ -1855,6 +1854,7 @@ layout abs_layout
 layout activity_feed
 layout activity_login
 layout activity_new_user
+layout activity_post_view
 layout activity_topic_cards
 layout custom_dialog
 layout design_bottom_navigation_item
@@ -1907,6 +1907,7 @@ layout notification_template_custom_big
 layout notification_template_icon_group
 layout notification_template_part_chronometer
 layout notification_template_part_time
+layout post_preview
 layout select_dialog_item_material
 layout select_dialog_multichoice_material
 layout select_dialog_singlechoice_material

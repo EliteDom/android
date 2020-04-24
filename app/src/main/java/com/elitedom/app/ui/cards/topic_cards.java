@@ -23,7 +23,6 @@ import com.elitedom.app.R;
 import com.elitedom.app.ui.main.Feed;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Objects;
 
 public class topic_cards extends AppCompatActivity {
@@ -72,11 +71,13 @@ public class topic_cards extends AppCompatActivity {
                                                                        public boolean onMove(@NonNull RecyclerView recyclerView,
                                                                                              @NonNull RecyclerView.ViewHolder viewHolder,
                                                                                              @NonNull RecyclerView.ViewHolder target) {
+/*
                                                                            int from = viewHolder.getAdapterPosition();
                                                                            int to = target.getAdapterPosition();
                                                                            Collections.swap(mTopicData, from, to);
                                                                            mAdapter.notifyItemMoved(from, to);
-                                                                           return true;
+                                                                           Disallow Card Reorganisation*/
+                                                                           return false;
                                                                        }
 
                                                                        @Override

@@ -1,6 +1,7 @@
 package com.elitedom.app.ui.cards;
 
 import android.animation.LayoutTransition;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +12,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.elitedom.app.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -26,14 +27,15 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
     private ArrayList<Cards> mTopicsData;
     private Context mContext;
 
-    CardsAdapter(Context context, ArrayList<Cards> sportsData) {
-        this.mTopicsData = sportsData;
+    CardsAdapter(Context context, ArrayList<Cards> topicData) {
+        this.mTopicsData = topicData;
         this.mContext = context;
     }
 
+    @NonNull
     @Override
     public CardsAdapter.ViewHolder onCreateViewHolder(
-            ViewGroup parent, int viewType) {
+            @NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(mContext).
                 inflate(R.layout.list_topics, parent, false));
     }
@@ -41,9 +43,9 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(CardsAdapter.ViewHolder holder,
                                  int position) {
-        Cards currentSport = mTopicsData.get(position);
+        Cards currentTopic = mTopicsData.get(position);
 
-        holder.bindTo(currentSport);
+        holder.bindTo(currentTopic);
     }
 
     @Override
@@ -69,7 +71,7 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
             mCardLayout = itemView.findViewById(R.id.singlecardlayout);
             mTickView = itemView.findViewById(R.id.tick);
 
-            View myLayout = LayoutInflater.from(mContext).inflate(R.layout.activity_topic_cards, null);
+            @SuppressLint("InflateParams") View myLayout = LayoutInflater.from(mContext).inflate(R.layout.activity_topic_cards, null);
             fab = myLayout.findViewById(R.id.fab);
 
             fab.animate().alpha(0.0f);
