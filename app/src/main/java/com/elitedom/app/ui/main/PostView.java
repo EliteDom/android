@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ public class PostView extends AppCompatActivity {
 
     private RelativeLayout relativeLayout;
     private TextView mPostTitle;
+    private ImageView mPostImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,7 @@ public class PostView extends AppCompatActivity {
 
         relativeLayout = findViewById(R.id.singlecardlayout);
         mPostTitle = findViewById(R.id.title);
+        mPostImage = findViewById(R.id.postImage);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         Objects.requireNonNull(getSupportActionBar()).hide();
@@ -37,5 +40,6 @@ public class PostView extends AppCompatActivity {
         Intent intent = getIntent();
         String message = intent.getStringExtra("title");
         mPostTitle.setText(message);
+        mPostImage.setClipToOutline(true);
     }
 }
