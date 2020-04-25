@@ -1437,6 +1437,7 @@ drawable img_baseball
 drawable img_basketball
 drawable img_bowling
 drawable img_cycling
+drawable img_dummy_post
 drawable img_golf
 drawable img_running
 drawable img_soccer
@@ -1465,6 +1466,7 @@ drawable notification_template_icon_bg
 drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
+drawable rounded_image
 drawable test_custom_background
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
@@ -1686,6 +1688,7 @@ id password_toggle
 id peekHeight
 id percent
 id pin
+id postImage
 id progress_circular
 id progress_horizontal
 id radio

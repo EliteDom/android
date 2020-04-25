@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -60,8 +61,12 @@ class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHolder> {
 
         ViewHolder(final View itemView) {
             super(itemView);
+
             mTitleText = itemView.findViewById(R.id.title);
             mCard = itemView.findViewById(R.id.cardview);
+            ImageView mPostImage = itemView.findViewById(R.id.postImage);
+            mPostImage.setClipToOutline(true);
+
             itemView.setOnClickListener(this);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
