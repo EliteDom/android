@@ -1520,9 +1520,11 @@ id action_bar_root
 id action_bar_spinner
 id action_bar_subtitle
 id action_bar_title
+id action_cards
 id action_container
 id action_context_bar
 id action_divider
+id action_icons
 id action_image
 id action_menu_divider
 id action_menu_presenter
@@ -1689,6 +1691,8 @@ id peekHeight
 id percent
 id pin
 id postImage
+id post_text
+id post_view
 id progress_circular
 id progress_horizontal
 id radio
@@ -1722,6 +1726,7 @@ id shortcut
 id showCustom
 id showHome
 id showTitle
+id single_card
 id singlecardlayout
 id skipCollapsed
 id slide

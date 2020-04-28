@@ -1,24 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/singlecardlayout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/single_card"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="16dp"
     android:animateLayoutChanges="true"
-    android:background="@drawable/gradient_list">
+    android:background="@drawable/gradient_list"
+    android:paddingTop="16dp">
 
-    <androidx.cardview.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/cardview"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:src="@drawable/ic_arrow_back_white_24dp" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/post_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="16dp"
+        android:onClick="backAction"
         android:transitionName="post_expansion"
         app:cardCornerRadius="8dp"
         app:cardElevation="0dp">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/title"
@@ -31,14 +44,79 @@
                 android:textStyle="bold"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark" />
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/action_cards"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/postImage"
+                android:translationY="-12dp"
+                app:cardBackgroundColor="@color/colorAccent"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:id="@+id/action_icons"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="6dp"
+                    android:orientation="horizontal"
+                    android:paddingTop="12dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:src="@drawable/ic_arrow_back_white_24dp"
+                        tools:ignore="ContentDescription" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:src="@drawable/ic_arrow_back_white_24dp"
+                        tools:ignore="ContentDescription" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:src="@drawable/ic_arrow_back_white_24dp"
+                        tools:ignore="ContentDescription" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:src="@drawable/ic_arrow_back_white_24dp"
+                        tools:ignore="ContentDescription" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
             <ImageView
                 android:id="@+id/postImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rounded_image"
                 android:layout_below="@id/title"
                 android:adjustViewBounds="true"
-                android:src="@drawable/img_dummy_post" />
+                android:background="@drawable/rounded_image"
+                android:src="@drawable/img_dummy_post"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/post_text"
+                android:layout_below="@id/action_cards"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/subtitle_detail_text"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:background="@drawable/rounded_image"
+                android:textStyle="bold" />
+
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
+
 </RelativeLayout>
