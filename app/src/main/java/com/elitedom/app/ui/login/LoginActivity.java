@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
         usernameEditText.startAnimation(atg);
         passwordEditText.startAnimation(atg2);
         loginButton.startAnimation(atg3);
-        animateText("Elitedom", title, 300);
+        animateText("Elitedom", title);
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -154,10 +154,10 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void animateText(String string, final TextView txt_view, long delay) {
+    private void animateText(String string, final TextView txt_view) {
         final char[] s = string.toCharArray();
         try {
-            Thread.sleep(delay);
+            Thread.sleep(300);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
