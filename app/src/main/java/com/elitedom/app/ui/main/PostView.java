@@ -20,9 +20,8 @@ import java.util.Objects;
 public class PostView extends AppCompatActivity {
 
     private RelativeLayout relativeLayout;
-    private TextView mPostTitle;
+    private TextView mPostTitle, mPostText;
     private ImageView mPostImage;
-    private FloatingActionButton mChatRoom;
 
 
     @Override
@@ -33,7 +32,7 @@ public class PostView extends AppCompatActivity {
         relativeLayout = findViewById(R.id.single_card);
         mPostTitle = findViewById(R.id.title);
         mPostImage = findViewById(R.id.postImage);
-        mChatRoom = findViewById(R.id.fab);
+        mPostText = findViewById(R.id.post_text);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         Objects.requireNonNull(getSupportActionBar()).hide();
@@ -47,6 +46,7 @@ public class PostView extends AppCompatActivity {
         String message = intent.getStringExtra("title");
         mPostTitle.setText(message);
         mPostImage.setClipToOutline(true);
+        mPostText.setClipToOutline(true);
     }
 
     public void backAction(View view) {

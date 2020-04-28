@@ -1691,6 +1691,7 @@ id peekHeight
 id percent
 id pin
 id postImage
+id post_text
 id post_view
 id progress_circular
 id progress_horizontal
