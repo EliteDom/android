@@ -103,18 +103,26 @@
                 android:src="@drawable/img_dummy_post"
                 tools:ignore="ContentDescription" />
 
-            <TextView
+            <ScrollView
+                android:id="@+id/text_scroll"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/post_text"
+                android:layout_height="match_parent"
                 android:layout_below="@id/action_cards"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="@string/subtitle_detail_text"
-                android:textColor="@color/black"
-                android:textSize="14sp"
                 android:background="@drawable/rounded_image"
-                android:textStyle="bold" />
+                android:scrollbars="none">
+
+                <TextView
+                    android:id="@+id/post_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/rounded_image"
+                    android:text="@string/subtitle_detail_text"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </ScrollView>
 
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
