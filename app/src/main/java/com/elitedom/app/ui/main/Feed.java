@@ -74,7 +74,7 @@ public class Feed extends AppCompatActivity {
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String value = dataSnapshot.child("image")
+                String value = dataSnapshot.child("image").getValue().toString();
 
             }
 
