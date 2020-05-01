@@ -49,7 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/postImage"
-                android:translationY="-12dp"
+                android:layout_marginHorizontal="6dp"
                 app:cardBackgroundColor="@color/colorAccent"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="0dp">
@@ -59,8 +59,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="6dp"
-                    android:orientation="horizontal"
-                    android:paddingTop="12dp">
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -99,6 +98,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title"
                 android:adjustViewBounds="true"
+                android:layout_marginHorizontal="6dp"
+                android:layout_marginBottom="6dp"
                 android:background="@drawable/rounded_image"
                 android:src="@drawable/img_dummy_post"
                 tools:ignore="ContentDescription" />
