@@ -71,7 +71,7 @@ public class Feed extends AppCompatActivity {
         TypedArray topicTitleResources = getResources().obtainTypedArray(R.array.topic_images);
         mTitleData.clear();
 
-        mDatabase.addValueEventListener(new ValueEventListener() {
+/*        mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String value = dataSnapshot.child("image").getValue().toString();
@@ -82,7 +82,8 @@ public class Feed extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
+        });*/
+
         for (int i = 0; i < topicList.length; i++) {
             mTitleData.add(new PreviewCard(topicList[i], topicInfo[i],
                     topicTitleResources.getResourceId(i, 0)));
