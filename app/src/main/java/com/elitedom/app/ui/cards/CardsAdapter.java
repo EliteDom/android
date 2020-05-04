@@ -44,7 +44,6 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
     public void onBindViewHolder(CardsAdapter.ViewHolder holder,
                                  int position) {
         Cards currentTopic = mTopicsData.get(position);
-
         holder.bindTo(currentTopic);
     }
 
