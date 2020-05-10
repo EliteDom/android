@@ -16,6 +16,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.elitedom.app.R;
 
 import java.util.ArrayList;
@@ -57,6 +58,7 @@ class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHolder> {
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView mTitleText, mInfoText;
+        private ImageView mPostImage;
         private CardView mCard;
 
         ViewHolder(final View itemView) {
@@ -64,7 +66,7 @@ class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHolder> {
 
             mTitleText = itemView.findViewById(R.id.title);
             mCard = itemView.findViewById(R.id.cardview);
-            ImageView mPostImage = itemView.findViewById(R.id.postImage);
+            mPostImage = itemView.findViewById(R.id.postImage);
             mPostImage.setClipToOutline(true);
 
             itemView.setOnClickListener(this);
