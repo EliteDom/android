@@ -1,12 +1,14 @@
 package com.elitedom.app.ui.cards;
 
-public class Cards {
+import android.net.Uri;
+
+class Cards {
     // Member variables representing the title and information about the sport.
     private String title;
     private String info;
-    private final int imageResource;
+    private final Uri imageResource;
 
-    Cards(String title, String info, int imageResource) {
+    Cards(String title, String info, Uri imageResource) {
         this.title = title;
         this.info = info;
         this.imageResource = imageResource;
@@ -20,7 +22,7 @@ public class Cards {
         return info;
     }
 
-    public int getImageResource() {
+    Uri getImageResource() {
         return imageResource;
     }
 }

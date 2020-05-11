@@ -1,9 +1,5 @@
 [
     {
-        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_img_swimming.jpg.flat",
-        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/img_swimming.jpg"
-    },
-    {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable-v24_gradient_3.xml.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable-v24/gradient_3.xml"
     },
@@ -38,10 +34,6 @@
     {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/layout_activity_new_user.xml.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/layout/activity_new_user.xml"
-    },
-    {
-        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_img_bowling.jpg.flat",
-        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/img_bowling.jpg"
     },
     {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_ic_launcher_background.xml.flat",
@@ -108,24 +100,12 @@
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/layout/list_topics.xml"
     },
     {
-        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_img_basketball.jpg.flat",
-        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/img_basketball.jpg"
-    },
-    {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_ic_arrow_back_white_24dp.xml.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/ic_arrow_back_white_24dp.xml"
     },
     {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/mipmap-xhdpi_ic_launcher.png.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/mipmap-xhdpi/ic_launcher.png"
-    },
-    {
-        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_img_baseball.jpg.flat",
-        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/img_baseball.jpg"
-    },
-    {
-        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_img_golf.jpg.flat",
-        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/img_golf.jpg"
     },
     {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/layout_activity_topic_cards.xml.flat",
@@ -136,20 +116,8 @@
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/anim/slide_in_right.xml"
     },
     {
-        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_img_tennis.jpg.flat",
-        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/img_tennis.jpg"
-    },
-    {
-        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_img_badminton.jpg.flat",
-        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/img_badminton.jpg"
-    },
-    {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/anim_atg2.xml.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/anim/atg2.xml"
-    },
-    {
-        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_img_running.jpg.flat",
-        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/img_running.jpg"
     },
     {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable-v24_gradient_list.xml.flat",
@@ -168,14 +136,6 @@
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/anim/slide_out_right.xml"
     },
     {
-        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_img_soccer.jpg.flat",
-        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/img_soccer.jpg"
-    },
-    {
-        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_img_tabletennis.jpg.flat",
-        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/img_tabletennis.jpg"
-    },
-    {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable-v24_gradient_2.xml.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable-v24/gradient_2.xml"
     },
@@ -186,10 +146,6 @@
     {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/layout_activity_login.xml.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/layout/activity_login.xml"
-    },
-    {
-        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_img_cycling.jpg.flat",
-        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/img_cycling.jpg"
     },
     {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/anim_fab_pop.xml.flat",

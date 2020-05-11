@@ -64,9 +64,6 @@ animator mtrl_fab_hide_motion_spec
 animator mtrl_fab_show_motion_spec
 animator mtrl_fab_transformation_sheet_collapse_spec
 animator mtrl_fab_transformation_sheet_expand_spec
-array topic_images
-array topic_info
-array topic_titles
 attr actionBarDivider
 attr actionBarItemBackground
 attr actionBarPopupTheme
@@ -1431,17 +1428,6 @@ drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
 drawable ic_reset
-drawable img_badminton
-drawable img_baseball
-drawable img_basketball
-drawable img_bowling
-drawable img_cycling
-drawable img_golf
-drawable img_running
-drawable img_soccer
-drawable img_swimming
-drawable img_tabletennis
-drawable img_tennis
 drawable mtrl_dialog_background
 drawable mtrl_dropdown_arrow
 drawable mtrl_ic_arrow_drop_down
