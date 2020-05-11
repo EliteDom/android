@@ -22,5 +22,7 @@ class Cards {
         return info;
     }
 
-    Uri getImageResource() { return imageResource; }
+    Uri getImageResource() {
+        return imageResource;
+    }
 }

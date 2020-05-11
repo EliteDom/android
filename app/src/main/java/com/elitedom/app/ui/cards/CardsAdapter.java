@@ -122,9 +122,9 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
         void bindTo(Cards currentTopic) {
             mTitleText.setText(currentTopic.getTitle());
             mInfoText.setText(currentTopic.getInfo());
-            Glide.with(mContext).load(currentTopic.getImageResource()).into(mTopicImage);
-            Log.d("IMAGE URI", "Bind Image URI is: " + currentTopic.getImageResource());
-
+            Glide.with(mContext)
+                    .load(currentTopic.getImageResource())
+                    .into(mTopicImage);
         }
 
         @Override

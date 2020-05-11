@@ -30,6 +30,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 
@@ -38,6 +39,7 @@ public class topic_cards extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private ArrayList<Cards> mTopicData;
     private CardsAdapter mAdapter;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +69,9 @@ public class topic_cards extends AppCompatActivity {
         mRecyclerView.setClipToOutline(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        mTopicData = new ArrayList<>();
+
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Dorms");
         mAdapter = new CardsAdapter(this, mTopicData);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -90,18 +95,13 @@ public class topic_cards extends AppCompatActivity {
     }
 
     private void initializeData() {
-        TypedArray topicTitleResources = getResources().obtainTypedArray(R.array.topic_images);
         mTopicData.clear();
-
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) { loadImages((Map<String,Object>) dataSnapshot.getValue()); }
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) { loadImage((Map<String, Object>) dataSnapshot.getValue()); }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
-
-        topicTitleResources.recycle();
-        mAdapter.notifyDataSetChanged();
     }
 
     public void feedActivity(View view) {
@@ -111,16 +111,14 @@ public class topic_cards extends AppCompatActivity {
         finish();
     }
 
-    private void loadImages(Map<String, Object> images) {
-        for (Map.Entry<String, Object> entry : images.entrySet()) {
-            Map singleImage = (Map) entry.getValue();
-            Uri image = Uri.parse((String) singleImage.get("image"));
-            String topic = (String) singleImage.get("Name");
-            String subtopic = (String) singleImage.get("description");
-            Log.d("IMAGE URI", "Image URI is: " + image);
-            Log.d("IMAGE URI", "Name URI is: " + topic);
-            Log.d("IMAGE URI", "Description URI is: " + subtopic);
-            mTopicData.add(new Cards(topic, subtopic, image));
+    private void loadImage(Map<String, Object> entries) {
+        for (Map.Entry<String, Object> singleEntry : entries.entrySet()) {
+            Map entry = (Map) singleEntry.getValue();
+            Uri image = Uri.parse((String) entry.get("image"));
+            String dormTitle = (String) entry.get("Name");
+            String dormTopic = (String) entry.get("description");
+            mTopicData.add(new Cards(dormTitle, dormTopic, image));
         }
+        mAdapter.notifyDataSetChanged();
     }
 }

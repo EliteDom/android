@@ -9,19 +9,14 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.elitedom.app.R;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -66,26 +61,30 @@ public class Feed extends AppCompatActivity {
     }
 
     private void initializeData() {
+        // TODO: Integrate Firebase here
         String[] topicList = getResources()
                 .getStringArray(R.array.dummy_posts);
-        String[] topicInfo = getResources()
-                .getStringArray(R.array.topic_info);
-        TypedArray topicTitleResources = getResources().obtainTypedArray(R.array.topic_images);
+//        String[] topicInfo = getResources()
+//                .getStringArray(R.array.topic_info);
+//        TypedArray topicTitleResources = getResources().obtainTypedArray(R.array.topic_images);
         mTitleData.clear();
 
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) { loadImages((Map<String,Object>) dataSnapshot.getValue()); }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {}
-                });
+/*        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String value = dataSnapshot.child("image").getValue().toString();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });*/
 
         for (int i = 0; i < topicList.length; i++) {
-//            mTitleData.add(new PreviewCard())
-            mTitleData.add(new PreviewCard(topicList[i], topicInfo[i],
-                    topicTitleResources.getResourceId(i, 0)));
+            mTitleData.add(new PreviewCard(topicList[i], "Dummy Info"));
         }
-        topicTitleResources.recycle();
         mAdapter.notifyDataSetChanged();
     }
 
