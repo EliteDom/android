@@ -8,18 +8,13 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.elitedom.app.R;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -64,11 +59,12 @@ public class Feed extends AppCompatActivity {
     }
 
     private void initializeData() {
+        // TODO: Integrate Firebase here
         String[] topicList = getResources()
                 .getStringArray(R.array.dummy_posts);
-        String[] topicInfo = getResources()
-                .getStringArray(R.array.topic_info);
-        TypedArray topicTitleResources = getResources().obtainTypedArray(R.array.topic_images);
+//        String[] topicInfo = getResources()
+//                .getStringArray(R.array.topic_info);
+//        TypedArray topicTitleResources = getResources().obtainTypedArray(R.array.topic_images);
         mTitleData.clear();
 
 /*        mDatabase.addValueEventListener(new ValueEventListener() {
@@ -85,10 +81,8 @@ public class Feed extends AppCompatActivity {
         });*/
 
         for (int i = 0; i < topicList.length; i++) {
-            mTitleData.add(new PreviewCard(topicList[i], topicInfo[i],
-                    topicTitleResources.getResourceId(i, 0)));
+            mTitleData.add(new PreviewCard(topicList[i], "Dummy Info"));
         }
-        topicTitleResources.recycle();
         mAdapter.notifyDataSetChanged();
     }
 

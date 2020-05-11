@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewOutlineProvider;
@@ -21,14 +22,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.elitedom.app.R;
 import com.elitedom.app.ui.main.Feed;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Map;
 import java.util.Objects;
 
 public class topic_cards extends AppCompatActivity {
 
     private ArrayList<Cards> mTopicData;
     private CardsAdapter mAdapter;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +68,7 @@ public class topic_cards extends AppCompatActivity {
 
         mTopicData = new ArrayList<>();
 
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Dorms");
         mAdapter = new CardsAdapter(this, mTopicData);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -91,19 +101,13 @@ public class topic_cards extends AppCompatActivity {
     }
 
     private void initializeData() {
-        String[] topicList = getResources()
-                .getStringArray(R.array.topic_titles);
-        String[] topicInfo = getResources()
-                .getStringArray(R.array.topic_info);
-        TypedArray topicTitleResources = getResources().obtainTypedArray(R.array.topic_images);
         mTopicData.clear();
-
-        for (int i = 0; i < topicList.length; i++) {
-            mTopicData.add(new Cards(topicList[i], topicInfo[i],
-                    topicTitleResources.getResourceId(i, 0)));
-        }
-        topicTitleResources.recycle();
-        mAdapter.notifyDataSetChanged();
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) { loadImage((Map<String, Object>) dataSnapshot.getValue()); }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
+        });
     }
 
     public void feedActivity(View view) {
@@ -111,5 +115,16 @@ public class topic_cards extends AppCompatActivity {
         startActivity(feed);
         setResult(Activity.RESULT_OK);
         finish();
+    }
+
+    private void loadImage(Map<String, Object> entries) {
+        for (Map.Entry<String, Object> singleEntry : entries.entrySet()) {
+            Map entry = (Map) singleEntry.getValue();
+            Uri image = Uri.parse((String) entry.get("image"));
+            String dormTitle = (String) entry.get("Name");
+            String dormTopic = (String) entry.get("description");
+            mTopicData.add(new Cards(dormTitle, dormTopic, image));
+        }
+        mAdapter.notifyDataSetChanged();
     }
 }

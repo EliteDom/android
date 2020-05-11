@@ -5,10 +5,10 @@ class PreviewCard {
     private String title;
     private String subtext;
 
-    PreviewCard(String title, String subtext, int imageResource) {
+    PreviewCard(String title, String subtext) {
         this.title = title;
         this.subtext = subtext;
-        this.imageResource = imageResource;
+        this.imageResource = 1;
     }
 
     String getTitle() {
@@ -19,8 +19,6 @@ class PreviewCard {
         return subtext;
     }
 
-    int getImageResource() {
-        return imageResource;
-    }
+    int getImageResource() { return imageResource; }
 
 }
