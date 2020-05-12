@@ -39,7 +39,6 @@ public class topic_cards extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private ArrayList<Cards> mTopicData;
     private CardsAdapter mAdapter;
-    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
