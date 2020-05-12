@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -65,6 +64,7 @@ class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHolder> {
             super(itemView);
 
             mTitleText = itemView.findViewById(R.id.title);
+            mInfoText = itemView.findViewById(R.id.post_text);
             mCard = itemView.findViewById(R.id.cardview);
             mPostImage = itemView.findViewById(R.id.postImage);
             mPostImage.setClipToOutline(true);
@@ -77,13 +77,17 @@ class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHolder> {
                     intent.putExtra("title", mTitleText.getText().toString());
                     ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity)mContext, mCard, "post_expansion");
                     ActivityCompat.startActivity(v.getContext(), intent, options.toBundle());
+                    // TODO: Add Subtext and Image transfer across shared activity
                 }
             });
         }
 
         void bindTo(PreviewCard currentTopic) {
             mTitleText.setText(currentTopic.getTitle());
-//            mInfoText.setText(currentTopic.getSubtext());
+            mInfoText.setText(currentTopic.getSubtext());
+            Glide.with(mContext)
+                    .load(currentTopic.getImageResource())
+                    .into(mPostImage);
         }
 
         @Override

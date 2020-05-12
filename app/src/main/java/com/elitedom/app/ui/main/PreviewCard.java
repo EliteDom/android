@@ -1,14 +1,16 @@
 package com.elitedom.app.ui.main;
 
+import android.net.Uri;
+
 class PreviewCard {
-    private final int imageResource;
+    private final Uri imageResource;
     private String title;
     private String subtext;
 
-    PreviewCard(String title, String subtext) {
+    PreviewCard(String title, String subtext, Uri imageResource) {
         this.title = title;
         this.subtext = subtext;
-        this.imageResource = 1;
+        this.imageResource = imageResource;
     }
 
     String getTitle() {
@@ -19,6 +21,6 @@ class PreviewCard {
         return subtext;
     }
 
-    int getImageResource() { return imageResource; }
+    Uri getImageResource() { return imageResource; }
 
 }
