@@ -1,6 +1,7 @@
 package com.elitedom.app.ui.main;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -12,6 +13,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.elitedom.app.R;
 
 import java.util.Objects;
@@ -42,8 +45,13 @@ public class PostView extends AppCompatActivity {
         animationDrawable.start();
 
         Intent intent = getIntent();
-        String message = intent.getStringExtra("title");
-        mPostTitle.setText(message);
+        mPostTitle.setText(intent.getStringExtra("title"));
+        mPostText.setText(intent.getStringExtra("subtext"));
+        Glide.with(this)
+                .load(intent.getStringExtra("image"))
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(mPostImage);
+
         mPostImage.setClipToOutline(true);
         mPostText.setClipToOutline(true);
     }
