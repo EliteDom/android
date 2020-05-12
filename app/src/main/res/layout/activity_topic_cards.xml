@@ -38,5 +38,4 @@
             android:src="@drawable/ic_arrow_back_white_24dp" />
 
     </RelativeLayout>
-
 </androidx.cardview.widget.CardView>

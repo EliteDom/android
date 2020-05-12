@@ -8,6 +8,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.view.WindowManager;
@@ -35,9 +36,9 @@ import java.util.Objects;
 
 public class topic_cards extends AppCompatActivity {
 
+    private DatabaseReference mDatabase;
     private ArrayList<Cards> mTopicData;
     private CardsAdapter mAdapter;
-    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,18 +53,19 @@ public class topic_cards extends AppCompatActivity {
         getSupportActionBar().setCustomView(R.layout.abs_layout);
         // Objects.requireNonNull(getSupportActionBar()).hide();
 
+        mTopicData = new ArrayList<>();
+
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Dorms");
         RelativeLayout relativeLayout = findViewById(R.id.card_container);
+        RecyclerView mRecyclerView = findViewById(R.id.recyclerView);
+
         AnimationDrawable animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
         animationDrawable.setEnterFadeDuration(2000);
         animationDrawable.setExitFadeDuration(4000);
         animationDrawable.start();
 
-        // Initialize the RecyclerView.
-        RecyclerView mRecyclerView = findViewById(R.id.recyclerView);
-
         mRecyclerView.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
         mRecyclerView.setClipToOutline(true);
-
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         mTopicData = new ArrayList<>();
@@ -80,16 +82,7 @@ public class topic_cards extends AppCompatActivity {
                                                                        @Override
                                                                        public boolean onMove(@NonNull RecyclerView recyclerView,
                                                                                              @NonNull RecyclerView.ViewHolder viewHolder,
-                                                                                             @NonNull RecyclerView.ViewHolder target) {
-/*
-                                                                           int from = viewHolder.getAdapterPosition();
-                                                                           int to = target.getAdapterPosition();
-                                                                           Collections.swap(mTopicData, from, to);
-                                                                           mAdapter.notifyItemMoved(from, to);
-                                                                           Disallow Card Reorganisation*/
-                                                                           return false;
-                                                                       }
-
+                                                                                             @NonNull RecyclerView.ViewHolder target) { return false; }
                                                                        @Override
                                                                        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder,
                                                                                             int direction) {

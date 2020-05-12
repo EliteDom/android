@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/singlecardlayout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:animateLayoutChanges="true">
-
-    <ImageView
-        android:id="@+id/test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/cardview" />
 
     <androidx.cardview.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/cardview"
@@ -43,12 +38,19 @@
                 android:id="@+id/postImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/title"
                 android:layout_marginHorizontal="6dp"
                 android:layout_marginBottom="6dp"
-                android:layout_below="@id/title"
                 android:adjustViewBounds="true"
                 android:background="@drawable/rounded_image"
-                android:src="@drawable/img_dummy_post" />
+                android:src="@drawable/img_dummy_post"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/post_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

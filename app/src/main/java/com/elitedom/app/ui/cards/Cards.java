@@ -3,7 +3,6 @@ package com.elitedom.app.ui.cards;
 import android.net.Uri;
 
 class Cards {
-    // Member variables representing the title and information about the sport.
     private String title;
     private String info;
     private final Uri imageResource;

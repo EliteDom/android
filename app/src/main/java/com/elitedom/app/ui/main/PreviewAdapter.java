@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +15,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.elitedom.app.R;
 
 import java.util.ArrayList;
@@ -57,14 +57,16 @@ class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHolder> {
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView mTitleText, mInfoText;
+        private ImageView mPostImage;
         private CardView mCard;
 
         ViewHolder(final View itemView) {
             super(itemView);
 
             mTitleText = itemView.findViewById(R.id.title);
+            mInfoText = itemView.findViewById(R.id.post_text);
             mCard = itemView.findViewById(R.id.cardview);
-            ImageView mPostImage = itemView.findViewById(R.id.postImage);
+            mPostImage = itemView.findViewById(R.id.postImage);
             mPostImage.setClipToOutline(true);
 
             itemView.setOnClickListener(this);
@@ -75,13 +77,17 @@ class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHolder> {
                     intent.putExtra("title", mTitleText.getText().toString());
                     ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity)mContext, mCard, "post_expansion");
                     ActivityCompat.startActivity(v.getContext(), intent, options.toBundle());
+                    // TODO: Add Subtext and Image transfer across shared activity
                 }
             });
         }
 
         void bindTo(PreviewCard currentTopic) {
             mTitleText.setText(currentTopic.getTitle());
-//            mInfoText.setText(currentTopic.getSubtext());
+            mInfoText.setText(currentTopic.getSubtext());
+            Glide.with(mContext)
+                    .load(currentTopic.getImageResource())
+                    .into(mPostImage);
         }
 
         @Override

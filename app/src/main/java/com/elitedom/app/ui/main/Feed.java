@@ -1,20 +1,23 @@
 package com.elitedom.app.ui.main;
 
-import android.content.res.TypedArray;
 import android.graphics.drawable.AnimationDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.ViewOutlineProvider;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.elitedom.app.R;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -23,18 +26,17 @@ public class Feed extends AppCompatActivity {
 
     private ArrayList<PreviewCard> mTitleData;
     private PreviewAdapter mAdapter;
-    private DatabaseReference mDatabase;
-    private ImageView mTestImage;
+    private FirebaseFirestore mDatabase;
+    private ArrayList<String> imageList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
 
-
         RelativeLayout relativeLayout = findViewById(R.id.feed_container);
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Dorms");
-        mTestImage = findViewById(R.id.test);
+        imageList = new ArrayList<>();
+        mDatabase = FirebaseFirestore.getInstance();
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         Objects.requireNonNull(getSupportActionBar()).hide();
@@ -59,31 +61,18 @@ public class Feed extends AppCompatActivity {
     }
 
     private void initializeData() {
-        // TODO: Integrate Firebase here
-        String[] topicList = getResources()
-                .getStringArray(R.array.dummy_posts);
-//        String[] topicInfo = getResources()
-//                .getStringArray(R.array.topic_info);
-//        TypedArray topicTitleResources = getResources().obtainTypedArray(R.array.topic_images);
         mTitleData.clear();
-
-/*        mDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String value = dataSnapshot.child("image").getValue().toString();
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });*/
-
-        for (int i = 0; i < topicList.length; i++) {
-            mTitleData.add(new PreviewCard(topicList[i], "Dummy Info"));
-        }
-        mAdapter.notifyDataSetChanged();
+        mDatabase.collection("dorms").document("Linux").collection("posts")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) mTitleData.add(new PreviewCard((String) document.get("title"), (String) document.get("postText"), Uri.parse((String) document.get("image"))));
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
     }
 
     @Override
