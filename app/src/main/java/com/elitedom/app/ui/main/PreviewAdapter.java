@@ -3,6 +3,7 @@ package com.elitedom.app.ui.main;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.elitedom.app.R;
 
 import java.util.ArrayList;
@@ -75,6 +77,8 @@ class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHolder> {
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), PostView.class);
                     intent.putExtra("title", mTitleText.getText().toString());
+                    intent.putExtra("subtext", mInfoText.getText().toString());
+                    intent.putExtra("image", mPostImage.getContentDescription().toString());
                     ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity)mContext, mCard, "post_expansion");
                     ActivityCompat.startActivity(v.getContext(), intent, options.toBundle());
                     // TODO: Add Subtext and Image transfer across shared activity
@@ -87,7 +91,9 @@ class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHolder> {
             mInfoText.setText(currentTopic.getSubtext());
             Glide.with(mContext)
                     .load(currentTopic.getImageResource())
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(mPostImage);
+            mPostImage.setContentDescription(currentTopic.getImageResource().toString());
         }
 
         @Override
