@@ -1,7 +1,6 @@
 package com.elitedom.app.ui.main;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -21,20 +20,15 @@ import java.util.Objects;
 
 public class PostView extends AppCompatActivity {
 
-    private RelativeLayout relativeLayout;
-    private TextView mPostTitle, mPostText;
-    private ImageView mPostImage;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_view);
 
-        relativeLayout = findViewById(R.id.single_card);
-        mPostTitle = findViewById(R.id.title);
-        mPostImage = findViewById(R.id.postImage);
-        mPostText = findViewById(R.id.post_text);
+        RelativeLayout relativeLayout = findViewById(R.id.single_card);
+        TextView mPostTitle = findViewById(R.id.title);
+        ImageView mPostImage = findViewById(R.id.postImage);
+        TextView mPostText = findViewById(R.id.post_text);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         Objects.requireNonNull(getSupportActionBar()).hide();
