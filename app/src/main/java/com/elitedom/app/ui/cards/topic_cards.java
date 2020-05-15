@@ -109,15 +109,4 @@ public class topic_cards extends AppCompatActivity {
         setResult(Activity.RESULT_OK);
         finish();
     }
-
-    private void loadImage(Map<String, Object> entries) {
-        for (Map.Entry<String, Object> singleEntry : entries.entrySet()) {
-            Map entry = (Map) singleEntry.getValue();
-            Uri image = Uri.parse((String) entry.get("image"));
-            String dormTitle = (String) entry.get("Name");
-            String dormTopic = (String) entry.get("description");
-            mTopicData.add(new Cards(dormTitle, dormTopic, image));
-        }
-        mAdapter.notifyDataSetChanged();
-    }
 }
