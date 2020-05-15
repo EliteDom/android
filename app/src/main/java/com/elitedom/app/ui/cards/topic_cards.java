@@ -21,11 +21,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.elitedom.app.R;
 import com.elitedom.app.ui.main.Feed;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -33,7 +33,7 @@ import java.util.Objects;
 
 public class topic_cards extends AppCompatActivity {
 
-    private DatabaseReference mDatabase;
+    private FirebaseFirestore mDatabase;
     private ArrayList<Cards> mTopicData;
     private CardsAdapter mAdapter;
 
@@ -52,7 +52,7 @@ public class topic_cards extends AppCompatActivity {
 
         mTopicData = new ArrayList<>();
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Dorms");
+        mDatabase = FirebaseFirestore.getInstance();
         RelativeLayout relativeLayout = findViewById(R.id.card_container);
         RecyclerView mRecyclerView = findViewById(R.id.recyclerView);
 
@@ -65,7 +65,6 @@ public class topic_cards extends AppCompatActivity {
         mRecyclerView.setClipToOutline(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Dorms");
         mAdapter = new CardsAdapter(this, mTopicData);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -90,12 +89,18 @@ public class topic_cards extends AppCompatActivity {
 
     private void initializeData() {
         mTopicData.clear();
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) { loadImage((Map<String, Object>) dataSnapshot.getValue()); }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {}
-        });
+        mDatabase.collection("dorms")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) mTopicData.add(new Cards((String) document.get("name"), (String) document.get("description"), Uri.parse((String) document.get("image"))));
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+
     }
 
     public void feedActivity(View view) {

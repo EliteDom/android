@@ -3,7 +3,6 @@ package com.elitedom.app.ui.main;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,7 +80,6 @@ class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHolder> {
                     intent.putExtra("image", mPostImage.getContentDescription().toString());
                     ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity)mContext, mCard, "post_expansion");
                     ActivityCompat.startActivity(v.getContext(), intent, options.toBundle());
-                    // TODO: Add Subtext and Image transfer across shared activity
                 }
             });
         }

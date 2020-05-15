@@ -30,7 +30,6 @@ public class Feed extends AppCompatActivity {
     private ArrayList<PreviewCard> mTitleData;
     private PreviewAdapter mAdapter;
     private FirebaseFirestore mDatabase;
-    private ArrayList<String> imageList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +37,7 @@ public class Feed extends AppCompatActivity {
         setContentView(R.layout.activity_feed);
 
         RelativeLayout relativeLayout = findViewById(R.id.feed_container);
-        imageList = new ArrayList<>();
+        ArrayList<String> imageList = new ArrayList<>();
         mDatabase = FirebaseFirestore.getInstance();
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
