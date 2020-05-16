@@ -1844,7 +1844,6 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
-layout abs_layout
 layout activity_feed
 layout activity_login
 layout activity_new_user
@@ -1866,7 +1865,7 @@ layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_end_icon
 layout design_text_input_start_icon
-layout list_topics
+layout mainfeed_actionbar
 layout mtrl_alert_dialog
 layout mtrl_alert_dialog_actions
 layout mtrl_alert_dialog_title
@@ -1905,7 +1904,9 @@ layout post_preview
 layout select_dialog_item_material
 layout select_dialog_multichoice_material
 layout select_dialog_singlechoice_material
+layout single_topic_card
 layout support_simple_spinner_dropdown_item
+layout tc_actionbar
 layout test_action_chip
 layout test_design_checkbox
 layout test_reflow_chipgroup
@@ -1977,6 +1978,7 @@ string common_open_on_phone
 string common_signin_button_text
 string common_signin_button_text_long
 string default_web_client_id
+string elitedom
 string error_icon_content_description
 string exposed_dropdown_menu_content_description
 string fab_transformation_scrim_behavior

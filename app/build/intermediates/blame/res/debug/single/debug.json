@@ -20,6 +20,10 @@
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png"
     },
     {
+        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/layout_tc_actionbar.xml.flat",
+        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/layout/tc_actionbar.xml"
+    },
+    {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/layout_activity_feed.xml.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/layout/activity_feed.xml"
     },
@@ -28,16 +32,16 @@
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable-v24/ic_launcher_foreground.xml"
     },
     {
-        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/layout_list_topics.xml.flat",
-        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/layout/list_topics.xml"
-    },
-    {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_ic_arrow_back_white_24dp.xml.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/ic_arrow_back_white_24dp.xml"
     },
     {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/anim_atg.xml.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/anim/atg.xml"
+    },
+    {
+        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/layout_mainfeed_actionbar.xml.flat",
+        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/layout/mainfeed_actionbar.xml"
     },
     {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_custom_relativelayout.xml.flat",
@@ -108,6 +112,10 @@
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/gradient_1.xml"
     },
     {
+        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/layout_single_topic_card.xml.flat",
+        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/layout/single_topic_card.xml"
+    },
+    {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable-v24_gradient_2.xml.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable-v24/gradient_2.xml"
     },
@@ -162,10 +170,6 @@
     {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_custom_button.xml.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/custom_button.xml"
-    },
-    {
-        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/layout_abs_layout.xml.flat",
-        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/layout/abs_layout.xml"
     },
     {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/anim_slide_from_bottom_topic_cards.xml.flat",

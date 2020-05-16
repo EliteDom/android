@@ -1,6 +1,8 @@
 package com.elitedom.app.ui.main;
 
+import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.ViewOutlineProvider;
@@ -8,6 +10,7 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,7 +30,7 @@ public class Feed extends AppCompatActivity {
     private ArrayList<PreviewCard> mTitleData;
     private PreviewAdapter mAdapter;
     private FirebaseFirestore mDatabase;
-    private ArrayList<String> imageList;
+    private ArrayList<String> mTopicNames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +38,17 @@ public class Feed extends AppCompatActivity {
         setContentView(R.layout.activity_feed);
 
         RelativeLayout relativeLayout = findViewById(R.id.feed_container);
-        imageList = new ArrayList<>();
+        ArrayList<String> imageList = new ArrayList<>();
         mDatabase = FirebaseFirestore.getInstance();
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        Objects.requireNonNull(getSupportActionBar()).hide();
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        Objects.requireNonNull(getSupportActionBar()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.mainfeed_actionbar);
+        //        Objects.requireNonNull(getSupportActionBar()).hide();
 
         AnimationDrawable animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
         animationDrawable.setEnterFadeDuration(2000);
@@ -56,23 +65,27 @@ public class Feed extends AppCompatActivity {
         mTitleData = new ArrayList<>();
         mAdapter = new PreviewAdapter(this, mTitleData);
         mRecyclerView.setAdapter(mAdapter);
+        mTopicNames = getIntent().getStringArrayListExtra("cards");
 
         initializeData();
     }
 
     private void initializeData() {
         mTitleData.clear();
-        mDatabase.collection("dorms").document("Linux").collection("posts")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) mTitleData.add(new PreviewCard((String) document.get("title"), (String) document.get("postText"), Uri.parse((String) document.get("image"))));
-                            mAdapter.notifyDataSetChanged();
+        for (String i : mTopicNames) {
+            mDatabase.collection("dorms").document(i).collection("posts")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult()))
+                                    mTitleData.add(new PreviewCard((String) document.get("title"), (String) document.get("postText"), Uri.parse((String) document.get("image"))));
+                                mAdapter.notifyDataSetChanged();
+                            }
                         }
-                    }
-                });
+                    });
+        }
     }
 
     @Override

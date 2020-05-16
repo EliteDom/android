@@ -3,7 +3,6 @@ package com.elitedom.app.ui.cards;
 import android.animation.LayoutTransition;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,10 +26,12 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
 
     private ArrayList<Cards> mTopicsData;
     private Context mContext;
+    private ArrayList<String> mTickedNames;
 
     CardsAdapter(Context context, ArrayList<Cards> topicData) {
         this.mTopicsData = topicData;
         this.mContext = context;
+        mTickedNames = new ArrayList<>();
     }
 
     @NonNull
@@ -38,7 +39,7 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
     public CardsAdapter.ViewHolder onCreateViewHolder(
             @NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(mContext).
-                inflate(R.layout.list_topics, parent, false));
+                inflate(R.layout.single_topic_card, parent, false));
     }
 
     @Override
@@ -51,6 +52,15 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return mTopicsData.size();
+    }
+
+    private void updateCardNames(String s, int n) {
+        if (n == 1) mTickedNames.add(s);
+        else mTickedNames.remove(s);
+    }
+
+    ArrayList<String> getCardNames() {
+        return mTickedNames;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -83,22 +93,34 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
 
             in.setAnimationListener(new Animation.AnimationListener() {
                 @Override
-                public void onAnimationStart(Animation animation) { mCardLayout.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING); }
+                public void onAnimationStart(Animation animation) {
+                    mCardLayout.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
+                }
+
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     mCardLayout.setLayoutTransition(null);
                     mInfoText.setVisibility(GONE);
                 }
+
                 @Override
-                public void onAnimationRepeat(Animation animation) {}
+                public void onAnimationRepeat(Animation animation) {
+                }
             });
             out.setAnimationListener(new Animation.AnimationListener() {
                 @Override
-                public void onAnimationStart(Animation animation) { mCardLayout.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING); }
+                public void onAnimationStart(Animation animation) {
+                    mCardLayout.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
+                }
+
                 @Override
-                public void onAnimationEnd(Animation animation) { mCardLayout.setLayoutTransition(null); }
+                public void onAnimationEnd(Animation animation) {
+                    mCardLayout.setLayoutTransition(null);
+                }
+
                 @Override
-                public void onAnimationRepeat(Animation animation) {}
+                public void onAnimationRepeat(Animation animation) {
+                }
             });
 
             mInfoText.setTranslationY(-170f);
@@ -111,9 +133,7 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
                     if (mInfoText.getVisibility() != View.VISIBLE) {
                         mInfoText.setVisibility(View.VISIBLE);
                         mInfoText.startAnimation(out);
-                    }
-                    else
-                        mInfoText.startAnimation(in);
+                    } else mInfoText.startAnimation(in);
                     return true;
                 }
             });
@@ -134,8 +154,13 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
                 fab.startAnimation(expandIn);
                 flag = 1;
             }
-            if (mTickView.getAlpha() == 1.0f) mTickView.animate().alpha(0.0f);
-            else mTickView.animate().alpha(1.0f);
+            if (mTickView.getAlpha() == 1.0f) {
+                mTickView.animate().alpha(0.0f);
+                CardsAdapter.this.updateCardNames(mTitleText.getText().toString(), 2);
+            } else {
+                mTickView.animate().alpha(1.0f);
+                CardsAdapter.this.updateCardNames(mTitleText.getText().toString(), 1);
+            }
         }
     }
 }
