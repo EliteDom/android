@@ -16,7 +16,6 @@
         android:background="@drawable/custom_card"
         android:fontFamily="monospace"
         android:padding="8dp"
-        android:text="@string/topic_info_placeholder"
         android:textColor="@color/black"
         android:textStyle="bold" />
 

@@ -3,9 +3,9 @@ package com.elitedom.app.ui.cards;
 import android.net.Uri;
 
 class Cards {
+    private final Uri imageResource;
     private String title;
     private String info;
-    private final Uri imageResource;
 
     Cards(String title, String info, Uri imageResource) {
         this.title = title;

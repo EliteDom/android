@@ -7,6 +7,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.view.WindowManager;
@@ -28,7 +29,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Objects;
 
 public class topic_cards extends AppCompatActivity {
@@ -76,7 +76,10 @@ public class topic_cards extends AppCompatActivity {
                                                                        @Override
                                                                        public boolean onMove(@NonNull RecyclerView recyclerView,
                                                                                              @NonNull RecyclerView.ViewHolder viewHolder,
-                                                                                             @NonNull RecyclerView.ViewHolder target) { return false; }
+                                                                                             @NonNull RecyclerView.ViewHolder target) {
+                                                                           return false;
+                                                                       }
+
                                                                        @Override
                                                                        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder,
                                                                                             int direction) {
@@ -95,16 +98,17 @@ public class topic_cards extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) mTopicData.add(new Cards((String) document.get("name"), (String) document.get("description"), Uri.parse((String) document.get("image"))));
+                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult()))
+                                mTopicData.add(new Cards((String) document.get("name"), (String) document.get("description"), Uri.parse((String) document.get("image"))));
                             mAdapter.notifyDataSetChanged();
                         }
                     }
                 });
-
     }
 
     public void feedActivity(View view) {
         Intent feed = new Intent(this, Feed.class);
+        feed.putExtra("cards", mAdapter.getCardNames());
         startActivity(feed);
         setResult(Activity.RESULT_OK);
         finish();

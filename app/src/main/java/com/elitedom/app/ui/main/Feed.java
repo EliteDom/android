@@ -30,6 +30,7 @@ public class Feed extends AppCompatActivity {
     private ArrayList<PreviewCard> mTitleData;
     private PreviewAdapter mAdapter;
     private FirebaseFirestore mDatabase;
+    private ArrayList<String> mTopicNames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,23 +65,27 @@ public class Feed extends AppCompatActivity {
         mTitleData = new ArrayList<>();
         mAdapter = new PreviewAdapter(this, mTitleData);
         mRecyclerView.setAdapter(mAdapter);
+        mTopicNames = getIntent().getStringArrayListExtra("cards");
 
         initializeData();
     }
 
     private void initializeData() {
         mTitleData.clear();
-        mDatabase.collection("dorms").document("Linux").collection("posts")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) mTitleData.add(new PreviewCard((String) document.get("title"), (String) document.get("postText"), Uri.parse((String) document.get("image"))));
-                            mAdapter.notifyDataSetChanged();
+        for (String i : mTopicNames) {
+            mDatabase.collection("dorms").document(i).collection("posts")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult()))
+                                    mTitleData.add(new PreviewCard((String) document.get("title"), (String) document.get("postText"), Uri.parse((String) document.get("image"))));
+                                mAdapter.notifyDataSetChanged();
+                            }
                         }
-                    }
-                });
+                    });
+        }
     }
 
     @Override

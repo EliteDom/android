@@ -1865,7 +1865,6 @@ layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_end_icon
 layout design_text_input_start_icon
-layout list_topics
 layout mainfeed_actionbar
 layout mtrl_alert_dialog
 layout mtrl_alert_dialog_actions
@@ -1905,6 +1904,7 @@ layout post_preview
 layout select_dialog_item_material
 layout select_dialog_multichoice_material
 layout select_dialog_singlechoice_material
+layout single_topic_card
 layout support_simple_spinner_dropdown_item
 layout tc_actionbar
 layout test_action_chip
