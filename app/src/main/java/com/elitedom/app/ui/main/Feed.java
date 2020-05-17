@@ -38,7 +38,6 @@ public class Feed extends AppCompatActivity {
         setContentView(R.layout.activity_feed);
 
         RelativeLayout relativeLayout = findViewById(R.id.feed_container);
-        ArrayList<String> imageList = new ArrayList<>();
         mDatabase = FirebaseFirestore.getInstance();
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
