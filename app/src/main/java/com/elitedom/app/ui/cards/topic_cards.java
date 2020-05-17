@@ -7,11 +7,11 @@ import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -51,7 +51,6 @@ public class topic_cards extends AppCompatActivity {
         // Objects.requireNonNull(getSupportActionBar()).hide();
 
         mTopicData = new ArrayList<>();
-
         mDatabase = FirebaseFirestore.getInstance();
         RelativeLayout relativeLayout = findViewById(R.id.card_container);
         RecyclerView mRecyclerView = findViewById(R.id.recyclerView);
@@ -107,10 +106,13 @@ public class topic_cards extends AppCompatActivity {
     }
 
     public void feedActivity(View view) {
-        Intent feed = new Intent(this, Feed.class);
-        feed.putExtra("cards", mAdapter.getCardNames());
-        startActivity(feed);
-        setResult(Activity.RESULT_OK);
-        finish();
+        if (mAdapter.getCardNames().size() > 0) {
+            Intent feed = new Intent(this, Feed.class);
+            feed.putExtra("cards", mAdapter.getCardNames());
+            startActivity(feed);
+            setResult(Activity.RESULT_OK);
+            finish();
+        } else
+            Toast.makeText(getApplicationContext(), "PLease select a Category!", Toast.LENGTH_SHORT).show();
     }
 }
