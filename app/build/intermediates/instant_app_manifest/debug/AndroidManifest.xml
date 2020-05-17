@@ -29,6 +29,7 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/AppTheme" >
+        <activity android:name="com.elitedom.app.ui.aux.user_profile" />
         <activity android:name="com.elitedom.app.ui.main.PostView" />
         <activity
             android:name="com.elitedom.app.ui.cards.topic_cards"

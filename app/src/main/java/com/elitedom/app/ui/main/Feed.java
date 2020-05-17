@@ -1,10 +1,13 @@
 package com.elitedom.app.ui.main;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
@@ -16,6 +19,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.elitedom.app.R;
+import com.elitedom.app.ui.aux.user_profile;
+import com.elitedom.app.ui.cards.topic_cards;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -91,5 +96,17 @@ public class Feed extends AppCompatActivity {
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+
+    public void profileUI(View view) {
+        startActivity(new Intent(this, user_profile.class));
+        setResult(Activity.RESULT_OK);
+        finish();
+    }
+
+    public void topicUI(View view) {
+        startActivity(new Intent(this, topic_cards.class));
+        setResult(Activity.RESULT_OK);
+        finish();
     }
 }
