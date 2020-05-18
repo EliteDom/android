@@ -284,6 +284,14 @@ attr counterOverflowTextColor
 attr counterTextAppearance
 attr counterTextColor
 attr customNavigationLayout
+attr cv_border
+attr cv_border_color
+attr cv_border_width
+attr cv_color
+attr cv_shadow
+attr cv_shadow_color
+attr cv_shadow_gravity
+attr cv_shadow_radius
 attr dayInvalidStyle
 attr daySelectedStyle
 attr dayStyle
@@ -1544,6 +1552,7 @@ id checked
 id chip
 id chip_group
 id chronometer
+id circleView
 id clear_text
 id clip_horizontal
 id clip_vertical
@@ -1678,6 +1687,7 @@ id pin
 id postImage
 id post_text
 id post_view
+id profiledata
 id progress_circular
 id progress_horizontal
 id radio
@@ -2748,6 +2758,7 @@ styleable ButtonBarLayout allowStacking
 styleable CardView android_minWidth android_minHeight cardBackgroundColor cardCornerRadius cardElevation cardMaxElevation cardPreventCornerOverlap cardUseCompatPadding contentPadding contentPaddingBottom contentPaddingLeft contentPaddingRight contentPaddingTop
 styleable Chip android_textAppearance android_textColor android_ellipsize android_maxWidth android_text android_checkable checkedIcon checkedIconEnabled checkedIconVisible chipBackgroundColor chipCornerRadius chipEndPadding chipIcon chipIconEnabled chipIconSize chipIconTint chipIconVisible chipMinHeight chipMinTouchTargetSize chipStartPadding chipStrokeColor chipStrokeWidth chipSurfaceColor closeIcon closeIconEnabled closeIconEndPadding closeIconSize closeIconStartPadding closeIconTint closeIconVisible ensureMinTouchTargetSize hideMotionSpec iconEndPadding iconStartPadding rippleColor shapeAppearance shapeAppearanceOverlay showMotionSpec textEndPadding textStartPadding
 styleable ChipGroup checkedChip chipSpacing chipSpacingHorizontal chipSpacingVertical singleLine singleSelection
+styleable CircleView cv_border cv_border_color cv_border_width cv_color cv_shadow cv_shadow_color cv_shadow_gravity cv_shadow_radius
 styleable CollapsingToolbarLayout collapsedTitleGravity collapsedTitleTextAppearance contentScrim expandedTitleGravity expandedTitleMargin expandedTitleMarginBottom expandedTitleMarginEnd expandedTitleMarginStart expandedTitleMarginTop expandedTitleTextAppearance scrimAnimationDuration scrimVisibleHeightTrigger statusBarScrim title titleEnabled toolbarId
 styleable CollapsingToolbarLayout_Layout layout_collapseMode layout_collapseParallaxMultiplier
 styleable ColorStateListItem android_color android_alpha alpha

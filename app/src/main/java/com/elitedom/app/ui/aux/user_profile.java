@@ -27,5 +27,6 @@ public class user_profile extends AppCompatActivity {
 //        animationDrawable.setEnterFadeDuration(2000);
 //        animationDrawable.setExitFadeDuration(4000);
 //        animationDrawable.start();
+
     }
 }
