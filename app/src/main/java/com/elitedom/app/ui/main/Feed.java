@@ -101,7 +101,6 @@ public class Feed extends AppCompatActivity {
     public void profileUI(View view) {
         startActivity(new Intent(this, user_profile.class));
         setResult(Activity.RESULT_OK);
-        finish();
     }
 
     public void topicUI(View view) {
