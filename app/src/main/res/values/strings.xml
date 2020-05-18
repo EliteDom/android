@@ -19,6 +19,11 @@
     <string name="subtitle_detail_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ultrices congue rutrum. Phasellus elementum ipsum ac convallis aliquam. Suspendisse eleifend eros a enim faucibus mollis. Nunc placerat, est vitae vestibulum blandit, dolor diam fringilla tellus, eu euismod mauris neque at neque.</string>
     <string name="topic_cards_action_bar">Select Interesting Categories!</string>
     <string name="elitedom">Elitedom</string>
+    <string name="profile_name">Jinen Setpal\'s Profile</string>
+    <string name="elite_name">Linux Elite</string>
+    <string name="predictor_text">Predictor Text</string>
+    <string name="predictor_score">500</string>
+    <string name="appreciation_points">Appreciation Points</string>
     <string-array name="dummy_posts">
         <item>Harnessing the modularity of Arch Linux</item>
         <item>Using Linear Regression to Differentiate the Iris Dataset</item>

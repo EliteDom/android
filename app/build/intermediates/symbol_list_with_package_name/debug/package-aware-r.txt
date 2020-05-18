@@ -212,6 +212,10 @@ attr chipStrokeWidth
 attr chipStyle
 attr chipSurfaceColor
 attr circleCrop
+attr civ_border_color
+attr civ_border_overlay
+attr civ_border_width
+attr civ_circle_background_color
 attr closeIcon
 attr closeIconEnabled
 attr closeIconEndPadding
@@ -1455,6 +1459,7 @@ drawable rounded_image
 drawable test_custom_background
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
+drawable wp_linux
 id ALT
 id BOTTOM_END
 id BOTTOM_START
@@ -1525,6 +1530,8 @@ id adjust_width
 id alertTitle
 id all
 id always
+id appreciation_score
+id appreciation_text
 id async
 id auto
 id barrier
@@ -1571,6 +1578,7 @@ id direct
 id disableHome
 id dropdown_menu
 id edit_query
+id elite
 id email
 id end
 id enterAlways
@@ -1604,6 +1612,7 @@ id icon_group
 id icon_only
 id ifRoom
 id image
+id image_layer
 id info
 id information
 id invisible
@@ -1678,6 +1687,10 @@ id pin
 id postImage
 id post_text
 id post_view
+id predictor_score
+id predictor_text
+id profile_data
+id profile_image
 id progress_circular
 id progress_horizontal
 id radio
@@ -1849,6 +1862,7 @@ layout activity_login
 layout activity_new_user
 layout activity_post_view
 layout activity_topic_cards
+layout activity_user_profile
 layout custom_dialog
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog
@@ -1953,6 +1967,7 @@ string action_sign_in
 string action_sign_in_short
 string app_name
 string appbar_scrolling_view_behavior
+string appreciation_points
 string bottom_sheet_behavior
 string character_counter_content_description
 string character_counter_overflowed_content_description
@@ -1978,6 +1993,7 @@ string common_open_on_phone
 string common_signin_button_text
 string common_signin_button_text_long
 string default_web_client_id
+string elite_name
 string elitedom
 string error_icon_content_description
 string exposed_dropdown_menu_content_description
@@ -2038,6 +2054,9 @@ string path_password_eye
 string path_password_eye_mask_strike_through
 string path_password_eye_mask_visible
 string path_password_strike_through
+string predictor_score
+string predictor_text
+string profile_name
 string project_id
 string prompt_email
 string prompt_password
@@ -2747,6 +2766,7 @@ styleable ButtonBarLayout allowStacking
 styleable CardView android_minWidth android_minHeight cardBackgroundColor cardCornerRadius cardElevation cardMaxElevation cardPreventCornerOverlap cardUseCompatPadding contentPadding contentPaddingBottom contentPaddingLeft contentPaddingRight contentPaddingTop
 styleable Chip android_textAppearance android_textColor android_ellipsize android_maxWidth android_text android_checkable checkedIcon checkedIconEnabled checkedIconVisible chipBackgroundColor chipCornerRadius chipEndPadding chipIcon chipIconEnabled chipIconSize chipIconTint chipIconVisible chipMinHeight chipMinTouchTargetSize chipStartPadding chipStrokeColor chipStrokeWidth chipSurfaceColor closeIcon closeIconEnabled closeIconEndPadding closeIconSize closeIconStartPadding closeIconTint closeIconVisible ensureMinTouchTargetSize hideMotionSpec iconEndPadding iconStartPadding rippleColor shapeAppearance shapeAppearanceOverlay showMotionSpec textEndPadding textStartPadding
 styleable ChipGroup checkedChip chipSpacing chipSpacingHorizontal chipSpacingVertical singleLine singleSelection
+styleable CircleImageView civ_border_color civ_border_overlay civ_border_width civ_circle_background_color
 styleable CollapsingToolbarLayout collapsedTitleGravity collapsedTitleTextAppearance contentScrim expandedTitleGravity expandedTitleMargin expandedTitleMarginBottom expandedTitleMarginEnd expandedTitleMarginStart expandedTitleMarginTop expandedTitleTextAppearance scrimAnimationDuration scrimVisibleHeightTrigger statusBarScrim title titleEnabled toolbarId
 styleable CollapsingToolbarLayout_Layout layout_collapseMode layout_collapseParallaxMultiplier
 styleable ColorStateListItem android_color android_alpha alpha
