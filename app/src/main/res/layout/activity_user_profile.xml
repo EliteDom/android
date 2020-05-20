@@ -60,8 +60,8 @@
                 android:layout_height="144dp"
                 android:layout_weight="1"
                 android:src="@drawable/wp_linux"
-                app:civ_border_color="#FF000000"
-                app:civ_border_width="2dp" />
+                app:civ_border_color="@color/colorAccent"
+                app:civ_border_width="8dp" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -129,7 +129,7 @@
         app:layout_constraintTop_toTopOf="@id/profile_data">
 
         <RelativeLayout
-            android:id="@+id/feed_container"
+            android:id="@+id/user_feed_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/gradient_list"
