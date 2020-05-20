@@ -21,12 +21,12 @@ import com.elitedom.app.R;
 
 import java.util.ArrayList;
 
-class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHolder> {
+public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHolder> {
 
     private ArrayList<PreviewCard> mTopicsData;
     private Context mContext;
 
-    PreviewAdapter(Context context, ArrayList<PreviewCard> sportsData) {
+    public PreviewAdapter(Context context, ArrayList<PreviewCard> sportsData) {
         this.mTopicsData = sportsData;
         this.mContext = context;
     }

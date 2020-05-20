@@ -99,7 +99,9 @@ public class Feed extends AppCompatActivity {
     }
 
     public void profileUI(View view) {
-        startActivity(new Intent(this, user_profile.class));
+        Intent feed = new Intent(this, user_profile.class);
+        feed.putExtra("cards", mTopicNames);
+        startActivity(feed);
         setResult(Activity.RESULT_OK);
     }
 
