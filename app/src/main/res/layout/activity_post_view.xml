@@ -5,6 +5,7 @@
     android:id="@+id/single_card"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:transitionName="postview_expansion"
     android:animateLayoutChanges="true"
     android:background="@drawable/gradient_list"
     android:paddingTop="16dp">
@@ -97,9 +98,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title"
-                android:adjustViewBounds="true"
                 android:layout_marginHorizontal="6dp"
                 android:layout_marginBottom="6dp"
+                android:adjustViewBounds="true"
                 android:background="@drawable/rounded_image"
                 tools:ignore="ContentDescription" />
 

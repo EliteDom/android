@@ -1,13 +1,10 @@
 package com.elitedom.app.ui.aux;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
@@ -18,8 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.elitedom.app.R;
-import com.elitedom.app.ui.cards.topic_cards;
-import com.elitedom.app.ui.main.Feed;
 import com.elitedom.app.ui.main.PreviewAdapter;
 import com.elitedom.app.ui.main.PreviewCard;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -58,14 +53,12 @@ public class user_profile extends AppCompatActivity {
         animationDrawable.start();
 
         RecyclerView mRecyclerView = findViewById(R.id.recyclerView);
-
         mRecyclerView.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
         mRecyclerView.setClipToOutline(true);
-
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         mTitleData = new ArrayList<>();
-        mAdapter = new PreviewAdapter(this, mTitleData);
+        mAdapter = new PreviewAdapter(this, mTitleData, "postview_expansion");
         mRecyclerView.setAdapter(mAdapter);
         mTopicNames = getIntent().getStringArrayListExtra("cards");
         initializeData();

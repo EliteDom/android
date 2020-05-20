@@ -126,14 +126,16 @@
         app:cardCornerRadius="16dp"
         app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:transitionName="postview_expansion"
         app:layout_constraintTop_toTopOf="@id/profile_data">
 
         <RelativeLayout
             android:id="@+id/user_feed_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
             android:background="@drawable/gradient_list"
-            android:paddingTop="8dp"
+            android:paddingTop="16dp"
             android:paddingBottom="@dimen/activity_vertical_margin"
             tools:context="com.example.android.materialme.MainActivity">
 

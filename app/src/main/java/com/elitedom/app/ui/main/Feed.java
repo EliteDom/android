@@ -67,7 +67,7 @@ public class Feed extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         mTitleData = new ArrayList<>();
-        mAdapter = new PreviewAdapter(this, mTitleData);
+        mAdapter = new PreviewAdapter(this, mTitleData, "post_expansion");
         mRecyclerView.setAdapter(mAdapter);
         mTopicNames = getIntent().getStringArrayListExtra("cards");
 

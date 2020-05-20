@@ -25,10 +25,12 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
 
     private ArrayList<PreviewCard> mTopicsData;
     private Context mContext;
+    private String transitionType;
 
-    public PreviewAdapter(Context context, ArrayList<PreviewCard> sportsData) {
-        this.mTopicsData = sportsData;
+    public PreviewAdapter(Context context, ArrayList<PreviewCard> topicData, String transitionType) {
+        this.mTopicsData = topicData;
         this.mContext = context;
+        this.transitionType = transitionType;
     }
 
     @NonNull
@@ -36,11 +38,7 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
     public PreviewAdapter.ViewHolder onCreateViewHolder(
             @NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(mContext).
-                inflate(R.layout.post_preview, parent, false)) {
-            @Override
-            public void onClick(View v) {
-            }
-        };
+                inflate(R.layout.post_preview, parent, false)) {};
     }
 
     @Override
@@ -78,7 +76,7 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
                     intent.putExtra("title", mTitleText.getText().toString());
                     intent.putExtra("subtext", mInfoText.getText().toString());
                     intent.putExtra("image", mPostImage.getContentDescription().toString());
-                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity)mContext, mCard, "post_expansion");
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity)mContext, mCard, transitionType);
                     ActivityCompat.startActivity(v.getContext(), intent, options.toBundle());
                 }
             });

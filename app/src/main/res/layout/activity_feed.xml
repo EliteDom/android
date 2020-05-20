@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    card_view:cardPreventCornerOverlap="false">
+    card_view:cardPreventCornerOverlap="false"
+    card_view:cardCornerRadius="16dp"
+    card_view:cardElevation="0dp"
+    android:transitionName="postview_expansion">
 
     <RelativeLayout
         android:id="@+id/feed_container"
