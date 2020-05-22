@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.elitedom.app.R;
+import com.elitedom.app.ui.profile.user_profile_view;
 
 import java.util.ArrayList;
 
@@ -26,11 +27,13 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
     private ArrayList<PreviewCard> mTopicsData;
     private Context mContext;
     private String transitionType;
+    private int intentID;
 
-    public PreviewAdapter(Context context, ArrayList<PreviewCard> topicData, String transitionType) {
+    public PreviewAdapter(Context context, ArrayList<PreviewCard> topicData, String transitionType, int intentID) {
         this.mTopicsData = topicData;
         this.mContext = context;
         this.transitionType = transitionType;
+        this.intentID = intentID;
     }
 
     @NonNull
@@ -38,7 +41,8 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
     public PreviewAdapter.ViewHolder onCreateViewHolder(
             @NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(mContext).
-                inflate(R.layout.post_preview, parent, false)) {};
+                inflate(R.layout.post_preview, parent, false)) {
+        };
     }
 
     @Override
@@ -72,11 +76,13 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(), PostView.class);
+                    Intent intent;
+                    if (intentID == 1) intent = new Intent(v.getContext(), PostView.class);
+                    else intent = new Intent(v.getContext(), user_profile_view.class);
                     intent.putExtra("title", mTitleText.getText().toString());
                     intent.putExtra("subtext", mInfoText.getText().toString());
                     intent.putExtra("image", mPostImage.getContentDescription().toString());
-                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity)mContext, mCard, transitionType);
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, mCard, transitionType);
                     ActivityCompat.startActivity(v.getContext(), intent, options.toBundle());
                 }
             });
@@ -94,8 +100,10 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(v.getContext(), PostView.class);
-            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity)mContext, mCard, "post_expansion");
+            Intent intent;
+            if (intentID == 1) intent = new Intent(v.getContext(), PostView.class);
+            else intent = new Intent(v.getContext(), user_profile_view.class);
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, mCard, transitionType);
             ActivityCompat.startActivity(v.getContext(), intent, options.toBundle());
         }
     }

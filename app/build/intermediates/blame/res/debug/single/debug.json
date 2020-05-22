@@ -48,6 +48,10 @@
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/ic_launcher_background.xml"
     },
     {
+        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/layout_activity_user_profile_view.xml.flat",
+        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/layout/activity_user_profile_view.xml"
+    },
+    {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/mipmap-mdpi_ic_launcher_round.png.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/mipmap-mdpi/ic_launcher_round.png"
     },

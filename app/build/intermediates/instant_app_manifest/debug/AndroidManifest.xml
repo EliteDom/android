@@ -29,8 +29,9 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/AppTheme" >
+        <activity android:name="com.elitedom.app.ui.profile.user_profile_view" />
         <activity
-            android:name="com.elitedom.app.ui.aux.user_profile"
+            android:name="com.elitedom.app.ui.profile.user_profile"
             android:exported="true" />
         <activity android:name="com.elitedom.app.ui.main.PostView" />
         <activity
