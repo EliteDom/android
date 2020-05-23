@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:transitionName="postview_expansion"
     tools:context=".ui.profile.user_profile">
 
     <RelativeLayout
@@ -61,7 +60,9 @@
                 android:layout_width="0dp"
                 android:layout_height="144dp"
                 android:layout_weight="1"
+                android:onClick="sharedexpansion"
                 android:src="@drawable/wp_linux"
+                android:transitionName="image"
                 app:civ_border_color="@color/colorAccent"
                 app:civ_border_width="8dp" />
 
@@ -110,7 +111,8 @@
                 android:text="@string/profile_name"
                 android:textColor="@color/black"
                 android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:transitionName="username" />
 
             <TextView
                 android:id="@+id/elite"
@@ -126,6 +128,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:transitionName="post_cards"
         app:cardCornerRadius="16dp"
         app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

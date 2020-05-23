@@ -52,6 +52,9 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
         holder.bindTo(currentTopic);
     }
 
+    public void itemasa() {
+    }
+
     @Override
     public int getItemCount() {
         return mTopicsData.size();
@@ -77,12 +80,18 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
                 @Override
                 public void onClick(View v) {
                     Intent intent;
-                    if (intentID == 1) intent = new Intent(v.getContext(), PostView.class);
-                    else intent = new Intent(v.getContext(), user_profile_view.class);
+                    ActivityOptionsCompat options;
+                    if (intentID == 1) {
+                        intent = new Intent(v.getContext(), PostView.class);
+                        options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, mCard, transitionType);
+                    }
+                    else {
+                        intent = new Intent(v.getContext(), user_profile_view.class);
+                        options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, itemView.findViewById(R.id.user_profile_layout), transitionType);
+                    }
                     intent.putExtra("title", mTitleText.getText().toString());
                     intent.putExtra("subtext", mInfoText.getText().toString());
                     intent.putExtra("image", mPostImage.getContentDescription().toString());
-                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, mCard, transitionType);
                     ActivityCompat.startActivity(v.getContext(), intent, options.toBundle());
                 }
             });
@@ -103,7 +112,7 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
             Intent intent;
             if (intentID == 1) intent = new Intent(v.getContext(), PostView.class);
             else intent = new Intent(v.getContext(), user_profile_view.class);
-            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, mCard, transitionType);
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, itemView.findViewById(R.id.user_profile_layout), transitionType);
             ActivityCompat.startActivity(v.getContext(), intent, options.toBundle());
         }
     }

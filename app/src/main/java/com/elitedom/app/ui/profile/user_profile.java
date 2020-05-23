@@ -1,20 +1,28 @@
 package com.elitedom.app.ui.profile;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Pair;
+import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.elitedom.app.R;
+import com.elitedom.app.ui.main.PostView;
 import com.elitedom.app.ui.main.PreviewAdapter;
 import com.elitedom.app.ui.main.PreviewCard;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -80,5 +88,20 @@ public class user_profile extends AppCompatActivity {
                         }
                     });
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        supportFinishAfterTransition();
+    }
+
+    public void sharedexpansion(View view) {
+        Intent intent = new Intent(this, user_profile_view.class);
+
+        Pair<View, String> t1 = Pair.create(findViewById(R.id.profile_image), "image");
+        Pair<View, String> t2 = Pair.create(findViewById(R.id.username), "username");
+        Pair<View, String> t3 = Pair.create(findViewById(R.id.user_profile_holder), "post_cards");
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this, t1, t2, t3);
+        ActivityCompat.startActivity(this, intent, options.toBundle());
     }
 }
