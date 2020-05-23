@@ -63,7 +63,8 @@ public class user_profile extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         mTitleData = new ArrayList<>();
-        mAdapter = new PreviewAdapter(this, mTitleData, "postview_expansion", 2);
+        mAdapter = new PreviewAdapter(this, mTitleData, "post_expansion", 2);
+        mAdapter.sendContext(this, findViewById(R.id.profile_image), findViewById(R.id.username), findViewById(R.id.user_profile_holder));
         mRecyclerView.setAdapter(mAdapter);
         mTopicNames = getIntent().getStringArrayListExtra("cards");
         initializeData();

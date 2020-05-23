@@ -29,9 +29,10 @@ import java.util.ArrayList;
 public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHolder> {
 
     private ArrayList<PreviewCard> mTopicsData;
-    private ArrayList<String> mTopicNames;
     private Context mContext;
     private String transitionType;
+    private user_profile profileContext;
+    private View image, name, card;
     private int intentID;
 
     public PreviewAdapter(Context context, ArrayList<PreviewCard> topicData, String transitionType, int intentID) {
@@ -39,7 +40,13 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
         this.mContext = context;
         this.transitionType = transitionType;
         this.intentID = intentID;
-        this.mTopicNames = new ArrayList<>();
+    }
+
+    public void sendContext(user_profile profileContext, View image, View name, View card) {
+        this.profileContext = profileContext;
+        this.image = image;
+        this.name = name;
+        this.card = card;
     }
 
     @NonNull
@@ -105,26 +112,27 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
         }
 
         private void profileActivity(View v) {
-            @SuppressLint("InflateParams") View layout = LayoutInflater.from(mContext).inflate(R.layout.activity_profile_post, null);
-            Pair<View, String> t1 = Pair.create(layout.findViewById(R.id.profile_image), "image");
-            Pair<View, String> t2 = Pair.create(layout.findViewById(R.id.username), "username");
-            Pair<View, String> t3 = Pair.create(layout.findViewById(R.id.user_profile_holder), "post_cards");
-            Pair<View, String> t4 = Pair.create((View) mCard, transitionType);
-            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) mContext, t1, t2, t3, t4);
+            @SuppressLint("InflateParams") View postLayout = LayoutInflater.from(mContext).inflate(R.layout.activity_profile_post, null);
 
             Intent intent = new Intent(v.getContext(), profile_post.class);
             intent.putExtra("title", mTitleText.getText().toString());
             intent.putExtra("subtext", mInfoText.getText().toString());
             intent.putExtra("image", mPostImage.getContentDescription().toString());
+
+            Pair<View, String> t1 = Pair.create(image, "image");
+            Pair<View, String> t2 = Pair.create(name, "username");
+            Pair<View, String> t3 = Pair.create(card, "post_cards");
+//            Pair<View, String> t4 = Pair.create(postLayout.findViewById(R.id.cardview), transitionType);
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) v.getContext(), t1, t2, t3);
             ActivityCompat.startActivity(v.getContext(), intent, options.toBundle());
         }
 
         private void feedActivity(View v) {
-            Intent intent = new Intent(mContext, PostView.class);
+            Intent intent = new Intent(v.getContext(), PostView.class);
             intent.putExtra("title", mTitleText.getText().toString());
             intent.putExtra("subtext", mInfoText.getText().toString());
             intent.putExtra("image", mPostImage.getContentDescription().toString());
-            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, mCard, transitionType);
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) v.getContext(), mCard, transitionType);
             ActivityCompat.startActivity(v.getContext(), intent, options.toBundle());
         }
     }

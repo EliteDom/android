@@ -9,16 +9,16 @@
     <androidx.cardview.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/cardview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="6dp"
         android:layout_marginBottom="6dp"
-        android:animateLayoutChanges="false"
+        android:animateLayoutChanges="true"
         android:transitionName="post_expansion"
         app:cardBackgroundColor="@android:color/transparent"
         app:cardCornerRadius="8dp"
         app:cardElevation="0dp">
 
-        <RelativeLayout
+ 0       <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/custom_card">

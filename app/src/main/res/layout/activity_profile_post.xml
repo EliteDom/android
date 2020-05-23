@@ -42,6 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:animateLayoutChanges="true"
         android:transitionName="post_cards"
         app:cardCornerRadius="16dp"
         app:cardElevation="0dp"
@@ -69,15 +70,16 @@
                 android:src="@drawable/ic_arrow_back_white_24dp" />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/post_view"
+                android:id="@+id/cardview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:animateLayoutChanges="true"
+                android:transitionName="post_expansion"
                 android:layout_margin="16dp"
-                android:onClick="backAction"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="0dp">
 
-                <RelativeLayout
+            <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
