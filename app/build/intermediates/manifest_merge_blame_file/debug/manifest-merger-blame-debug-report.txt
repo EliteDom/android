@@ -48,9 +48,9 @@
 29        android:testOnly="true"
 30        android:theme="@style/AppTheme" >
 30-->/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:13:9-40
-31        <activity android:name="com.elitedom.app.ui.profile.user_profile_view" />
-31-->/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:14:9-75
-31-->/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:14:19-63
+31        <activity android:name="com.elitedom.app.ui.profile.profile_post" />
+31-->/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:14:9-61
+31-->/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:14:19-58
 32        <activity
 32-->/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:15:9-17:39
 33            android:name="com.elitedom.app.ui.profile.user_profile"

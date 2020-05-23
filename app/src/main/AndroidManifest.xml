@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.profile.user_profile_view"></activity>
+        <activity android:name=".ui.profile.profile_post" />
         <activity
             android:name=".ui.profile.user_profile"
             android:exported="true" />

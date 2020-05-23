@@ -173,10 +173,10 @@ MERGED from [de.hdodenhof:circleimageview:3.1.0] /home/jinen/.gradle/caches/tran
 		ADDED from /home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:8:9-35
 	android:theme
 		ADDED from /home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:13:9-40
-activity#com.elitedom.app.ui.profile.user_profile_view
-ADDED from /home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:14:9-75
+activity#com.elitedom.app.ui.profile.profile_post
+ADDED from /home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:14:9-61
 	android:name
-		ADDED from /home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:14:19-63
+		ADDED from /home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:14:19-58
 activity#com.elitedom.app.ui.profile.user_profile
 ADDED from /home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:15:9-17:39
 	android:exported
