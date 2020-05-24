@@ -18,7 +18,7 @@
         app:cardCornerRadius="8dp"
         app:cardElevation="0dp">
 
- 0       <RelativeLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/custom_card">

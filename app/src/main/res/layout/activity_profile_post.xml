@@ -5,6 +5,7 @@
     android:id="@+id/user_profile_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_alignParentBottom="true"
     android:layout_marginTop="12dp"
     android:orientation="vertical"
     tools:context=".ui.profile.profile_post">
@@ -40,14 +41,15 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/user_profile_holder"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:animateLayoutChanges="true"
         android:transitionName="post_cards"
         app:cardCornerRadius="16dp"
         app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@id/profile_data">
+        app:layout_constraintTop_toTopOf="@id/profile_data"
+        tools:ignore="InefficientWeight">
 
         <RelativeLayout
             android:id="@+id/user_feed_container"
@@ -55,7 +57,7 @@
             android:layout_height="match_parent"
             android:animateLayoutChanges="true"
             android:background="@drawable/gradient_list"
-            android:paddingTop="4dp"
+            android:paddingTop="16dp"
             android:paddingBottom="@dimen/activity_vertical_margin"
             tools:context="com.example.android.materialme.MainActivity">
 
@@ -70,16 +72,16 @@
                 android:src="@drawable/ic_arrow_back_white_24dp" />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardview"
+                android:id="@+id/post_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:animateLayoutChanges="true"
-                android:transitionName="post_expansion"
                 android:layout_margin="16dp"
+                android:onClick="backAction"
+                android:transitionName="post_expansion"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="0dp">
 
-            <RelativeLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
@@ -158,6 +160,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_below="@id/action_cards"
+                        android:layout_alignParentBottom="true"
                         android:background="@drawable/rounded_image"
                         android:scrollbars="none">
 

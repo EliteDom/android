@@ -122,8 +122,9 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
             Pair<View, String> t1 = Pair.create(image, "image");
             Pair<View, String> t2 = Pair.create(name, "username");
             Pair<View, String> t3 = Pair.create(card, "post_cards");
-//            Pair<View, String> t4 = Pair.create(postLayout.findViewById(R.id.cardview), transitionType);
-            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) v.getContext(), t1, t2, t3);
+            Pair<View, String> t4 = Pair.create((View) mCard, transitionType);
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) v.getContext(), t1, t2, t3, t4);
+//            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) v.getContext(), mCard, transitionType);
             ActivityCompat.startActivity(v.getContext(), intent, options.toBundle());
         }
 
