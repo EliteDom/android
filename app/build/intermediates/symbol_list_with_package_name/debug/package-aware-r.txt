@@ -64,7 +64,6 @@ animator mtrl_fab_hide_motion_spec
 animator mtrl_fab_show_motion_spec
 animator mtrl_fab_transformation_sheet_collapse_spec
 animator mtrl_fab_transformation_sheet_expand_spec
-array dummy_posts
 attr actionBarDivider
 attr actionBarItemBackground
 attr actionBarPopupTheme
@@ -2015,7 +2014,6 @@ string home_info
 string icon_content_description
 string invalid_password
 string invalid_username
-string jinen_setpal
 string last_name
 string log_out
 string login_failed
@@ -2059,7 +2057,6 @@ string path_password_eye
 string path_password_eye_mask_strike_through
 string path_password_eye_mask_visible
 string path_password_strike_through
-string predictor_score
 string predictor_text
 string profile_name
 string project_id
