@@ -20,9 +20,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.elitedom.app.R;
 import com.elitedom.app.ui.cards.topic_cards;
+import com.elitedom.app.ui.login.LoginActivity;
 import com.elitedom.app.ui.profile.user_profile;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -106,6 +108,13 @@ public class Feed extends AppCompatActivity {
     public void topicUI(View view) {
         startActivity(new Intent(this, topic_cards.class));
         setResult(Activity.RESULT_OK);
+        finish();
+    }
+
+    public void logOut(View view) {
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(Feed.this, LoginActivity.class));
+        setResult(RESULT_OK);
         finish();
     }
 }

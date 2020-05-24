@@ -43,8 +43,8 @@
                 android:autofillHints="Username"
                 android:backgroundTint="@color/white"
                 android:fontFamily="monospace"
-                android:inputType="textPersonName"
                 android:hint="@string/username"
+                android:inputType="textPersonName"
 
                 android:selectAllOnFocus="true"
                 android:textColor="@color/white"
@@ -65,8 +65,8 @@
                 android:autofillHints="First Name"
                 android:backgroundTint="@color/white"
                 android:fontFamily="monospace"
-                android:inputType="textPersonName"
                 android:hint="@string/first_name"
+                android:inputType="textPersonName"
 
                 android:selectAllOnFocus="true"
                 android:textColor="@color/white"
@@ -87,8 +87,8 @@
                 android:autofillHints="Last Name"
                 android:backgroundTint="@color/white"
                 android:fontFamily="monospace"
-                android:inputType="textPersonName"
                 android:hint="@string/last_name"
+                android:inputType="textPersonName"
 
                 android:selectAllOnFocus="true"
                 android:textColor="@color/white"
@@ -109,10 +109,9 @@
                 android:layout_marginEnd="24dp"
                 android:layout_marginBottom="24dp"
 
-
                 android:background="@drawable/custom_button"
-                android:enabled="false"
                 android:fontFamily="monospace"
+                android:onClick="submitData"
                 android:text="@string/action_sign_in"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
@@ -120,20 +119,6 @@
                 android:textStyle="bold" />
 
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="128dp"
-            android:fontFamily="monospace"
-            android:gravity="center"
-            android:text=""
-            android:textColor="@color/white"
-            android:textSize="48sp"
-            android:textStyle="bold" />
-
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
