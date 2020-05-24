@@ -19,8 +19,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.elitedom.app.R;
-import com.elitedom.app.ui.aux.user_profile;
 import com.elitedom.app.ui.cards.topic_cards;
+import com.elitedom.app.ui.profile.user_profile;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -60,14 +60,12 @@ public class Feed extends AppCompatActivity {
         animationDrawable.start();
 
         RecyclerView mRecyclerView = findViewById(R.id.recyclerView);
-
         mRecyclerView.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
         mRecyclerView.setClipToOutline(true);
-
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         mTitleData = new ArrayList<>();
-        mAdapter = new PreviewAdapter(this, mTitleData);
+        mAdapter = new PreviewAdapter(this, mTitleData, "post_expansion", 1);
         mRecyclerView.setAdapter(mAdapter);
         mTopicNames = getIntent().getStringArrayListExtra("cards");
 
@@ -99,7 +97,9 @@ public class Feed extends AppCompatActivity {
     }
 
     public void profileUI(View view) {
-        startActivity(new Intent(this, user_profile.class));
+        Intent feed = new Intent(this, user_profile.class);
+        feed.putExtra("cards", mTopicNames);
+        startActivity(feed);
         setResult(Activity.RESULT_OK);
     }
 

@@ -1,8 +1,10 @@
 package com.elitedom.app.ui.main;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,17 +20,29 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.elitedom.app.R;
+import com.elitedom.app.ui.profile.profile_post;
 
 import java.util.ArrayList;
 
-class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHolder> {
+public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHolder> {
 
     private ArrayList<PreviewCard> mTopicsData;
     private Context mContext;
+    private String transitionType;
+    private View image, name, card;
+    private int intentID;
 
-    PreviewAdapter(Context context, ArrayList<PreviewCard> sportsData) {
-        this.mTopicsData = sportsData;
+    public PreviewAdapter(Context context, ArrayList<PreviewCard> topicData, String transitionType, int intentID) {
+        this.mTopicsData = topicData;
         this.mContext = context;
+        this.transitionType = transitionType;
+        this.intentID = intentID;
+    }
+
+    public void sendContext(View image, View name, View card) {
+        this.image = image;
+        this.name = name;
+        this.card = card;
     }
 
     @NonNull
@@ -37,9 +51,6 @@ class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHolder> {
             @NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(mContext).
                 inflate(R.layout.post_preview, parent, false)) {
-            @Override
-            public void onClick(View v) {
-            }
         };
     }
 
@@ -74,12 +85,8 @@ class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHolder> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(), PostView.class);
-                    intent.putExtra("title", mTitleText.getText().toString());
-                    intent.putExtra("subtext", mInfoText.getText().toString());
-                    intent.putExtra("image", mPostImage.getContentDescription().toString());
-                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity)mContext, mCard, "post_expansion");
-                    ActivityCompat.startActivity(v.getContext(), intent, options.toBundle());
+                    if (intentID == 1) feedActivity(v);
+                    else profileActivity(v);
                 }
             });
         }
@@ -96,9 +103,31 @@ class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHolder> {
 
         @Override
         public void onClick(View v) {
+            if (intentID == 1) feedActivity(v);
+            else profileActivity(v);
+        }
+
+        private void profileActivity(View v) {
+            Intent intent = new Intent(v.getContext(), profile_post.class);
+            intent.putExtra("title", mTitleText.getText().toString());
+            intent.putExtra("subtext", mInfoText.getText().toString());
+            intent.putExtra("image", mPostImage.getContentDescription().toString());
+
+            Pair<View, String> t1 = Pair.create(image, "image");
+            Pair<View, String> t2 = Pair.create(name, "username");
+            Pair<View, String> t3 = Pair.create(card, "post_cards");
+            Pair<View, String> t4 = Pair.create((View) mCard, transitionType);
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) v.getContext(), t1, t2, t3, t4);
+//            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) v.getContext(), mCard, transitionType);
+            ActivityCompat.startActivity(v.getContext(), intent, options.toBundle());
+        }
+
+        private void feedActivity(View v) {
             Intent intent = new Intent(v.getContext(), PostView.class);
-            String transitionName = "post_expansion";
-            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity)mContext, mCard, transitionName);
+            intent.putExtra("title", mTitleText.getText().toString());
+            intent.putExtra("subtext", mInfoText.getText().toString());
+            intent.putExtra("image", mPostImage.getContentDescription().toString());
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) v.getContext(), mCard, transitionType);
             ActivityCompat.startActivity(v.getContext(), intent, options.toBundle());
         }
     }

@@ -97,9 +97,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title"
-                android:adjustViewBounds="true"
                 android:layout_marginHorizontal="6dp"
                 android:layout_marginBottom="6dp"
+                android:adjustViewBounds="true"
                 android:background="@drawable/rounded_image"
                 tools:ignore="ContentDescription" />
 

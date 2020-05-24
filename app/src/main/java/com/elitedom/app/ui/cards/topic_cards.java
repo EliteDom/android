@@ -113,6 +113,6 @@ public class topic_cards extends AppCompatActivity {
             setResult(Activity.RESULT_OK);
             finish();
         } else
-            Toast.makeText(getApplicationContext(), "PLease select a Category!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Please select a Category!", Toast.LENGTH_SHORT).show();
     }
 }

@@ -1788,6 +1788,9 @@ id uniform
 id unlabeled
 id up
 id useLogo
+id user_feed_container
+id user_profile_holder
+id user_profile_layout
 id username
 id view_offset_helper
 id visible
@@ -1861,6 +1864,7 @@ layout activity_feed
 layout activity_login
 layout activity_new_user
 layout activity_post_view
+layout activity_profile_post
 layout activity_topic_cards
 layout activity_user_profile
 layout custom_dialog
@@ -2011,6 +2015,7 @@ string home_info
 string icon_content_description
 string invalid_password
 string invalid_username
+string jinen_setpal
 string last_name
 string log_out
 string login_failed
