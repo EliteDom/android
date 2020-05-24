@@ -21,15 +21,6 @@
     <string name="elitedom">Elitedom</string>
     <string name="profile_name">Jinen Setpal\'s Profile</string>
     <string name="elite_name">Linux Elite</string>
-    <string name="predictor_text">Predictor Text</string>
-    <string name="predictor_score">500</string>
+    <string name="predictor_text">Predictor Score</string>
     <string name="appreciation_points">Appreciation Points</string>
-    <string name="jinen_setpal">Jinen Setpal</string>
-    <string-array name="dummy_posts">
-        <item>Harnessing the modularity of Arch Linux</item>
-        <item>Using Linear Regression to Differentiate the Iris Dataset</item>
-        <item>Zoom\'s Vulnerabilities and What it means for Cybersecurity </item>
-        <item>LFS and How it Beats out Arch</item>
-        <item>How Unpruned Decision Trees can Lead to Overfitting</item>
-    </string-array>
 </resources>
