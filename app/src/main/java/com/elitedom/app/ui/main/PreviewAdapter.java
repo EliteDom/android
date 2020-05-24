@@ -1,6 +1,5 @@
 package com.elitedom.app.ui.main;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
@@ -22,7 +21,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.elitedom.app.R;
 import com.elitedom.app.ui.profile.profile_post;
-import com.elitedom.app.ui.profile.user_profile;
 
 import java.util.ArrayList;
 
@@ -31,7 +29,6 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
     private ArrayList<PreviewCard> mTopicsData;
     private Context mContext;
     private String transitionType;
-    private user_profile profileContext;
     private View image, name, card;
     private int intentID;
 
@@ -42,8 +39,7 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
         this.intentID = intentID;
     }
 
-    public void sendContext(user_profile profileContext, View image, View name, View card) {
-        this.profileContext = profileContext;
+    public void sendContext(View image, View name, View card) {
         this.image = image;
         this.name = name;
         this.card = card;
@@ -112,8 +108,6 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
         }
 
         private void profileActivity(View v) {
-            @SuppressLint("InflateParams") View postLayout = LayoutInflater.from(mContext).inflate(R.layout.activity_profile_post, null);
-
             Intent intent = new Intent(v.getContext(), profile_post.class);
             intent.putExtra("title", mTitleText.getText().toString());
             intent.putExtra("subtext", mInfoText.getText().toString());

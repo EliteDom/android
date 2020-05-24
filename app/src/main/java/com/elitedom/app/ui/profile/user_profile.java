@@ -1,21 +1,16 @@
 package com.elitedom.app.ui.profile;
 
-import android.app.ActivityOptions;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Pair;
-import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -64,7 +59,7 @@ public class user_profile extends AppCompatActivity {
 
         mTitleData = new ArrayList<>();
         mAdapter = new PreviewAdapter(this, mTitleData, "post_expansion", 2);
-        mAdapter.sendContext(this, findViewById(R.id.profile_image), findViewById(R.id.username), findViewById(R.id.user_profile_holder));
+        mAdapter.sendContext(findViewById(R.id.profile_image), findViewById(R.id.username), findViewById(R.id.user_profile_holder));
         mRecyclerView.setAdapter(mAdapter);
         mTopicNames = getIntent().getStringArrayListExtra("cards");
         initializeData();
@@ -93,12 +88,4 @@ public class user_profile extends AppCompatActivity {
         supportFinishAfterTransition();
     }
 
-    public void sharedexpansion(View view) {
-        Intent intent = new Intent(this, profile_post.class);
-        Pair<View, String> t1 = Pair.create(findViewById(R.id.profile_image), "image");
-        Pair<View, String> t2 = Pair.create(findViewById(R.id.username), "username");
-        Pair<View, String> t3 = Pair.create(findViewById(R.id.user_profile_holder), "post_cards");
-        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this, t1, t2, t3);
-        ActivityCompat.startActivity(this, intent, options.toBundle());
-    }
 }
