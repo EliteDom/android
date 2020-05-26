@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
         usernameEditText.startAnimation(atg);
         passwordEditText.startAnimation(atg2);
         loginButton.startAnimation(atg3);
-        animateText("Elitedom", title);
+        animateText(title);
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -154,8 +154,8 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void animateText(String string, final TextView txt_view) {
-        final char[] s = string.toCharArray();
+    private void animateText(final TextView txt_view) {
+        final char[] s = "Elitedom".toCharArray();
         try {
             Thread.sleep(300);
         } catch (InterruptedException e) {
@@ -222,12 +222,7 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            newUI(user);
-                        } else {
-                            newUI(null);
-                        }
+                        if (task.isSuccessful()) newUI();
                     }
                 });
     }
@@ -241,7 +236,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void newUI(FirebaseUser user) {
+    private void newUI() {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

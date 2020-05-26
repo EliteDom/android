@@ -1792,6 +1792,9 @@ id user_profile_holder
 id user_profile_layout
 id username
 id view_offset_helper
+id view_tree_lifecycle_owner
+id view_tree_saved_state_registry_owner
+id view_tree_view_model_store_owner
 id visible
 id visible_removing_fragment_view_tag
 id wide
@@ -1860,9 +1863,11 @@ layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_feed
+layout activity_feed_messaging
 layout activity_login
 layout activity_new_user
 layout activity_post_view
+layout activity_profile_messaging
 layout activity_profile_post
 layout activity_topic_cards
 layout activity_user_profile
