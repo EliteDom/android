@@ -40,6 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/postImage"
                 android:layout_marginHorizontal="6dp"
+                android:transitionName="messaging_transition"
                 app:cardBackgroundColor="@color/colorAccent"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="0dp">
