@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                     showLoginFailed(loginResult.getError());
                 }
                 if (loginResult.getSuccess() != null) {
-                    updateUiWithUser(loginResult.getSuccess(), usernameEditText.getText().toString(), passwordEditText.getText().toString());
+                    updateUiWithUser(usernameEditText.getText().toString(), passwordEditText.getText().toString());
                 }
             }
         });
@@ -198,7 +198,7 @@ public class LoginActivity extends AppCompatActivity {
         }).start();
     }*/
 
-    private void updateUiWithUser(LoggedInUserView model, final String email, final String password) {
+    private void updateUiWithUser(final String email, final String password) {
         (mAuth.signInWithEmailAndPassword(email, password))
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override

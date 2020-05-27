@@ -84,9 +84,9 @@ public class user_profile extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
                             assert document != null;
-                            predictor.setText(Integer.parseInt((String) Objects.requireNonNull(document.get("predictorPoints"))));
-                            appreciation.setText(Integer.parseInt((String) Objects.requireNonNull(document.get("appreciationPoints"))));
-                            username.setText(Objects.requireNonNull(document.get("firstName")).toString() + " " + Objects.requireNonNull(document.get("firstName")).toString() + "'s Profile");
+                            predictor.setText(Objects.requireNonNull(document.get("predictorPoints")).toString());
+                            appreciation.setText(Objects.requireNonNull(document.get("appreciationPoints")).toString());
+                            username.setText(Objects.requireNonNull(document.get("firstName")).toString() + " " + Objects.requireNonNull(document.get("lastName")).toString() + "'s Profile");
                         }
                     }
                 });
