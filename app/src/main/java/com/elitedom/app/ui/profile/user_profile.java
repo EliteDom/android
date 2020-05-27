@@ -112,5 +112,4 @@ public class user_profile extends AppCompatActivity {
     public void onBackPressed() {
         supportFinishAfterTransition();
     }
-
 }

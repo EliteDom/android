@@ -1,26 +1,42 @@
 package com.elitedom.app.ui.profile;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.elitedom.app.R;
 import com.elitedom.app.ui.messaging.FeedMessaging;
+import com.elitedom.app.ui.messaging.ProfileMessaging;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
 public class profile_post extends AppCompatActivity {
+
+    private CardView mCard;
+    private TextView mUsername;
+    private FirebaseFirestore mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +47,10 @@ public class profile_post extends AppCompatActivity {
         TextView mPostTitle = findViewById(R.id.title);
         ImageView mPostImage = findViewById(R.id.postImage);
         TextView mPostText = findViewById(R.id.post_text);
+        mCard = findViewById(R.id.action_cards);
+        mUsername = findViewById(R.id.username);
+        mDatabase = FirebaseFirestore.getInstance();
+
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         Objects.requireNonNull(getSupportActionBar()).hide();
@@ -48,6 +68,21 @@ public class profile_post extends AppCompatActivity {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(mPostImage);
 
+        mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            assert document != null;
+                            mUsername.setText(Objects.requireNonNull(document.get("firstName")).toString() + " " + Objects.requireNonNull(document.get("lastName")).toString() + "'s Profile");
+                        }
+                    }
+                });
+
+
         mPostImage.setClipToOutline(true);
         mPostText.setClipToOutline(true);
     }
@@ -58,7 +93,9 @@ public class profile_post extends AppCompatActivity {
     }
 
     public void messageActivity(View view) {
-        startActivity(new Intent(this, FeedMessaging.class));
+        Intent intent = new Intent(this, ProfileMessaging.class).putExtra("username", mUsername.getText().toString());
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) view.getContext(), mCard, "messaging_transition");
+        ActivityCompat.startActivity(this, intent, options.toBundle());
         setResult(Activity.RESULT_OK);
     }
 }
