@@ -82,17 +82,25 @@
                         app:cardCornerRadius="8dp"
                         app:cardElevation="0dp">
 
-                        <ScrollView
+                        <TextView
+                            android:text="hi man, how are you?"
+                            android:background="@drawable/message_bubble"
+                            android:layout_width="wrap_content"
+                            android:elevation="4dp"
+                            android:layout_height="wrap_content"
+                            android:padding="8dp"
+                            android:textColor="@color/black"
+                            android:layout_marginTop="4dp"/>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/messageList"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:padding="16dp"
-                            android:scrollbars="none">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/subtitle_detail_text" />
-                        </ScrollView>
+                            android:background="@drawable/custom_relativelayout"
+                            android:clipChildren="true"
+                            android:layoutAnimation="@anim/layout_topic_cards_animation"
+                            android:padding="@dimen/activity_horizontal_margin"
+                            android:scrollbars="none" />
                     </androidx.cardview.widget.CardView>
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>

@@ -1382,6 +1382,7 @@ drawable btn_radio_off_mtrl
 drawable btn_radio_off_to_on_mtrl_animation
 drawable btn_radio_on_mtrl
 drawable btn_radio_on_to_off_mtrl_animation
+drawable circle
 drawable common_full_open_on_phone
 drawable common_google_signin_btn_icon_dark
 drawable common_google_signin_btn_icon_dark_focused
@@ -1455,6 +1456,7 @@ drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
 drawable rounded_image
+drawable sent_message_bubble
 drawable test_custom_background
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
@@ -1612,6 +1614,7 @@ id icon_only
 id ifRoom
 id image
 id image_layer
+id image_message_profile
 id info
 id information
 id invisible
@@ -1632,6 +1635,7 @@ id login
 id login_layout
 id masked
 id message
+id messageList
 id middle
 id mini
 id month_grid
@@ -1764,6 +1768,9 @@ id textSpacerNoTitle
 id textStart
 id text_input_end_icon
 id text_input_start_icon
+id text_message_body
+id text_message_name
+id text_message_time
 id text_scroll
 id textinput_counter
 id textinput_error
@@ -1887,6 +1894,7 @@ layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_end_icon
 layout design_text_input_start_icon
+layout item_message_received
 layout mainfeed_actionbar
 layout mtrl_alert_dialog
 layout mtrl_alert_dialog_actions

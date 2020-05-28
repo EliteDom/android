@@ -98,4 +98,9 @@ public class profile_post extends AppCompatActivity {
         ActivityCompat.startActivity(this, intent, options.toBundle());
         setResult(Activity.RESULT_OK);
     }
+
+    @Override
+    public void onBackPressed() {
+        supportFinishAfterTransition();
+    }
 }

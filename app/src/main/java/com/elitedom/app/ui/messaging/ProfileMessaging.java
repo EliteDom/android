@@ -31,4 +31,9 @@ public class ProfileMessaging extends AppCompatActivity {
         TextView mUsername = findViewById(R.id.username);
         mUsername.setText(getIntent().getStringExtra("username"));
     }
+
+    @Override
+    public void onBackPressed() {
+        supportFinishAfterTransition();
+    }
 }

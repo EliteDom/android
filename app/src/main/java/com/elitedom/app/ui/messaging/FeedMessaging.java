@@ -27,4 +27,9 @@ public class FeedMessaging extends AppCompatActivity {
         animationDrawable.setExitFadeDuration(4000);
         animationDrawable.start();
     }
+
+    @Override
+    public void onBackPressed() {
+        supportFinishAfterTransition();
+    }
 }

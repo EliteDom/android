@@ -48,6 +48,10 @@
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/layout/activity_new_user.xml"
     },
     {
+        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_sent_message_bubble.xml.flat",
+        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/sent_message_bubble.xml"
+    },
+    {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/layout_activity_post_view.xml.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/layout/activity_post_view.xml"
     },
@@ -84,6 +88,10 @@
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/mipmap-xxhdpi/ic_launcher.png"
     },
     {
+        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/layout_item_message_received.xml.flat",
+        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/layout/item_message_received.xml"
+    },
+    {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/anim_layout_topic_cards_animation.xml.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/anim/layout_topic_cards_animation.xml"
     },
@@ -114,6 +122,10 @@
     {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/anim_cards_subtext_in.xml.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/anim/cards_subtext_in.xml"
+    },
+    {
+        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_circle.xml.flat",
+        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/circle.xml"
     },
     {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/mipmap-hdpi_ic_launcher_round.png.flat",
