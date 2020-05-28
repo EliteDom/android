@@ -21,6 +21,8 @@ public class PreviewCard {
         return subtext;
     }
 
-    Uri getImageResource() { return imageResource; }
+    Uri getImageResource() {
+        return imageResource;
+    }
 
 }

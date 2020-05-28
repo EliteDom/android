@@ -83,14 +83,14 @@
                         app:cardElevation="0dp">
 
                         <TextView
-                            android:text="hi man, how are you?"
-                            android:background="@drawable/message_bubble"
                             android:layout_width="wrap_content"
-                            android:elevation="4dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:background="@drawable/message_bubble"
+                            android:elevation="4dp"
                             android:padding="8dp"
-                            android:textColor="@color/black"
-                            android:layout_marginTop="4dp"/>
+                            android:text="hi man, how are you?"
+                            android:textColor="@color/black" />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/messageList"
