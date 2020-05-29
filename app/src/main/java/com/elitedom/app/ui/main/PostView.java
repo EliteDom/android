@@ -34,8 +34,9 @@ public class PostView extends AppCompatActivity {
 
         RelativeLayout relativeLayout = findViewById(R.id.single_card);
         TextView mPostTitle = findViewById(R.id.title);
-        ImageView mPostImage = findViewById(R.id.postImage);
         TextView mPostText = findViewById(R.id.post_text);
+        TextView mAuthor = findViewById(R.id.author);
+        ImageView mPostImage = findViewById(R.id.postImage);
         mCard = findViewById(R.id.action_cards);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
@@ -49,6 +50,7 @@ public class PostView extends AppCompatActivity {
         Intent intent = getIntent();
         mPostTitle.setText(intent.getStringExtra("title"));
         mPostText.setText(intent.getStringExtra("subtext"));
+        mAuthor.setText(intent.getStringExtra("author"));
         Glide.with(this)
                 .load(intent.getStringExtra("image"))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)

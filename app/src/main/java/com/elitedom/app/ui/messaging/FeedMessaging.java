@@ -54,24 +54,11 @@ public class FeedMessaging extends AppCompatActivity {
     private void initializeData() {
         // TODO: Configure Database Reads
         messageArrayList.clear();
-        messageArrayList.add(new Message("Hello there", "11:30"));
-        messageArrayList.add(new Message("General Kenobi", "11:31", "Jinen Setpal", Uri.parse("https://avatars1.githubusercontent.com/u/52078103?s=400&u=77322297039f4d6c78f3c968aead567dbe73abfe&v=4")));
-        messageArrayList.add(new Message("Ah, I see you're a man of culture as well", "11:31"));
-        messageArrayList.add(new Message("Indeed", "11:31", "Jinen Setpal", Uri.parse("https://avatars1.githubusercontent.com/u/52078103?s=400&u=77322297039f4d6c78f3c968aead567dbe73abfe&v=4")));
-        messageArrayList.add(new Message("Hello there", "11:30"));
-        messageArrayList.add(new Message("General Kenobi", "11:31", "Jinen Setpal", Uri.parse("https://avatars1.githubusercontent.com/u/52078103?s=400&u=77322297039f4d6c78f3c968aead567dbe73abfe&v=4")));
-        messageArrayList.add(new Message("Ah, I see you're a man of culture as well", "11:31"));
-        messageArrayList.add(new Message("Indeed", "11:31", "Jinen Setpal", Uri.parse("https://avatars1.githubusercontent.com/u/52078103?s=400&u=77322297039f4d6c78f3c968aead567dbe73abfe&v=4")));
-        messageArrayList.add(new Message("Indeed", "11:31", "Jinen Setpal", Uri.parse("https://avatars1.githubusercontent.com/u/52078103?s=400&u=77322297039f4d6c78f3c968aead567dbe73abfe&v=4")));
-        messageArrayList.add(new Message("Hello there", "11:30"));
-        messageArrayList.add(new Message("Hello there", "11:30"));
-        messageArrayList.add(new Message("General Kenobi", "11:31", "Jinen Setpal", Uri.parse("https://avatars1.githubusercontent.com/u/52078103?s=400&u=77322297039f4d6c78f3c968aead567dbe73abfe&v=4")));
-        messageArrayList.add(new Message("Ah, I see you're a man of culture as well", "11:31"));
-        messageArrayList.add(new Message("Indeed", "11:31", "Jinen Setpal", Uri.parse("https://avatars1.githubusercontent.com/u/52078103?s=400&u=77322297039f4d6c78f3c968aead567dbe73abfe&v=4")));
-        messageArrayList.add(new Message("Hello there", "11:30"));
-        messageArrayList.add(new Message("General Kenobi", "11:31", "Jinen Setpal", Uri.parse("https://avatars1.githubusercontent.com/u/52078103?s=400&u=77322297039f4d6c78f3c968aead567dbe73abfe&v=4")));
-        messageArrayList.add(new Message("Ah, I see you're a man of culture as well", "11:31"));
-        messageArrayList.add(new Message("Indeed", "11:31", "Jinen Setpal", Uri.parse("https://avatars1.githubusercontent.com/u/52078103?s=400&u=77322297039f4d6c78f3c968aead567dbe73abfe&v=4")));
+        messageArrayList.add(new Message("Have you considered container implementation? ", "11:34", "Jon Skeet", Uri.parse("https://avatars1.githubusercontent.com/u/17011?s=460&v=4")));
+        messageArrayList.add(new Message("I am familiar with Docker, but how does it affect modularity?", "11:38"));
+        messageArrayList.add(new Message("Containerizing packages, not the OS [like Docker] would allow users to run only the packages they need for a workflow. As a result, they use the most minimal set of system resourrces without sacrificing on general-case usability.", "11:40", "Jon Skeet", Uri.parse("https://avatars1.githubusercontent.com/u/17011?s=460&v=4")));
+        messageArrayList.add(new Message("That's interesting! I'll read up on this, and make a post audit.", "11:40"));
+        messageArrayList.add(new Message("Happy to help!", "11:40", "Jon Skeet", Uri.parse("https://avatars1.githubusercontent.com/u/17011?s=460&v=4")));
         mAdapter.notifyDataSetChanged();
     }
 

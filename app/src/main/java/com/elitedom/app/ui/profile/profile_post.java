@@ -47,6 +47,7 @@ public class profile_post extends AppCompatActivity {
         TextView mPostTitle = findViewById(R.id.title);
         ImageView mPostImage = findViewById(R.id.postImage);
         TextView mPostText = findViewById(R.id.post_text);
+        TextView mAuthor = findViewById(R.id.author);
         mCard = findViewById(R.id.action_cards);
         mUsername = findViewById(R.id.username);
         mDatabase = FirebaseFirestore.getInstance();
@@ -63,6 +64,7 @@ public class profile_post extends AppCompatActivity {
         Intent intent = getIntent();
         mPostTitle.setText(intent.getStringExtra("title"));
         mPostText.setText(intent.getStringExtra("subtext"));
+        mAuthor.setText(intent.getStringExtra("author"));
         Glide.with(this)
                 .load(intent.getStringExtra("image"))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)

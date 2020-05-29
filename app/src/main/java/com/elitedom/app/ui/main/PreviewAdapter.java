@@ -114,6 +114,7 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
             intent.putExtra("title", mTitleText.getText().toString());
             intent.putExtra("subtext", mInfoText.getText().toString());
             intent.putExtra("image", mPostImage.getContentDescription().toString());
+            intent.putExtra("author", mAuthor.getText().toString());
 
             Pair<View, String> t1 = Pair.create(image, "image");
             Pair<View, String> t2 = Pair.create(name, "username");
@@ -128,6 +129,7 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
             Intent intent = new Intent(v.getContext(), PostView.class);
             intent.putExtra("title", mTitleText.getText().toString());
             intent.putExtra("subtext", mInfoText.getText().toString());
+            intent.putExtra("author", mAuthor.getText().toString());
             intent.putExtra("image", mPostImage.getContentDescription().toString());
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) v.getContext(), mCard, transitionType);
             ActivityCompat.startActivity(v.getContext(), intent, options.toBundle());

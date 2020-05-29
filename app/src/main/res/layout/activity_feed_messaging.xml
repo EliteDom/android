@@ -48,7 +48,6 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_margin="6dp"
                         android:text="@string/chatroom"
-                        android:textColor="@color/white"
                         android:textSize="24sp"
                         android:textStyle="bold" />
 
