@@ -68,7 +68,7 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView mTitleText, mInfoText;
+        private TextView mTitleText, mInfoText, mAuthor;
         private ImageView mPostImage;
         private CardView mCard;
 
@@ -79,6 +79,7 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
             mInfoText = itemView.findViewById(R.id.post_text);
             mCard = itemView.findViewById(R.id.cardview);
             mPostImage = itemView.findViewById(R.id.postImage);
+            mAuthor = itemView.findViewById(R.id.author);
             mPostImage.setClipToOutline(true);
 
             itemView.setOnClickListener(this);
@@ -91,14 +92,15 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
             });
         }
 
-        void bindTo(PreviewCard currentTopic) {
-            mTitleText.setText(currentTopic.getTitle());
-            mInfoText.setText(currentTopic.getSubtext());
+        void bindTo(PreviewCard currentPost) {
+            mTitleText.setText(currentPost.getTitle());
+            mInfoText.setText(currentPost.getSubtext());
+            mAuthor.setText(currentPost.getAuthor());
             Glide.with(mContext)
-                    .load(currentTopic.getImageResource())
+                    .load(currentPost.getImageResource())
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(mPostImage);
-            mPostImage.setContentDescription(currentTopic.getImageResource().toString());
+            mPostImage.setContentDescription(currentPost.getImageResource().toString());
         }
 
         @Override

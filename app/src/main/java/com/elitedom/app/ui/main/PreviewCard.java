@@ -4,12 +4,12 @@ import android.net.Uri;
 
 public class PreviewCard {
     private final Uri imageResource;
-    private String title;
-    private String subtext;
+    private String title, subtext, author;
 
-    public PreviewCard(String title, String subtext, Uri imageResource) {
+    public PreviewCard(String title, String subtext, String author, Uri imageResource) {
         this.title = title;
         this.subtext = subtext;
+        this.author = author;
         this.imageResource = imageResource;
     }
 
@@ -19,6 +19,10 @@ public class PreviewCard {
 
     String getSubtext() {
         return subtext;
+    }
+
+    String getAuthor() {
+        return author;
     }
 
     Uri getImageResource() {
