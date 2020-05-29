@@ -13,6 +13,7 @@
     <RelativeLayout
         android:id="@+id/profile_data"
         android:layout_width="match_parent"
+        android:paddingTop="4dp"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
         android:gravity="center">

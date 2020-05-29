@@ -1417,13 +1417,17 @@ drawable gradient_1
 drawable gradient_2
 drawable gradient_3
 drawable gradient_list
+drawable ic_account_circle_white_24dp
 drawable ic_arrow_back_white_24dp
 drawable ic_calendar_black_24dp
+drawable ic_chat_white_24dp
 drawable ic_clear_black_24dp
 drawable ic_done_outline_white_24dp
 drawable ic_edit_black_24dp
+drawable ic_exit_to_app_white_24dp
 drawable ic_keyboard_arrow_left_black_24dp
 drawable ic_keyboard_arrow_right_black_24dp
+drawable ic_keyboard_arrow_right_white_24dp
 drawable ic_launcher_background
 drawable ic_launcher_foreground
 drawable ic_menu_arrow_down_black_24dp
@@ -1432,7 +1436,11 @@ drawable ic_mtrl_checked_circle
 drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
+drawable ic_reply_white_24dp
 drawable ic_reset
+drawable ic_share_white_24dp
+drawable ic_thumb_down_alt_white_24dp
+drawable ic_thumb_up_alt_white_24dp
 drawable message_bubble
 drawable mtrl_dialog_background
 drawable mtrl_dropdown_arrow
@@ -1534,6 +1542,7 @@ id always
 id appreciation_score
 id appreciation_text
 id async
+id author
 id auto
 id barrier
 id beginning

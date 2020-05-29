@@ -51,7 +51,7 @@ public class profile_post extends AppCompatActivity {
         mUsername = findViewById(R.id.username);
         mDatabase = FirebaseFirestore.getInstance();
 
-
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         Objects.requireNonNull(getSupportActionBar()).hide();
 

@@ -97,7 +97,7 @@
                             android:focusable="true"
                             android:gravity="center"
                             android:onClick="sendMessage"
-                            android:src="@drawable/ic_arrow_back_white_24dp"
+                            android:src="@drawable/ic_reply_white_24dp"
                             tools:ignore="ContentDescription" />
 
                     </LinearLayout>

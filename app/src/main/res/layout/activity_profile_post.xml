@@ -14,6 +14,7 @@
         android:id="@+id/profile_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="4dp"
         android:layout_margin="12dp"
         android:gravity="center">
 
@@ -107,21 +108,21 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0.5"
-                                android:src="@drawable/ic_arrow_back_white_24dp"
+                                android:src="@drawable/ic_thumb_up_alt_white_24dp"
                                 tools:ignore="ContentDescription" />
 
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0.5"
-                                android:src="@drawable/ic_arrow_back_white_24dp"
+                                android:src="@drawable/ic_thumb_down_alt_white_24dp"
                                 tools:ignore="ContentDescription" />
 
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0.5"
-                                android:src="@drawable/ic_arrow_back_white_24dp"
+                                android:src="@drawable/ic_share_white_24dp"
                                 tools:ignore="ContentDescription" />
 
                             <ImageView
@@ -129,7 +130,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0.5"
                                 android:onClick="messageActivity"
-                                android:src="@drawable/ic_arrow_back_white_24dp"
+                                android:src="@drawable/ic_chat_white_24dp"
                                 tools:ignore="ContentDescription" />
 
                         </LinearLayout>

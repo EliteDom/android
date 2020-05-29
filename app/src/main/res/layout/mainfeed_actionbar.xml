@@ -2,7 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_marginTop="24dp"
+    android:layout_marginTop="20dp"
     android:orientation="horizontal">
 
     <ImageButton
@@ -12,7 +12,7 @@
         android:background="@android:color/transparent"
         android:baselineAlignBottom="true"
         android:onClick="profileUI"
-        android:src="@drawable/ic_arrow_back_white_24dp" />
+        android:src="@drawable/ic_account_circle_white_24dp" />
 
     <TextView
         android:id="@+id/title"
@@ -24,7 +24,7 @@
         android:onClick="topicUI"
         android:text="@string/elitedom"
         android:textColor="#FFFFFF"
-        android:textSize="28sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         android:typeface="monospace" />
 
@@ -35,6 +35,6 @@
         android:background="@android:color/transparent"
         android:baselineAlignBottom="true"
         android:onClick="logOut"
-        android:src="@drawable/ic_arrow_back_white_24dp" />
+        android:src="@drawable/ic_exit_to_app_white_24dp" />
 
 </LinearLayout>
