@@ -81,7 +81,6 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
         SentViewHolder(final View itemView) {
             super(itemView);
-
             message = itemView.findViewById(R.id.text_message_body);
             timestamp = itemView.findViewById(R.id.text_message_time);
         }

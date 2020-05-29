@@ -50,6 +50,7 @@ public class FeedMessaging extends AppCompatActivity {
         initializeData();
     }
 
+    @SuppressWarnings("SpellCheckingInspection")
     private void initializeData() {
         // TODO: Configure Database Reads
         messageArrayList.clear();
@@ -71,7 +72,6 @@ public class FeedMessaging extends AppCompatActivity {
         messageArrayList.add(new Message("General Kenobi", "11:31", "Jinen Setpal", Uri.parse("https://avatars1.githubusercontent.com/u/52078103?s=400&u=77322297039f4d6c78f3c968aead567dbe73abfe&v=4")));
         messageArrayList.add(new Message("Ah, I see you're a man of culture as well", "11:31"));
         messageArrayList.add(new Message("Indeed", "11:31", "Jinen Setpal", Uri.parse("https://avatars1.githubusercontent.com/u/52078103?s=400&u=77322297039f4d6c78f3c968aead567dbe73abfe&v=4")));
-
         mAdapter.notifyDataSetChanged();
     }
 

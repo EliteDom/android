@@ -5,12 +5,12 @@
     android:id="@+id/login_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_list"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".ui.login.LoginActivity"
-    android:background="@drawable/gradient_list">
+    tools:context=".ui.login.LoginActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,13 +19,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <LinearLayout
             android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
             android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -73,25 +74,48 @@
                 android:textColorHint="@color/white"
                 android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/login"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="24dp"
+                android:id="@+id/actions">
 
+                <Button
+                    android:id="@+id/forgot_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="48dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="24dp"
+                    android:background="@android:color/transparent"
+                    android:elevation="0dp"
+                    android:padding="6dp"
+                    android:onClick="resetPassword"
+                    android:fontFamily="monospace"
+                    android:text="@string/forgot_password"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-                android:background="@drawable/custom_button"
-                android:enabled="false"
-                android:fontFamily="monospace"
-                android:text="@string/action_sign_in"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                <Button
+                    android:id="@+id/login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginBottom="24dp"
+                    android:background="@drawable/custom_button"
+                    android:fontFamily="monospace"
+                    android:text="@string/action_sign_in"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -99,27 +123,27 @@
             android:id="@+id/information"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="16dp"
             android:fontFamily="monospace"
+            android:gravity="center"
             android:text="@string/home_info"
             android:textColor="@color/white"
             android:textSize="12sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="16dp"
-            android:gravity="center"
-            android:layout_alignParentBottom="true" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:fontFamily="monospace"
-            android:textSize="48sp"
-            android:layout_marginTop="128dp"
-            android:text=""
             android:layout_alignParentTop="true"
-            android:gravity="center" />
+            android:layout_marginTop="128dp"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="48sp"
+            android:textStyle="bold" />
 
         <ProgressBar
             android:id="@+id/loading"
