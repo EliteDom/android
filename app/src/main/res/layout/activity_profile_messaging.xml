@@ -89,8 +89,9 @@
                             android:background="@drawable/custom_relativelayout"
                             android:clipChildren="true"
                             android:layoutAnimation="@anim/layout_topic_cards_animation"
-                            android:padding="@dimen/activity_horizontal_margin"
+                            android:padding="8dp"
                             android:scrollbars="none" />
+<!--                        TODO: Add Message Sending Layout-->
                     </androidx.cardview.widget.CardView>
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>

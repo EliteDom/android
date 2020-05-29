@@ -23,4 +23,6 @@
     <string name="elite_name">Linux Elite</string>
     <string name="predictor_text">Predictor Score</string>
     <string name="appreciation_points">Appreciation Points</string>
+    <string name="chatroom">The Chatroom</string>
+    <string name="message_prompt">Enter message</string>
 </resources>

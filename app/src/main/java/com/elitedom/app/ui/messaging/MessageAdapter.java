@@ -68,7 +68,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
     public int getItemViewType(int position) {
         Message message = messages.get(position);
 
-        if (message.getSender().equals("SendBird.getCurrentUser().getUserId()")) {
+        if (message.getSender() == null) {
             return VIEW_TYPE_MESSAGE_SENT;
         } else {
             return VIEW_TYPE_MESSAGE_RECEIVED;

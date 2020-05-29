@@ -2,6 +2,7 @@
 
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/user_profile_holder"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -41,17 +42,65 @@
                     app:cardCornerRadius="8dp"
                     app:cardElevation="0dp">
 
-                    <ScrollView
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="6dp"
+                        android:text="@string/chatroom"
+                        android:textColor="@color/white"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/messageList"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:padding="16dp"
-                        android:scrollbars="none">
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="44dp"
+                        android:background="@drawable/custom_relativelayout"
+                        android:clipChildren="true"
+                        android:layoutAnimation="@anim/layout_topic_cards_animation"
+                        android:padding="@dimen/activity_horizontal_margin"
+                        android:scrollbars="none" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/layout_chatbox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_margin="6dp"
+                        android:minHeight="48dp"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/edittext_chatbox"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="@string/subtitle_detail_text" />
-                    </ScrollView>
+                            android:layout_gravity="center"
+                            android:layout_margin="4dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/message_bubble"
+                            android:hint="@string/message_prompt"
+                            android:importantForAutofill="no"
+                            android:inputType="textCapSentences"
+                            android:maxLines="10"
+                            android:padding="8dp" />
+
+                        <ImageButton
+                            android:id="@+id/button_chatbox_send"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_gravity="bottom"
+                            android:background="@drawable/circle"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:onClick="sendMessage"
+                            android:src="@drawable/ic_arrow_back_white_24dp"
+                            tools:ignore="ContentDescription" />
+
+                    </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
