@@ -4,6 +4,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewOutlineProvider;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.elitedom.app.R;
@@ -37,6 +39,10 @@ public class ProfileMessaging extends AppCompatActivity {
         setContentView(R.layout.activity_profile_messaging);
 
         RecyclerView mRecyclerView = findViewById(R.id.messageList);
+        mRecyclerView.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
+        mRecyclerView.setClipToOutline(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         mDatabase = FirebaseFirestore.getInstance();
         message = findViewById(R.id.edittext_chatbox);
         uid = getIntent().getStringExtra("uid");
