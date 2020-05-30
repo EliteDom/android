@@ -38,6 +38,7 @@ public class Feed extends AppCompatActivity {
     private PreviewAdapter mAdapter;
     private FirebaseFirestore mDatabase;
     private ArrayList<String> mTopicNames;
+    private String currentDorm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class Feed extends AppCompatActivity {
 
         RelativeLayout relativeLayout = findViewById(R.id.feed_container);
         mDatabase = FirebaseFirestore.getInstance();
+        currentDorm = "";
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
@@ -77,6 +79,7 @@ public class Feed extends AppCompatActivity {
     private void initializeData() {
         mTitleData.clear();
         for (String i : mTopicNames) {
+            currentDorm = i;
             mDatabase.collection("dorms").document(i).collection("posts")
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -84,7 +87,7 @@ public class Feed extends AppCompatActivity {
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult()))
-                                    mTitleData.add(new PreviewCard((String) document.get("title"), (String) document.get("postText"), document.get("author") + " | Authored " + document.get("timestamp") + " ago", Uri.parse((String) document.get("image"))));
+                                    mTitleData.add(new PreviewCard((String) document.get("title"), (String) document.get("postText"), document.get("author") + " | Authored " + document.get("timestamp") + " ago", document.getId(), Feed.this.currentDorm, Uri.parse((String) document.get("image"))));
                                 mAdapter.notifyDataSetChanged();
                             }
                         }

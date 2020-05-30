@@ -8,12 +8,19 @@ import android.view.ViewOutlineProvider;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.elitedom.app.R;
+import com.elitedom.app.ui.main.Feed;
+import com.elitedom.app.ui.main.PreviewCard;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -23,6 +30,7 @@ public class FeedMessaging extends AppCompatActivity {
     private ArrayList<Message> messageArrayList;
     private MessageAdapter mAdapter;
     private FirebaseFirestore mDatabase;
+    String dorm, uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +51,9 @@ public class FeedMessaging extends AppCompatActivity {
         mRecyclerView.setClipToOutline(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+
+        uid = getIntent().getStringExtra("uid");
+        dorm = getIntent().getStringExtra("dorm");
         mDatabase = FirebaseFirestore.getInstance();
         messageArrayList = new ArrayList<>();
         mAdapter = new MessageAdapter(this, messageArrayList);
@@ -50,15 +61,22 @@ public class FeedMessaging extends AppCompatActivity {
         initializeData();
     }
 
-    @SuppressWarnings("SpellCheckingInspection")
     private void initializeData() {
-        // TODO: Configure Database Reads
         messageArrayList.clear();
-        messageArrayList.add(new Message("Have you considered container implementation? ", "11:34", "Jon Skeet", Uri.parse("https://avatars1.githubusercontent.com/u/17011?s=460&v=4")));
-        messageArrayList.add(new Message("I am familiar with Docker, but how does it affect modularity?", "11:38"));
-        messageArrayList.add(new Message("Containerizing packages, not the OS [like Docker] would allow users to run only the packages they need for a workflow. As a result, they use the most minimal set of system resourrces without sacrificing on general-case usability.", "11:40", "Jon Skeet", Uri.parse("https://avatars1.githubusercontent.com/u/17011?s=460&v=4")));
-        messageArrayList.add(new Message("That's interesting! I'll read up on this, and make a post audit.", "11:40"));
-        messageArrayList.add(new Message("Happy to help!", "11:40", "Jon Skeet", Uri.parse("https://avatars1.githubusercontent.com/u/17011?s=460&v=4")));
+        mDatabase.collection("dorms").document(dorm).collection("posts").document(uid).collection("chats")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                if (document.get("sender") != null) messageArrayList.add(new Message((String) document.get("message"), (String) document.get("timestamp"), (String) document.get("sender"), Uri.parse((String) document.get("image"))));
+                                else messageArrayList.add(new Message((String) document.get("message"), (String) document.get("timestamp")));
+                            }
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
         mAdapter.notifyDataSetChanged();
     }
 

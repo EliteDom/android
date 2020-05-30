@@ -26,6 +26,7 @@ import java.util.Objects;
 public class PostView extends AppCompatActivity {
 
     private CardView mCard;
+    private TextView mPostTitle, mPostText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +34,11 @@ public class PostView extends AppCompatActivity {
         setContentView(R.layout.activity_post_view);
 
         RelativeLayout relativeLayout = findViewById(R.id.single_card);
-        TextView mPostTitle = findViewById(R.id.title);
-        TextView mPostText = findViewById(R.id.post_text);
+        mPostText = findViewById(R.id.post_text);
         TextView mAuthor = findViewById(R.id.author);
         ImageView mPostImage = findViewById(R.id.postImage);
         mCard = findViewById(R.id.action_cards);
+        mPostTitle = findViewById(R.id.title);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         Objects.requireNonNull(getSupportActionBar()).hide();
@@ -49,7 +50,9 @@ public class PostView extends AppCompatActivity {
 
         Intent intent = getIntent();
         mPostTitle.setText(intent.getStringExtra("title"));
+        mPostTitle.setContentDescription(intent.getStringExtra("uid"));
         mPostText.setText(intent.getStringExtra("subtext"));
+        mPostText.setContentDescription(intent.getStringExtra("dorm"));
         mAuthor.setText(intent.getStringExtra("author"));
         Glide.with(this)
                 .load(intent.getStringExtra("image"))
@@ -66,8 +69,11 @@ public class PostView extends AppCompatActivity {
     }
 
     public void messageActivity(View view) {
+        Intent intent = new Intent(this, FeedMessaging.class);
+        intent.putExtra("uid", mPostTitle.getContentDescription().toString());
+        intent.putExtra("dorm", mPostText.getContentDescription().toString());
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) view.getContext(), mCard, "messaging_transition");
-        ActivityCompat.startActivity(this, new Intent(this, FeedMessaging.class), options.toBundle());
+        ActivityCompat.startActivity(this, intent, options.toBundle());
         setResult(Activity.RESULT_OK);
     }
 }

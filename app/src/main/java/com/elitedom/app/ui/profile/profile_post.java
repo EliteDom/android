@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -22,7 +21,6 @@ import androidx.core.app.ActivityOptionsCompat;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.elitedom.app.R;
-import com.elitedom.app.ui.messaging.FeedMessaging;
 import com.elitedom.app.ui.messaging.ProfileMessaging;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -35,8 +33,7 @@ import java.util.Objects;
 public class profile_post extends AppCompatActivity {
 
     private CardView mCard;
-    private TextView mUsername;
-    private FirebaseFirestore mDatabase;
+    private TextView mUsername, mPostTitle, mPostText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +41,13 @@ public class profile_post extends AppCompatActivity {
         setContentView(R.layout.activity_profile_post);
 
         RelativeLayout relativeLayout = findViewById(R.id.user_feed_container);
-        TextView mPostTitle = findViewById(R.id.title);
         ImageView mPostImage = findViewById(R.id.postImage);
-        TextView mPostText = findViewById(R.id.post_text);
         TextView mAuthor = findViewById(R.id.author);
+        mPostText = findViewById(R.id.post_text);
         mCard = findViewById(R.id.action_cards);
         mUsername = findViewById(R.id.username);
-        mDatabase = FirebaseFirestore.getInstance();
+        mPostTitle = findViewById(R.id.title);
+        FirebaseFirestore mDatabase = FirebaseFirestore.getInstance();
 
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
@@ -63,7 +60,9 @@ public class profile_post extends AppCompatActivity {
 
         Intent intent = getIntent();
         mPostTitle.setText(intent.getStringExtra("title"));
+        mPostTitle.setContentDescription(intent.getStringExtra("uid"));
         mPostText.setText(intent.getStringExtra("subtext"));
+        mPostText.setContentDescription(intent.getStringExtra("dorm"));
         mAuthor.setText(intent.getStringExtra("author"));
         Glide.with(this)
                 .load(intent.getStringExtra("image"))
@@ -95,7 +94,10 @@ public class profile_post extends AppCompatActivity {
     }
 
     public void messageActivity(View view) {
-        Intent intent = new Intent(this, ProfileMessaging.class).putExtra("username", mUsername.getText().toString());
+        Intent intent = new Intent(this, ProfileMessaging.class);
+        intent.putExtra("username", mUsername.getText().toString());
+        intent.putExtra("uid", mPostTitle.getContentDescription().toString());
+        intent.putExtra("dorm", mPostText.getContentDescription().toString());
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) view.getContext(), mCard, "messaging_transition");
         ActivityCompat.startActivity(this, intent, options.toBundle());
         setResult(Activity.RESULT_OK);

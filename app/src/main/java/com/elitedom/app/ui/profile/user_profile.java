@@ -38,6 +38,7 @@ public class user_profile extends AppCompatActivity {
     private FirebaseFirestore mDatabase;
     private ArrayList<String> mTopicNames;
     private TextView username, appreciation, predictor;
+    private String currentDorm;
 
 
     @Override
@@ -50,6 +51,7 @@ public class user_profile extends AppCompatActivity {
         username = findViewById(R.id.username);
         appreciation = findViewById(R.id.appreciation_score);
         predictor = findViewById(R.id.predictor_score);
+        currentDorm = "";
 
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
@@ -92,9 +94,9 @@ public class user_profile extends AppCompatActivity {
                         }
                     }
                 });
-
         mTitleData.clear();
         for (String i : mTopicNames) {
+            currentDorm = i;
             mDatabase.collection("dorms").document(i).collection("posts")
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -102,7 +104,7 @@ public class user_profile extends AppCompatActivity {
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult()))
-                                    mTitleData.add(new PreviewCard((String) document.get("title"), (String) document.get("postText"), document.get("author") + " | Authored " + document.get("timestamp") + " ago", Uri.parse((String) document.get("image"))));
+                                    mTitleData.add(new PreviewCard((String) document.get("title"), (String) document.get("postText"), document.get("author") + " | Authored " + document.get("timestamp") + " ago", document.getId(), user_profile.this.currentDorm, Uri.parse((String) document.get("image"))));
                                 mAdapter.notifyDataSetChanged();
                             }
                         }
