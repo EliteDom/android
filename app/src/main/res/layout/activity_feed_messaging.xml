@@ -43,6 +43,18 @@
                     app:cardElevation="0dp">
 
                     <TextView
+                        android:id="@+id/no_messages"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/message_bubble"
+                        android:padding="8dp"
+                        android:alpha="0.0"
+                        android:clipToPadding="false"
+                        android:layout_gravity="center"
+                        android:text="@string/empty_chatroom"
+                        android:elevation="4dp" />
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -98,7 +110,6 @@
                             android:onClick="sendMessage"
                             android:src="@drawable/ic_reply_white_24dp"
                             tools:ignore="ContentDescription" />
-
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </RelativeLayout>

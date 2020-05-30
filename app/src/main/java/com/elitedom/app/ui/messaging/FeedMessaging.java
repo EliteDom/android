@@ -8,8 +8,11 @@ import android.view.ViewOutlineProvider;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,8 +21,11 @@ import com.elitedom.app.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -36,6 +42,7 @@ public class FeedMessaging extends AppCompatActivity {
     private MessageAdapter mAdapter;
     private FirebaseFirestore mDatabase;
     private EditText message;
+    private TextView mNoMessages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +63,10 @@ public class FeedMessaging extends AppCompatActivity {
         mRecyclerView.setClipToOutline(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
         uid = getIntent().getStringExtra("uid");
         dorm = getIntent().getStringExtra("dorm");
         message = findViewById(R.id.edittext_chatbox);
+        mNoMessages = findViewById(R.id.no_messages);
         mDatabase = FirebaseFirestore.getInstance();
         messageArrayList = new ArrayList<>();
         mAdapter = new MessageAdapter(this, messageArrayList);
@@ -68,29 +75,31 @@ public class FeedMessaging extends AppCompatActivity {
     }
 
     private void initializeData() {
-        messageArrayList.clear();
-        mDatabase.collection("dorms").document(dorm).collection("posts").document(uid).collection("chats")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                if (document.get("sender") != null && Objects.requireNonNull(document.get("sender")).toString().length() > 0)
-                                    messageArrayList.add(new Message((String) document.get("message"), (String) document.get("timestamp"), (String) document.get("sender"), Uri.parse((String) document.get("image"))));
-                                else
-                                    messageArrayList.add(new Message((String) document.get("message"), (String) document.get("timestamp")));
-                            }
-                            mAdapter.notifyDataSetChanged();
-                        }
+        final CollectionReference chatRef = mDatabase.collection("dorms").document(dorm).collection("posts").document(uid).collection("chats");
+        chatRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                if (queryDocumentSnapshots != null) {
+                    messageArrayList.clear();
+                    for (QueryDocumentSnapshot document : Objects.requireNonNull(queryDocumentSnapshots)) {
+                        if (document.get("sender") != null && Objects.requireNonNull(document.get("sender")).toString().length() > 0)
+                            messageArrayList.add(new Message((String) document.get("message"), (String) document.get("timestamp"), (String) document.get("sender"), Uri.parse((String) document.get("image"))));
+                        else
+                            messageArrayList.add(new Message((String) document.get("message"), (String) document.get("timestamp")));
                     }
-                });
+                    mAdapter.notifyDataSetChanged();
+                    if (mAdapter.getItemCount() == 0) mNoMessages.animate().alpha(1.0f);
+                }
+            }
+        });
+
         mDatabase.collection("dorms").document(dorm).collection("posts").document(uid)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) author = (String) Objects.requireNonNull(task.getResult()).get("author");
+                        if (task.isSuccessful())
+                            author = (String) Objects.requireNonNull(task.getResult()).get("author");
                     }
                 });
     }
@@ -105,15 +114,21 @@ public class FeedMessaging extends AppCompatActivity {
             FirebaseAuth auth = FirebaseAuth.getInstance();
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             Map<String, Object> messageBlock = new HashMap<>();
+            String date = getDate(timestamp.toString());
             messageBlock.put("message", message.getText().toString());
-            messageBlock.put("timestamp", getDate(timestamp.toString()));
+            messageBlock.put("timestamp", date);
             if (!author.equals(auth.getUid())) {
                 messageBlock.put("sender", getProfileSender(auth.getUid()));
                 messageBlock.put("image", getProfileImage(auth.getUid()));
             }
             mDatabase.collection("dorms").document(dorm).collection("posts").document(uid).collection("chats").document(String.valueOf(timestamp.getTime()))
                     .set(messageBlock);
-        }
+            messageArrayList.add(new Message(message.getText().toString(), date));
+//            mAdapter.notifyDataSetChanged();
+//            runLayoutAnimation((RecyclerView) findViewById(R.id.recyclerView));
+            message.setText("");
+        } else
+            Toast.makeText(getApplicationContext(), "No message body!", Toast.LENGTH_SHORT).show();
     }
 
     private String getProfileSender(String uid) {
