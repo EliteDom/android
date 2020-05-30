@@ -933,6 +933,7 @@ color mtrl_textinput_focused_box_stroke_color
 color mtrl_textinput_hovered_box_stroke_color
 color notification_action_color_filter
 color notification_icon_bg_color
+color pastelGrey
 color primary_dark_material_dark
 color primary_dark_material_light
 color primary_material_dark
@@ -1382,6 +1383,7 @@ drawable btn_radio_off_mtrl
 drawable btn_radio_off_to_on_mtrl_animation
 drawable btn_radio_on_mtrl
 drawable btn_radio_on_to_off_mtrl_animation
+drawable circle
 drawable common_full_open_on_phone
 drawable common_google_signin_btn_icon_dark
 drawable common_google_signin_btn_icon_dark_focused
@@ -1416,13 +1418,17 @@ drawable gradient_1
 drawable gradient_2
 drawable gradient_3
 drawable gradient_list
+drawable ic_account_circle_white_24dp
 drawable ic_arrow_back_white_24dp
 drawable ic_calendar_black_24dp
+drawable ic_chat_white_24dp
 drawable ic_clear_black_24dp
 drawable ic_done_outline_white_24dp
 drawable ic_edit_black_24dp
+drawable ic_exit_to_app_white_24dp
 drawable ic_keyboard_arrow_left_black_24dp
 drawable ic_keyboard_arrow_right_black_24dp
+drawable ic_keyboard_arrow_right_white_24dp
 drawable ic_launcher_background
 drawable ic_launcher_foreground
 drawable ic_menu_arrow_down_black_24dp
@@ -1431,7 +1437,12 @@ drawable ic_mtrl_checked_circle
 drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
+drawable ic_reply_white_24dp
 drawable ic_reset
+drawable ic_share_white_24dp
+drawable ic_thumb_down_alt_white_24dp
+drawable ic_thumb_up_alt_white_24dp
+drawable message_bubble
 drawable mtrl_dialog_background
 drawable mtrl_dropdown_arrow
 drawable mtrl_ic_arrow_drop_down
@@ -1532,12 +1543,14 @@ id always
 id appreciation_score
 id appreciation_text
 id async
+id author
 id auto
 id barrier
 id beginning
 id blocking
 id bottom
 id buttonPanel
+id button_chatbox_send
 id cancel_button
 id card_container
 id cardview
@@ -1577,6 +1590,7 @@ id direct
 id disableHome
 id dropdown_menu
 id edit_query
+id edittext_chatbox
 id elite
 id email
 id end
@@ -1597,6 +1611,7 @@ id first_name
 id fitToContents
 id fixed
 id forever
+id forgot_password
 id fragment_container_view_tag
 id ghost_view
 id ghost_view_holder
@@ -1612,6 +1627,7 @@ id icon_only
 id ifRoom
 id image
 id image_layer
+id image_message_profile
 id info
 id information
 id invisible
@@ -1620,6 +1636,7 @@ id item_touch_helper_previous_elevation
 id labeled
 id largeLabel
 id last_name
+id layout_chatbox
 id left
 id light
 id line1
@@ -1632,6 +1649,7 @@ id login
 id login_layout
 id masked
 id message
+id messageList
 id middle
 id mini
 id month_grid
@@ -1665,6 +1683,7 @@ id navigation_header_container
 id never
 id new_user_layout
 id noScroll
+id no_messages
 id none
 id normal
 id notification_background
@@ -1694,6 +1713,7 @@ id progress_circular
 id progress_horizontal
 id radio
 id recyclerView
+id reset_layout
 id right
 id right_icon
 id right_side
@@ -1764,6 +1784,9 @@ id textSpacerNoTitle
 id textStart
 id text_input_end_icon
 id text_input_start_icon
+id text_message_body
+id text_message_name
+id text_message_time
 id text_scroll
 id textinput_counter
 id textinput_error
@@ -1866,6 +1889,7 @@ layout activity_feed
 layout activity_feed_messaging
 layout activity_login
 layout activity_new_user
+layout activity_password_reset
 layout activity_post_view
 layout activity_profile_messaging
 layout activity_profile_post
@@ -1887,6 +1911,8 @@ layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_end_icon
 layout design_text_input_start_icon
+layout item_message_received
+layout item_message_sent
 layout mainfeed_actionbar
 layout mtrl_alert_dialog
 layout mtrl_alert_dialog_actions
@@ -1980,6 +2006,7 @@ string bottom_sheet_behavior
 string character_counter_content_description
 string character_counter_overflowed_content_description
 string character_counter_pattern
+string chatroom
 string chip_text
 string clear_text_end_icon_content_description
 string common_google_play_services_enable_button
@@ -2003,12 +2030,14 @@ string common_signin_button_text_long
 string default_web_client_id
 string elite_name
 string elitedom
+string empty_chatroom
 string error_icon_content_description
 string exposed_dropdown_menu_content_description
 string fab_transformation_scrim_behavior
 string fab_transformation_sheet_behavior
 string firebase_database_url
 string first_name
+string forgot_password
 string gcm_defaultSenderId
 string google_api_key
 string google_app_id
@@ -2022,6 +2051,7 @@ string invalid_username
 string last_name
 string log_out
 string login_failed
+string message_prompt
 string mtrl_badge_numberless_content_description
 string mtrl_chip_close_icon_content_description
 string mtrl_exceed_max_badge_number_suffix
@@ -2067,6 +2097,7 @@ string profile_name
 string project_id
 string prompt_email
 string prompt_password
+string reset_password
 string search_menu_title
 string status_bar_notification_info_overflow
 string subtitle_detail_text

@@ -23,4 +23,9 @@
     <string name="elite_name">Linux Elite</string>
     <string name="predictor_text">Predictor Score</string>
     <string name="appreciation_points">Appreciation Points</string>
+    <string name="chatroom">The Chatroom</string>
+    <string name="message_prompt">Enter message</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="empty_chatroom">No messages yet. Be the first!</string>
 </resources>

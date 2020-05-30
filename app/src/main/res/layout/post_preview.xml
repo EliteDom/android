@@ -28,17 +28,30 @@
                 style="@style/TextAppearance.AppCompat.Headline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
+                android:paddingHorizontal="8dp"
+                android:paddingTop="8dp"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark" />
 
+            <TextView
+                android:id="@+id/author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title"
+                android:paddingHorizontal="8dp"
+                android:paddingBottom="8dp"
+                android:text="Jinen Setpal | Authored 3h ago"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                tools:ignore="SmallSp" />
+
             <ImageView
                 android:id="@+id/postImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/title"
+                android:layout_below="@id/author"
                 android:layout_marginHorizontal="6dp"
                 android:layout_marginBottom="6dp"
                 android:adjustViewBounds="true"

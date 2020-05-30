@@ -68,7 +68,7 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView mTitleText, mInfoText;
+        private TextView mTitleText, mInfoText, mAuthor;
         private ImageView mPostImage;
         private CardView mCard;
 
@@ -79,6 +79,7 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
             mInfoText = itemView.findViewById(R.id.post_text);
             mCard = itemView.findViewById(R.id.cardview);
             mPostImage = itemView.findViewById(R.id.postImage);
+            mAuthor = itemView.findViewById(R.id.author);
             mPostImage.setClipToOutline(true);
 
             itemView.setOnClickListener(this);
@@ -91,14 +92,17 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
             });
         }
 
-        void bindTo(PreviewCard currentTopic) {
-            mTitleText.setText(currentTopic.getTitle());
-            mInfoText.setText(currentTopic.getSubtext());
+        void bindTo(PreviewCard currentPost) {
+            mTitleText.setContentDescription(currentPost.getUid());
+            mTitleText.setText(currentPost.getTitle());
+            mInfoText.setContentDescription(currentPost.getDorm());
+            mInfoText.setText(currentPost.getSubtext());
+            mAuthor.setText(currentPost.getAuthor());
             Glide.with(mContext)
-                    .load(currentTopic.getImageResource())
+                    .load(currentPost.getImageResource())
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(mPostImage);
-            mPostImage.setContentDescription(currentTopic.getImageResource().toString());
+            mPostImage.setContentDescription(currentPost.getImageResource().toString());
         }
 
         @Override
@@ -110,22 +114,27 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
         private void profileActivity(View v) {
             Intent intent = new Intent(v.getContext(), profile_post.class);
             intent.putExtra("title", mTitleText.getText().toString());
+            intent.putExtra("uid", mTitleText.getContentDescription().toString());
+            intent.putExtra("dorm", mInfoText.getContentDescription().toString());
             intent.putExtra("subtext", mInfoText.getText().toString());
             intent.putExtra("image", mPostImage.getContentDescription().toString());
+            intent.putExtra("author", mAuthor.getText().toString());
 
             Pair<View, String> t1 = Pair.create(image, "image");
             Pair<View, String> t2 = Pair.create(name, "username");
             Pair<View, String> t3 = Pair.create(card, "post_cards");
             Pair<View, String> t4 = Pair.create((View) mCard, transitionType);
             ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) v.getContext(), t1, t2, t3, t4);
-//            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) v.getContext(), mCard, transitionType);
             ActivityCompat.startActivity(v.getContext(), intent, options.toBundle());
         }
 
         private void feedActivity(View v) {
             Intent intent = new Intent(v.getContext(), PostView.class);
             intent.putExtra("title", mTitleText.getText().toString());
+            intent.putExtra("uid", mTitleText.getContentDescription().toString());
+            intent.putExtra("dorm", mInfoText.getContentDescription().toString());
             intent.putExtra("subtext", mInfoText.getText().toString());
+            intent.putExtra("author", mAuthor.getText().toString());
             intent.putExtra("image", mPostImage.getContentDescription().toString());
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) v.getContext(), mCard, transitionType);
             ActivityCompat.startActivity(v.getContext(), intent, options.toBundle());

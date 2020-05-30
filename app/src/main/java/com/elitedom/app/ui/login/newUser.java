@@ -61,7 +61,7 @@ public class newUser extends AppCompatActivity {
         if (username.length() > 0 && first.length() > 0 && last.length() > 0) {
             userData.put("firstName", mFirstName.getText().toString());
             userData.put("lastName", mLastName.getText().toString());
-            userData.put("userName", mUsername.getText().toString());
+            userData.put("username", mUsername.getText().toString());
             userData.put("posts", null);
             userData.put("appreciationPoints", 0);
             userData.put("predictorPoints", 0);

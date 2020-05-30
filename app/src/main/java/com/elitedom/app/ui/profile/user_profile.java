@@ -6,6 +6,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
@@ -37,6 +38,7 @@ public class user_profile extends AppCompatActivity {
     private FirebaseFirestore mDatabase;
     private ArrayList<String> mTopicNames;
     private TextView username, appreciation, predictor;
+    private String currentDorm;
 
 
     @Override
@@ -49,7 +51,9 @@ public class user_profile extends AppCompatActivity {
         username = findViewById(R.id.username);
         appreciation = findViewById(R.id.appreciation_score);
         predictor = findViewById(R.id.predictor_score);
+        currentDorm = "";
 
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         Objects.requireNonNull(getSupportActionBar()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -84,15 +88,15 @@ public class user_profile extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
                             assert document != null;
-                            predictor.setText(Integer.parseInt((String) Objects.requireNonNull(document.get("predictorPoints"))));
-                            appreciation.setText(Integer.parseInt((String) Objects.requireNonNull(document.get("appreciationPoints"))));
-                            username.setText(Objects.requireNonNull(document.get("firstName")).toString() + " " + Objects.requireNonNull(document.get("firstName")).toString() + "'s Profile");
+                            predictor.setText(Objects.requireNonNull(document.get("predictorPoints")).toString());
+                            appreciation.setText(Objects.requireNonNull(document.get("appreciationPoints")).toString());
+                            username.setText(Objects.requireNonNull(document.get("firstName")).toString() + " " + Objects.requireNonNull(document.get("lastName")).toString() + "'s Profile");
                         }
                     }
                 });
-
         mTitleData.clear();
         for (String i : mTopicNames) {
+            currentDorm = i;
             mDatabase.collection("dorms").document(i).collection("posts")
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -100,7 +104,7 @@ public class user_profile extends AppCompatActivity {
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult()))
-                                    mTitleData.add(new PreviewCard((String) document.get("title"), (String) document.get("postText"), Uri.parse((String) document.get("image"))));
+                                    mTitleData.add(new PreviewCard((String) document.get("title"), (String) document.get("postText"), document.get("author") + " | Authored " + document.get("timestamp") + " ago", document.getId(), user_profile.this.currentDorm, Uri.parse((String) document.get("image"))));
                                 mAdapter.notifyDataSetChanged();
                             }
                         }
@@ -112,5 +116,4 @@ public class user_profile extends AppCompatActivity {
     public void onBackPressed() {
         supportFinishAfterTransition();
     }
-
 }

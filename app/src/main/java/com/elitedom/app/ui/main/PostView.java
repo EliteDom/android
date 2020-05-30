@@ -12,6 +12,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -22,15 +25,20 @@ import java.util.Objects;
 
 public class PostView extends AppCompatActivity {
 
+    private CardView mCard;
+    private TextView mPostTitle, mPostText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_view);
 
         RelativeLayout relativeLayout = findViewById(R.id.single_card);
-        TextView mPostTitle = findViewById(R.id.title);
+        mPostText = findViewById(R.id.post_text);
+        TextView mAuthor = findViewById(R.id.author);
         ImageView mPostImage = findViewById(R.id.postImage);
-        TextView mPostText = findViewById(R.id.post_text);
+        mCard = findViewById(R.id.action_cards);
+        mPostTitle = findViewById(R.id.title);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         Objects.requireNonNull(getSupportActionBar()).hide();
@@ -42,7 +50,10 @@ public class PostView extends AppCompatActivity {
 
         Intent intent = getIntent();
         mPostTitle.setText(intent.getStringExtra("title"));
+        mPostTitle.setContentDescription(intent.getStringExtra("uid"));
         mPostText.setText(intent.getStringExtra("subtext"));
+        mPostText.setContentDescription(intent.getStringExtra("dorm"));
+        mAuthor.setText(intent.getStringExtra("author"));
         Glide.with(this)
                 .load(intent.getStringExtra("image"))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -58,7 +69,11 @@ public class PostView extends AppCompatActivity {
     }
 
     public void messageActivity(View view) {
-        startActivity(new Intent(this, FeedMessaging.class));
+        Intent intent = new Intent(this, FeedMessaging.class);
+        intent.putExtra("uid", mPostTitle.getContentDescription().toString());
+        intent.putExtra("dorm", mPostText.getContentDescription().toString());
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) view.getContext(), mCard, "messaging_transition");
+        ActivityCompat.startActivity(this, intent, options.toBundle());
         setResult(Activity.RESULT_OK);
     }
 }

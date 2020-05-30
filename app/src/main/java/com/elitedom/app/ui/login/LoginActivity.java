@@ -63,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         usernameEditText = findViewById(R.id.email);
         passwordEditText = findViewById(R.id.password);
         loginButton = findViewById(R.id.login);
+        final Button passwordReset = findViewById(R.id.forgot_password);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
         final ConstraintLayout constraintLayout = findViewById(R.id.login_layout);
         TextView title = findViewById(R.id.title);
@@ -79,6 +80,7 @@ public class LoginActivity extends AppCompatActivity {
         usernameEditText.startAnimation(atg);
         passwordEditText.startAnimation(atg2);
         loginButton.startAnimation(atg3);
+        passwordReset.startAnimation(atg3);
         animateText(title);
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
@@ -108,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
                     showLoginFailed(loginResult.getError());
                 }
                 if (loginResult.getSuccess() != null) {
-                    updateUiWithUser(loginResult.getSuccess(), usernameEditText.getText().toString(), passwordEditText.getText().toString());
+                    updateUiWithUser(usernameEditText.getText().toString(), passwordEditText.getText().toString());
                 }
             }
         });
@@ -198,7 +200,7 @@ public class LoginActivity extends AppCompatActivity {
         }).start();
     }*/
 
-    private void updateUiWithUser(LoggedInUserView model, final String email, final String password) {
+    private void updateUiWithUser(final String email, final String password) {
         (mAuth.signInWithEmailAndPassword(email, password))
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -248,5 +250,10 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    public void resetPassword(View view) {
+        startActivity(new Intent(this, PasswordReset.class));
+        setResult(Activity.RESULT_OK);
     }
 }
