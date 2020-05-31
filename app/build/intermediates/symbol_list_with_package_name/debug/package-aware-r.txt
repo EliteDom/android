@@ -1910,6 +1910,8 @@ layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_end_icon
 layout design_text_input_start_icon
+layout item_message_multiple_received
+layout item_message_multiple_sent
 layout item_message_received
 layout item_message_sent
 layout mainfeed_actionbar

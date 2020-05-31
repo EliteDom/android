@@ -87,6 +87,11 @@ public class ProfileMessaging extends AppCompatActivity {
         initializeData();
     }
 
+    private int returnFlagRes(String prev_author, String cur_author) {
+        if (prev_author.equals(cur_author)) return 1;
+        else return 0;
+    }
+
     private void initializeData() {
         final CollectionReference chatRef = mDatabase.collection("dorms").document(dorm).collection("posts").document(uid).collection("chats");
         chatRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -96,10 +101,11 @@ public class ProfileMessaging extends AppCompatActivity {
                     messageArrayList.clear();
                     for (QueryDocumentSnapshot document : Objects.requireNonNull(queryDocumentSnapshots)) {
                         if (document != null) {
+                            String flag = (String) document.get("author");
                             if (document.get("sender") != null && !Objects.requireNonNull(document.get("sender")).toString().equals(FirebaseAuth.getInstance().getUid()))
-                                messageArrayList.add(new Message((String) document.get("message"), (String) document.get("timestamp"), getProfileSender((String) document.get("sender")), Uri.parse((String) document.get("image"))));
+                                messageArrayList.add(new Message((String) document.get("message"), (String) document.get("timestamp"), getProfileSender((String) document.get("sender")), Uri.parse((String) document.get("image")), returnFlagRes(Objects.requireNonNull(flag), (String) document.get("sender"))));
                             else
-                                messageArrayList.add(new Message((String) document.get("message"), (String) document.get("timestamp")));
+                                messageArrayList.add(new Message((String) document.get("message"), (String) document.get("timestamp"), returnFlagRes(Objects.requireNonNull(flag), (String) document.get("sender"))));
                         }
                     }
                     mAdapter.notifyDataSetChanged();

@@ -20,6 +20,8 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
     private static final int VIEW_TYPE_MESSAGE_SENT = 1;
     private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
+    private static final int VIEW_TYPE_MESSAGE_MULTIPLE_SENT = 3;
+    private static final int VIEW_TYPE_MESSAGE_MULTIPLE_RECEIVED = 4;
     private ArrayList<Message> messages;
     private Context mContext;
 
@@ -41,6 +43,14 @@ public class MessageAdapter extends RecyclerView.Adapter {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_message_received, parent, false);
             return new ReceivedViewHolder(view);
+        } else if (viewType == VIEW_TYPE_MESSAGE_MULTIPLE_SENT) {
+            view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_message_multiple_sent, parent, false);
+            return new SentMultipleViewHolder(view);
+        } else if (viewType == VIEW_TYPE_MESSAGE_MULTIPLE_RECEIVED) {
+            view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_message_multiple_received, parent, false);
+            return new ReceivedMultipleViewHolder(view);
         } else //noinspection ConstantConditions
             return null;
     }
@@ -56,6 +66,12 @@ public class MessageAdapter extends RecyclerView.Adapter {
                 break;
             case VIEW_TYPE_MESSAGE_RECEIVED:
                 ((ReceivedViewHolder) holder).bindTo(currentMessage);
+                break;
+            case VIEW_TYPE_MESSAGE_MULTIPLE_SENT:
+                ((SentMultipleViewHolder) holder).bindTo(currentMessage);
+                break;
+            case VIEW_TYPE_MESSAGE_MULTIPLE_RECEIVED:
+                ((ReceivedMultipleViewHolder) holder).bindTo(currentMessage);
         }
     }
 
@@ -67,12 +83,11 @@ public class MessageAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position) {
         Message message = messages.get(position);
-
-        if (message.getSender() == null) {
-            return VIEW_TYPE_MESSAGE_SENT;
-        } else {
-            return VIEW_TYPE_MESSAGE_RECEIVED;
-        }
+        if (message.getSender() == null)
+            if (message.getMultipleFlag() == 1) return VIEW_TYPE_MESSAGE_SENT;
+            else return VIEW_TYPE_MESSAGE_MULTIPLE_SENT;
+        else if (message.getMultipleFlag() == 1) return VIEW_TYPE_MESSAGE_RECEIVED;
+        return VIEW_TYPE_MESSAGE_MULTIPLE_RECEIVED;
     }
 
     static class SentViewHolder extends RecyclerView.ViewHolder {
@@ -81,6 +96,23 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
         SentViewHolder(final View itemView) {
             super(itemView);
+            message = itemView.findViewById(R.id.text_message_body);
+            timestamp = itemView.findViewById(R.id.text_message_time);
+        }
+
+        void bindTo(Message currentMessage) {
+            message.setText(currentMessage.getMessage());
+            timestamp.setText(currentMessage.getTimestamp());
+        }
+    }
+
+    static class SentMultipleViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView message, timestamp;
+
+        SentMultipleViewHolder(final View itemView) {
+            super(itemView);
+
             message = itemView.findViewById(R.id.text_message_body);
             timestamp = itemView.findViewById(R.id.text_message_time);
         }
@@ -115,6 +147,23 @@ public class MessageAdapter extends RecyclerView.Adapter {
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(image);
             image.setContentDescription(currentMessage.getImageResource().toString());
+        }
+    }
+
+    static class ReceivedMultipleViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView message, timestamp;
+
+        ReceivedMultipleViewHolder(final View itemView) {
+            super(itemView);
+
+            message = itemView.findViewById(R.id.text_message_body);
+            timestamp = itemView.findViewById(R.id.text_message_time);
+        }
+
+        void bindTo(Message currentMessage) {
+            message.setText(currentMessage.getMessage());
+            timestamp.setText(currentMessage.getTimestamp());
         }
     }
 }

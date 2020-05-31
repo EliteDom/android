@@ -76,7 +76,8 @@
                         android:background="@drawable/custom_relativelayout"
                         android:clipChildren="true"
                         android:layoutAnimation="@anim/layout_topic_cards_animation"
-                        android:padding="@dimen/activity_horizontal_margin"
+                        android:paddingVertical="16dp"
+                        android:paddingHorizontal="6dp"
                         android:scrollbars="none" />
 
                     <LinearLayout

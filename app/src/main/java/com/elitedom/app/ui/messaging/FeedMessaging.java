@@ -75,7 +75,13 @@ public class FeedMessaging extends AppCompatActivity {
         initializeData();
     }
 
+    private int returnFlagRes(String prev_author, String cur_author) {
+        if (prev_author.equals(cur_author)) return 0;
+        else return 1;
+    }
+
     private void initializeData() {
+        final String[] flag = {""};
         final CollectionReference chatRef = mDatabase.collection("dorms").document(dorm).collection("posts").document(uid).collection("chats");
         chatRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -85,9 +91,10 @@ public class FeedMessaging extends AppCompatActivity {
                     for (QueryDocumentSnapshot document : Objects.requireNonNull(queryDocumentSnapshots)) {
                         if (document != null) {
                             if (document.get("sender") != null && !Objects.requireNonNull(document.get("sender")).toString().equals(FirebaseAuth.getInstance().getUid()))
-                                messageArrayList.add(new Message((String) document.get("message"), (String) document.get("timestamp"), getProfileSender((String) document.get("sender")), Uri.parse((String) document.get("image"))));
+                                messageArrayList.add(new Message((String) document.get("message"), (String) document.get("timestamp"), getProfileSender((String) document.get("sender")), Uri.parse((String) document.get("image")), returnFlagRes(Objects.requireNonNull(flag[0]), (String) document.get("sender"))));
                             else
-                                messageArrayList.add(new Message((String) document.get("message"), (String) document.get("timestamp")));
+                                messageArrayList.add(new Message((String) document.get("message"), (String) document.get("timestamp"), returnFlagRes(Objects.requireNonNull(flag[0]), (String) document.get("sender"))));
+                            flag[0] = (String) document.get("sender");
                         }
                     }
                     mAdapter.notifyDataSetChanged();
@@ -106,7 +113,6 @@ public class FeedMessaging extends AppCompatActivity {
                             DocumentSnapshot document = task.getResult();
                             assert document != null;
                             authorImage = (String) document.get("image");
-                            if (authorImage == null) authorImage = "";
                         }
                     }
                 });
