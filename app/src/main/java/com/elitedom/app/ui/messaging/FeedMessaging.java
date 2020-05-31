@@ -153,23 +153,6 @@ public class FeedMessaging extends AppCompatActivity {
         return sender[0];
     }
 
-    private String getProfileImage(String uid) {
-        final String[] sender = {""};
-        mDatabase.collection("users").document(uid)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            assert document != null;
-                            sender[0] = (String) document.get("image");
-                        }
-                    }
-                });
-        return sender[0];
-    }
-
     private String getDate(String time) {
         StringBuilder res = new StringBuilder();
         for (char ch : time.toCharArray()) {

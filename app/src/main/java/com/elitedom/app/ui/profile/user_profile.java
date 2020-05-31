@@ -101,6 +101,7 @@ public class user_profile extends AppCompatActivity {
                                 Glide.with(user_profile.this)
                                 .load(image)
                                 .into(imageView);
+                            imageView.setContentDescription(image);
                         }
                     }
                 });

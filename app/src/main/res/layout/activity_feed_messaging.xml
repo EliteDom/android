@@ -30,7 +30,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:clipToPadding="false">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/action_cards"
@@ -60,14 +61,17 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_margin="6dp"
                         android:text="@string/chatroom"
-                        android:textSize="24sp"
+                        android:background="@drawable/message_bubble"
+                        android:elevation="4dp"
+                        android:padding="6dp"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/messageList"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="30dp"
                         android:layout_marginBottom="44dp"
                         android:background="@drawable/custom_relativelayout"
                         android:clipChildren="true"
