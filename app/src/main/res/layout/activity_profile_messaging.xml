@@ -13,10 +13,10 @@
     <RelativeLayout
         android:id="@+id/profile_data"
         android:layout_width="match_parent"
-        android:paddingTop="4dp"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
-        android:gravity="center">
+        android:gravity="center"
+        android:paddingTop="4dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image"
@@ -85,23 +85,23 @@
                             android:id="@+id/no_messages"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/message_bubble"
-                            android:padding="8dp"
-                            android:alpha="0.0"
-                            android:clipToPadding="false"
                             android:layout_gravity="center"
-                            android:text="@string/empty_chatroom"
-                            android:elevation="4dp" />
+                            android:alpha="0.0"
+                            android:background="@drawable/message_bubble"
+                            android:clipToPadding="false"
+                            android:elevation="4dp"
+                            android:padding="8dp"
+                            android:text="@string/empty_chatroom" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_margin="6dp"
-                            android:text="@string/chatroom"
                             android:background="@drawable/message_bubble"
                             android:elevation="4dp"
                             android:padding="5dp"
+                            android:text="@string/chatroom"
                             android:textSize="20sp"
                             android:textStyle="bold" />
 

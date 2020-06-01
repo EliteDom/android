@@ -53,6 +53,7 @@ public class ProfileMessaging extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_messaging);
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         Objects.requireNonNull(getSupportActionBar()).hide();
@@ -88,11 +89,12 @@ public class ProfileMessaging extends AppCompatActivity {
     }
 
     private int returnFlagRes(String prev_author, String cur_author) {
-        if (prev_author.equals(cur_author)) return 1;
-        else return 0;
+        if (prev_author.equals(cur_author)) return 0;
+        else return 1;
     }
 
     private void initializeData() {
+        final String[] flag = {""};
         final CollectionReference chatRef = mDatabase.collection("dorms").document(dorm).collection("posts").document(uid).collection("chats");
         chatRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -101,15 +103,16 @@ public class ProfileMessaging extends AppCompatActivity {
                     messageArrayList.clear();
                     for (QueryDocumentSnapshot document : Objects.requireNonNull(queryDocumentSnapshots)) {
                         if (document != null) {
-                            String flag = (String) document.get("author");
                             if (document.get("sender") != null && !Objects.requireNonNull(document.get("sender")).toString().equals(FirebaseAuth.getInstance().getUid()))
-                                messageArrayList.add(new Message((String) document.get("message"), (String) document.get("timestamp"), getProfileSender((String) document.get("sender")), Uri.parse((String) document.get("image")), returnFlagRes(Objects.requireNonNull(flag), (String) document.get("sender"))));
+                                messageArrayList.add(new Message((String) document.get("message"), (String) document.get("timestamp"), (String) document.get("sender"), Uri.parse((String) document.get("image")), returnFlagRes(Objects.requireNonNull(flag[0]), (String) document.get("sender"))));
                             else
-                                messageArrayList.add(new Message((String) document.get("message"), (String) document.get("timestamp"), returnFlagRes(Objects.requireNonNull(flag), (String) document.get("sender"))));
+                                messageArrayList.add(new Message((String) document.get("message"), (String) document.get("timestamp"), returnFlagRes(Objects.requireNonNull(flag[0]), (String) document.get("sender"))));
+                            flag[0] = (String) document.get("sender");
                         }
                     }
                     mAdapter.notifyDataSetChanged();
-                    if (mAdapter.getItemCount() == 0) mNoMessages.animate().alpha(1.0f);
+                    if (mAdapter.getItemCount() > 0) mNoMessages.animate().alpha(0.0f);
+                    else mNoMessages.animate().alpha(1.0f);
                 }
             }
         });
@@ -149,26 +152,9 @@ public class ProfileMessaging extends AppCompatActivity {
                     .set(messageBlock);
             message.setText("");
             mAdapter.notifyDataSetChanged();
-            if (mAdapter.getItemCount() == 0) mNoMessages.animate().alpha(0.0f);
+            if (mAdapter.getItemCount() >= 0) mNoMessages.animate().alpha(0.0f);
         } else
             Toast.makeText(getApplicationContext(), "No message body!", Toast.LENGTH_SHORT).show();
-    }
-
-    private String getProfileSender(String uid) {
-        final String[] sender = {""};
-        mDatabase.collection("users").document(uid)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            assert document != null;
-                            sender[0] = document.get("firstName") + " " + document.get("lastName");
-                        }
-                    }
-                });
-        return sender[0];
     }
 
     private String getDate(String time) {
