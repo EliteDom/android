@@ -15,8 +15,8 @@
         android:id="@+id/user_feed_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:animateLayoutChanges="true"
         android:background="@drawable/gradient_list"
+        android:fitsSystemWindows="true"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingBottom="@dimen/activity_vertical_margin">
 
@@ -30,7 +30,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:clipToPadding="false">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/action_cards"
@@ -46,33 +47,37 @@
                         android:id="@+id/no_messages"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/message_bubble"
-                        android:padding="8dp"
-                        android:alpha="0.0"
-                        android:clipToPadding="false"
                         android:layout_gravity="center"
-                        android:text="@string/empty_chatroom"
-                        android:elevation="4dp" />
+                        android:alpha="0.0"
+                        android:background="@drawable/message_bubble"
+                        android:clipToPadding="false"
+                        android:elevation="4dp"
+                        android:padding="8dp"
+                        android:text="@string/empty_chatroom" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_margin="6dp"
+                        android:background="@drawable/message_bubble"
+                        android:elevation="4dp"
+                        android:padding="6dp"
                         android:text="@string/chatroom"
-                        android:textSize="24sp"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/messageList"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="30dp"
                         android:layout_marginBottom="44dp"
                         android:background="@drawable/custom_relativelayout"
                         android:clipChildren="true"
                         android:layoutAnimation="@anim/layout_topic_cards_animation"
-                        android:padding="@dimen/activity_horizontal_margin"
+                        android:paddingHorizontal="6dp"
+                        android:paddingVertical="16dp"
                         android:scrollbars="none" />
 
                     <LinearLayout

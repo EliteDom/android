@@ -1,5 +1,6 @@
 package com.elitedom.app.ui.main;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
@@ -21,15 +22,23 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.elitedom.app.R;
 import com.elitedom.app.ui.profile.profile_post;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHolder> {
 
+    private FirebaseFirestore mDatabase;
     private ArrayList<PreviewCard> mTopicsData;
     private Context mContext;
     private String transitionType;
     private View image, name, card;
+    String profileUri;
     private int intentID;
 
     public PreviewAdapter(Context context, ArrayList<PreviewCard> topicData, String transitionType, int intentID) {
@@ -37,6 +46,25 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
         this.mContext = context;
         this.transitionType = transitionType;
         this.intentID = intentID;
+        this.mDatabase = FirebaseFirestore.getInstance();
+        this.profileUri = "";
+        this.getProfileUri();
+    }
+
+    private void getProfileUri() {
+        mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            assert document != null;
+                            PreviewAdapter.this.profileUri = (String) document.get("image");
+                        }
+                    }
+                });
     }
 
     public void sendContext(View image, View name, View card) {
@@ -81,6 +109,7 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
             mPostImage = itemView.findViewById(R.id.postImage);
             mAuthor = itemView.findViewById(R.id.author);
             mPostImage.setClipToOutline(true);
+            mDatabase = FirebaseFirestore.getInstance();
 
             itemView.setOnClickListener(this);
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -113,12 +142,13 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
 
         private void profileActivity(View v) {
             Intent intent = new Intent(v.getContext(), profile_post.class);
+            intent.putExtra("author", mAuthor.getText().toString());
             intent.putExtra("title", mTitleText.getText().toString());
+            intent.putExtra("subtext", mInfoText.getText().toString());
             intent.putExtra("uid", mTitleText.getContentDescription().toString());
             intent.putExtra("dorm", mInfoText.getContentDescription().toString());
-            intent.putExtra("subtext", mInfoText.getText().toString());
             intent.putExtra("image", mPostImage.getContentDescription().toString());
-            intent.putExtra("author", mAuthor.getText().toString());
+            intent.putExtra("profileImage", profileUri);
 
             Pair<View, String> t1 = Pair.create(image, "image");
             Pair<View, String> t2 = Pair.create(name, "username");

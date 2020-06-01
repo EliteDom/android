@@ -4,27 +4,18 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.elitedom.app.R;
 import com.elitedom.app.ui.cards.topic_cards;
@@ -38,33 +29,28 @@ import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private LoginViewModel loginViewModel;
     private FirebaseAuth mAuth;
-    private EditText usernameEditText, passwordEditText;
-    private Button loginButton;
+    private EditText emailEditText, passwordEditText;
 
     @Override
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+        topicActivity(currentUser);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
-                .get(LoginViewModel.class);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
-        usernameEditText = findViewById(R.id.email);
+        emailEditText = findViewById(R.id.email);
         passwordEditText = findViewById(R.id.password);
-        loginButton = findViewById(R.id.login);
+        Button loginButton = findViewById(R.id.login);
         final Button passwordReset = findViewById(R.id.forgot_password);
-        final ProgressBar loadingProgressBar = findViewById(R.id.loading);
         final ConstraintLayout constraintLayout = findViewById(R.id.login_layout);
         TextView title = findViewById(R.id.title);
 
@@ -77,86 +63,14 @@ public class LoginActivity extends AppCompatActivity {
         animationDrawable.setEnterFadeDuration(2000);
         animationDrawable.setExitFadeDuration(4000);
         animationDrawable.start();
-        usernameEditText.startAnimation(atg);
+        emailEditText.startAnimation(atg);
         passwordEditText.startAnimation(atg2);
         loginButton.startAnimation(atg3);
         passwordReset.startAnimation(atg3);
         animateText(title);
-
-        loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
-            @Override
-            public void onChanged(@Nullable LoginFormState loginFormState) {
-                if (loginFormState == null) {
-                    return;
-                }
-                loginButton.setEnabled(loginFormState.isDataValid());
-                if (loginFormState.getUsernameError() != null) {
-                    usernameEditText.setError(getString(loginFormState.getUsernameError()));
-                }
-                if (loginFormState.getPasswordError() != null) {
-                    passwordEditText.setError(getString(loginFormState.getPasswordError()));
-                }
-            }
-        });
-
-        loginViewModel.getLoginResult().observe(this, new Observer<LoginResult>() {
-            @Override
-            public void onChanged(@Nullable LoginResult loginResult) {
-                if (loginResult == null) {
-                    return;
-                }
-                loadingProgressBar.setVisibility(View.GONE);
-                if (loginResult.getError() != null) {
-                    showLoginFailed(loginResult.getError());
-                }
-                if (loginResult.getSuccess() != null) {
-                    updateUiWithUser(usernameEditText.getText().toString(), passwordEditText.getText().toString());
-                }
-            }
-        });
-
-        TextWatcher afterTextChangedListener = new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // ignore
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // ignore
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                loginViewModel.loginDataChanged(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
-            }
-        };
-        usernameEditText.addTextChangedListener(afterTextChangedListener);
-        passwordEditText.addTextChangedListener(afterTextChangedListener);
-        passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString());
-                }
-                return false;
-            }
-        });
-
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
-            }
-        });
     }
 
-    private void animateText(final TextView txt_view) {
+    private void animateText(final TextView view) {
         final char[] s = "Elitedom".toCharArray();
         try {
             Thread.sleep(300);
@@ -171,15 +85,64 @@ public class LoginActivity extends AppCompatActivity {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    txt_view.post(new Runnable() {
+                    view.post(new Runnable() {
                         public void run() {
-                            txt_view.append("" + ch);
+                            view.append("" + ch);
                         }
                     });
                 }
             }
         }).start();
     }
+
+    private void addUser(String email, String password) {
+        Toast.makeText(getApplicationContext(), "Creating new user", Toast.LENGTH_LONG).show();
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_LONG).show();
+                            Intent mainscreen = new Intent(LoginActivity.this, newUser.class);
+                            startActivity(mainscreen);
+                            overridePendingTransition(0, 0);
+                            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                            setResult(Activity.RESULT_OK);
+                            finish();
+                        }
+                        else Toast.makeText(getApplicationContext(), "Unsuccessful - try again later?", Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+
+    private void topicActivity(FirebaseUser user) {
+        if (user != null) {
+            Intent mainscreen = new Intent(this, topic_cards.class);
+            startActivity(mainscreen);
+            setResult(Activity.RESULT_OK);
+            finish();
+        }
+    }
+
+    public void loginButton(View view) {
+        Toast.makeText(getApplicationContext(), "Logging you in", Toast.LENGTH_LONG).show();
+        final String email = emailEditText.getText().toString();
+        final String password = passwordEditText.getText().toString();
+        (mAuth.signInWithEmailAndPassword(email, password))
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) topicActivity(mAuth.getCurrentUser());
+                        else addUser(email, password);
+                    }
+                });
+    }
+
+    public void resetPassword(View view) {
+        startActivity(new Intent(this, PasswordReset.class));
+        setResult(Activity.RESULT_OK);
+    }
+}
 
 /*    private void removeTextAnimation(final EditText txt_view) {
         new Thread(new Runnable() {
@@ -199,61 +162,3 @@ public class LoginActivity extends AppCompatActivity {
             }
         }).start();
     }*/
-
-    private void updateUiWithUser(final String email, final String password) {
-        (mAuth.signInWithEmailAndPassword(email, password))
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            addUser(email, password);
-                        }
-                    }
-                });
-    }
-
-    private void showLoginFailed(@StringRes Integer errorString) {
-        Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
-    }
-
-    private void addUser(String email, String password) {
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) newUI();
-                    }
-                });
-    }
-
-    private void updateUI(FirebaseUser user) {
-        if (user != null) {
-            Intent mainscreen = new Intent(this, topic_cards.class);
-            startActivity(mainscreen);
-            setResult(Activity.RESULT_OK);
-            finish();
-        }
-    }
-
-    private void newUI() {
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent mainscreen = new Intent(LoginActivity.this, newUser.class);
-                startActivity(mainscreen);
-                overridePendingTransition(0, 0);
-                //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-                setResult(Activity.RESULT_OK);
-                finish();
-            }
-        });
-    }
-
-    public void resetPassword(View view) {
-        startActivity(new Intent(this, PasswordReset.class));
-        setResult(Activity.RESULT_OK);
-    }
-}

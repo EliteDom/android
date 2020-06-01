@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,8 +31,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class profile_post extends AppCompatActivity {
 
+    private String profileImageUri;
     private CardView mCard;
     private TextView mUsername, mPostTitle, mPostText;
 
@@ -40,6 +44,7 @@ public class profile_post extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_post);
 
+        CircleImageView mProfileImage = findViewById(R.id.profile_image);
         RelativeLayout relativeLayout = findViewById(R.id.user_feed_container);
         ImageView mPostImage = findViewById(R.id.postImage);
         TextView mAuthor = findViewById(R.id.author);
@@ -63,6 +68,10 @@ public class profile_post extends AppCompatActivity {
         mPostTitle.setContentDescription(intent.getStringExtra("uid"));
         mPostText.setText(intent.getStringExtra("subtext"));
         mPostText.setContentDescription(intent.getStringExtra("dorm"));
+        profileImageUri = intent.getStringExtra("profileImage");
+        Glide.with(this)
+                .load(profileImageUri)
+                .into(mProfileImage);
         mAuthor.setText(intent.getStringExtra("author"));
         Glide.with(this)
                 .load(intent.getStringExtra("image"))
@@ -83,7 +92,6 @@ public class profile_post extends AppCompatActivity {
                     }
                 });
 
-
         mPostImage.setClipToOutline(true);
         mPostText.setClipToOutline(true);
     }
@@ -98,6 +106,7 @@ public class profile_post extends AppCompatActivity {
         intent.putExtra("username", mUsername.getText().toString());
         intent.putExtra("uid", mPostTitle.getContentDescription().toString());
         intent.putExtra("dorm", mPostText.getContentDescription().toString());
+        intent.putExtra("profileImage", profileImageUri);
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) view.getContext(), mCard, "messaging_transition");
         ActivityCompat.startActivity(this, intent, options.toBundle());
         setResult(Activity.RESULT_OK);

@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.elitedom.app.R;
 import com.elitedom.app.ui.main.PreviewAdapter;
 import com.elitedom.app.ui.main.PreviewCard;
@@ -31,6 +32,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class user_profile extends AppCompatActivity {
 
     private ArrayList<PreviewCard> mTitleData;
@@ -39,6 +42,7 @@ public class user_profile extends AppCompatActivity {
     private ArrayList<String> mTopicNames;
     private TextView username, appreciation, predictor;
     private String currentDorm;
+    private CircleImageView imageView;
 
 
     @Override
@@ -51,6 +55,7 @@ public class user_profile extends AppCompatActivity {
         username = findViewById(R.id.username);
         appreciation = findViewById(R.id.appreciation_score);
         predictor = findViewById(R.id.predictor_score);
+        imageView = findViewById(R.id.profile_image);
         currentDorm = "";
 
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
@@ -91,6 +96,12 @@ public class user_profile extends AppCompatActivity {
                             predictor.setText(Objects.requireNonNull(document.get("predictorPoints")).toString());
                             appreciation.setText(Objects.requireNonNull(document.get("appreciationPoints")).toString());
                             username.setText(Objects.requireNonNull(document.get("firstName")).toString() + " " + Objects.requireNonNull(document.get("lastName")).toString() + "'s Profile");
+                            String image = (String) document.get("image");
+                            if (image != null && image.length() > 0)
+                                Glide.with(user_profile.this)
+                                .load(image)
+                                .into(imageView);
+                            imageView.setContentDescription(image);
                         }
                     }
                 });
