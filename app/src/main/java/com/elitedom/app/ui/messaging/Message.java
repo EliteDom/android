@@ -12,6 +12,7 @@ class Message {
         this.timestamp = timestamp;
         this.imageResource = imageResource;
         this.multipleFlag = multipleFlag;
+        this.sender = sender;
     }
 
     Message(String message, String timestamp, int multipleFlag) {

@@ -1,5 +1,6 @@
 package com.elitedom.app.ui.messaging;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.elitedom.app.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -22,12 +27,14 @@ public class MessageAdapter extends RecyclerView.Adapter {
     private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
     private static final int VIEW_TYPE_MESSAGE_MULTIPLE_SENT = 3;
     private static final int VIEW_TYPE_MESSAGE_MULTIPLE_RECEIVED = 4;
+    private FirebaseFirestore mDatabase;
     private ArrayList<Message> messages;
     private Context mContext;
 
     MessageAdapter(Context context, ArrayList<Message> messages) {
         this.messages = messages;
         this.mContext = context;
+        this.mDatabase = FirebaseFirestore.getInstance();
     }
 
     @NonNull
@@ -123,6 +130,23 @@ public class MessageAdapter extends RecyclerView.Adapter {
         }
     }
 
+    static class ReceivedMultipleViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView message, timestamp;
+
+        ReceivedMultipleViewHolder(final View itemView) {
+            super(itemView);
+
+            message = itemView.findViewById(R.id.text_message_body);
+            timestamp = itemView.findViewById(R.id.text_message_time);
+        }
+
+        void bindTo(Message currentMessage) {
+            message.setText(currentMessage.getMessage());
+            timestamp.setText(currentMessage.getTimestamp());
+        }
+    }
+
     class ReceivedViewHolder extends RecyclerView.ViewHolder {
 
         private TextView message, sender, timestamp;
@@ -140,29 +164,24 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
         void bindTo(Message currentMessage) {
             message.setText(currentMessage.getMessage());
-            sender.setText(currentMessage.getSender());
-            timestamp.setText(currentMessage.getTimestamp());
             Glide.with(mContext)
                     .load(currentMessage.getImageResource())
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(image);
             image.setContentDescription(currentMessage.getImageResource().toString());
-        }
-    }
-
-    static class ReceivedMultipleViewHolder extends RecyclerView.ViewHolder {
-
-        private TextView message, timestamp;
-
-        ReceivedMultipleViewHolder(final View itemView) {
-            super(itemView);
-
-            message = itemView.findViewById(R.id.text_message_body);
-            timestamp = itemView.findViewById(R.id.text_message_time);
-        }
-
-        void bindTo(Message currentMessage) {
-            message.setText(currentMessage.getMessage());
+            mDatabase.collection("users").document(currentMessage.getSender())
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @SuppressLint("SetTextI18n")
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                assert document != null;
+                                sender.setText(document.get("firstName") + " " + document.get("lastName"));
+                            }
+                        }
+                    });
             timestamp.setText(currentMessage.getTimestamp());
         }
     }
