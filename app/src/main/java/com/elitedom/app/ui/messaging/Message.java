@@ -10,7 +10,6 @@ class Message {
     Message(String message, String timestamp, String sender, Uri imageResource, int multipleFlag) {
         this.message = message;
         this.timestamp = timestamp;
-        this.sender = sender;
         this.imageResource = imageResource;
         this.multipleFlag = multipleFlag;
     }
@@ -33,7 +32,9 @@ class Message {
         return timestamp;
     }
 
-    int getMultipleFlag() { return multipleFlag; }
+    int getMultipleFlag() {
+        return multipleFlag;
+    }
 
     Uri getImageResource() {
         return imageResource;

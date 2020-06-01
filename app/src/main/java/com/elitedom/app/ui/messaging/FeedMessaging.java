@@ -91,14 +91,15 @@ public class FeedMessaging extends AppCompatActivity {
                     for (QueryDocumentSnapshot document : Objects.requireNonNull(queryDocumentSnapshots)) {
                         if (document != null) {
                             if (document.get("sender") != null && !Objects.requireNonNull(document.get("sender")).toString().equals(FirebaseAuth.getInstance().getUid()))
-                                messageArrayList.add(new Message((String) document.get("message"), (String) document.get("timestamp"), getProfileSender((String) document.get("sender")), Uri.parse((String) document.get("image")), returnFlagRes(Objects.requireNonNull(flag[0]), (String) document.get("sender"))));
+                                messageArrayList.add(new Message((String) document.get("message"), (String) document.get("timestamp"), (String) document.get("sender"), Uri.parse((String) document.get("image")), returnFlagRes(Objects.requireNonNull(flag[0]), (String) document.get("sender"))));
                             else
                                 messageArrayList.add(new Message((String) document.get("message"), (String) document.get("timestamp"), returnFlagRes(Objects.requireNonNull(flag[0]), (String) document.get("sender"))));
                             flag[0] = (String) document.get("sender");
                         }
                     }
                     mAdapter.notifyDataSetChanged();
-                    if (mAdapter.getItemCount() == 0) mNoMessages.animate().alpha(1.0f);
+                    if (mAdapter.getItemCount() > 0) mNoMessages.animate().alpha(0.0f);
+                    else mNoMessages.animate().alpha(1.0f);
                 }
             }
         });
@@ -113,6 +114,7 @@ public class FeedMessaging extends AppCompatActivity {
                             DocumentSnapshot document = task.getResult();
                             assert document != null;
                             authorImage = (String) document.get("image");
+                            if (authorImage == null) authorImage = "";
                         }
                     }
                 });
@@ -137,26 +139,9 @@ public class FeedMessaging extends AppCompatActivity {
                     .set(messageBlock);
             message.setText("");
             mAdapter.notifyDataSetChanged();
-            if (mAdapter.getItemCount() == 0) mNoMessages.animate().alpha(0.0f);
+            if (mAdapter.getItemCount() >= 0) mNoMessages.animate().alpha(0.0f);
         } else
             Toast.makeText(getApplicationContext(), "No message body!", Toast.LENGTH_SHORT).show();
-    }
-
-    private String getProfileSender(String uid) {
-        final String[] sender = {""};
-        mDatabase.collection("users").document(uid)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            assert document != null;
-                            sender[0] = document.get("firstName") + " " + document.get("lastName");
-                        }
-                    }
-                });
-        return sender[0];
     }
 
     private String getDate(String time) {
