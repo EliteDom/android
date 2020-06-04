@@ -33,12 +33,12 @@ import java.util.Objects;
 
 public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHolder> {
 
+    private String profileUri;
     private FirebaseFirestore mDatabase;
     private ArrayList<PreviewCard> mTopicsData;
     private Context mContext;
     private String transitionType;
     private View image, name, card;
-    String profileUri;
     private int intentID;
 
     public PreviewAdapter(Context context, ArrayList<PreviewCard> topicData, String transitionType, int intentID) {
