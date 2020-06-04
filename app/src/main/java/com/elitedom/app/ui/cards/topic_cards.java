@@ -1,6 +1,7 @@
 package com.elitedom.app.ui.cards;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
@@ -10,6 +11,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -36,6 +39,7 @@ public class topic_cards extends AppCompatActivity {
     private FirebaseFirestore mDatabase;
     private ArrayList<Cards> mTopicData;
     private CardsAdapter mAdapter;
+    private RecyclerView mRecycler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,19 +57,19 @@ public class topic_cards extends AppCompatActivity {
         mTopicData = new ArrayList<>();
         mDatabase = FirebaseFirestore.getInstance();
         RelativeLayout relativeLayout = findViewById(R.id.card_container);
-        RecyclerView mRecyclerView = findViewById(R.id.recyclerView);
+        mRecycler = findViewById(R.id.recyclerView);
 
         AnimationDrawable animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
         animationDrawable.setEnterFadeDuration(2000);
         animationDrawable.setExitFadeDuration(4000);
         animationDrawable.start();
 
-        mRecyclerView.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
-        mRecyclerView.setClipToOutline(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecycler.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
+        mRecycler.setClipToOutline(true);
+        mRecycler.setLayoutManager(new LinearLayoutManager(this));
 
         mAdapter = new CardsAdapter(this, mTopicData);
-        mRecyclerView.setAdapter(mAdapter);
+        mRecycler.setAdapter(mAdapter);
 
         initializeData();
 
@@ -79,6 +83,7 @@ public class topic_cards extends AppCompatActivity {
                                                                            return false;
                                                                        }
 
+                                                                       @SuppressWarnings("deprecation")
                                                                        @Override
                                                                        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder,
                                                                                             int direction) {
@@ -86,7 +91,7 @@ public class topic_cards extends AppCompatActivity {
                                                                            mAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
                                                                        }
                                                                    });
-        helper.attachToRecyclerView(mRecyclerView);
+        helper.attachToRecyclerView(mRecycler);
     }
 
     private void initializeData() {
@@ -100,6 +105,7 @@ public class topic_cards extends AppCompatActivity {
                             for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult()))
                                 mTopicData.add(new Cards((String) document.get("name"), (String) document.get("description"), Uri.parse((String) document.get("image"))));
                             mAdapter.notifyDataSetChanged();
+                            runLayoutAnimation(mRecycler);
                         }
                     }
                 });
@@ -114,5 +120,15 @@ public class topic_cards extends AppCompatActivity {
             finish();
         } else
             Toast.makeText(getApplicationContext(), "Please select a Category!", Toast.LENGTH_SHORT).show();
+    }
+
+    private void runLayoutAnimation(final RecyclerView recyclerView) {
+        final Context context = recyclerView.getContext();
+        final LayoutAnimationController controller =
+                AnimationUtils.loadLayoutAnimation(context, R.anim.layout_topic_cards_animation);
+
+        recyclerView.setLayoutAnimation(controller);
+        Objects.requireNonNull(recyclerView.getAdapter()).notifyDataSetChanged();
+        recyclerView.scheduleLayoutAnimation();
     }
 }

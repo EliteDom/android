@@ -1,6 +1,7 @@
 package com.elitedom.app.ui.main;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
@@ -10,6 +11,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
@@ -38,6 +41,7 @@ public class Feed extends AppCompatActivity {
     private PreviewAdapter mAdapter;
     private FirebaseFirestore mDatabase;
     private ArrayList<String> mTopicNames;
+    private RecyclerView mRecycler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,14 +65,14 @@ public class Feed extends AppCompatActivity {
         animationDrawable.setExitFadeDuration(4000);
         animationDrawable.start();
 
-        RecyclerView mRecyclerView = findViewById(R.id.recyclerView);
-        mRecyclerView.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
-        mRecyclerView.setClipToOutline(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecycler = findViewById(R.id.recyclerView);
+        mRecycler.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
+        mRecycler.setClipToOutline(true);
+        mRecycler.setLayoutManager(new LinearLayoutManager(this));
 
         mTitleData = new ArrayList<>();
         mAdapter = new PreviewAdapter(this, mTitleData, "post_expansion", 1);
-        mRecyclerView.setAdapter(mAdapter);
+        mRecycler.setAdapter(mAdapter);
         mTopicNames = getIntent().getStringArrayListExtra("cards");
 
         initializeData();
@@ -86,6 +90,7 @@ public class Feed extends AppCompatActivity {
                                 for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult()))
                                     mTitleData.add(new PreviewCard((String) document.get("title"), (String) document.get("postText"), document.get("author") + " | Authored " + document.get("timestamp") + " ago", document.getId(), i, Uri.parse((String) document.get("image"))));
                                 mAdapter.notifyDataSetChanged();
+                                runLayoutAnimation(mRecycler);
                             }
                         }
                     });
@@ -116,5 +121,15 @@ public class Feed extends AppCompatActivity {
         startActivity(new Intent(Feed.this, LoginActivity.class));
         setResult(RESULT_OK);
         finish();
+    }
+
+    private void runLayoutAnimation(final RecyclerView recyclerView) {
+        final Context context = recyclerView.getContext();
+        final LayoutAnimationController controller =
+                AnimationUtils.loadLayoutAnimation(context, R.anim.layout_topic_cards_animation);
+
+        recyclerView.setLayoutAnimation(controller);
+        Objects.requireNonNull(recyclerView.getAdapter()).notifyDataSetChanged();
+        recyclerView.scheduleLayoutAnimation();
     }
 }
