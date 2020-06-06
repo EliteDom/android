@@ -99,9 +99,8 @@ public class FeedMessaging extends AppCompatActivity {
                         }
                     }
                     mAdapter.notifyDataSetChanged();
-                    if (mAdapter.getItemCount() > 0) mNoMessages.animate().alpha(0.0f);
+                    if (mAdapter.getItemCount() > 0) scrollToBottom();
                     else mNoMessages.animate().alpha(1.0f);
-                    scrollToBottom();
                 }
             }
         });
@@ -156,6 +155,7 @@ public class FeedMessaging extends AppCompatActivity {
     }
 
     private void scrollToBottom() {
+        mNoMessages.animate().alpha(0.0f);
         mRecyclerView.post(new Runnable() {
             @Override
             public void run() {

@@ -2,6 +2,7 @@ package com.elitedom.app.ui.main;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -27,6 +28,8 @@ public class PostView extends AppCompatActivity {
 
     private CardView mCard;
     private TextView mPostTitle, mPostText;
+    private ImageView mLiked, mDisliked;
+    private int like_status, dislike_status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,8 @@ public class PostView extends AppCompatActivity {
         ImageView mPostImage = findViewById(R.id.postImage);
         mCard = findViewById(R.id.action_cards);
         mPostTitle = findViewById(R.id.title);
+        mLiked = findViewById(R.id.liked);
+        mDisliked = findViewById(R.id.disliked);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         Objects.requireNonNull(getSupportActionBar()).hide();
@@ -75,5 +80,59 @@ public class PostView extends AppCompatActivity {
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) view.getContext(), mCard, "messaging_transition");
         ActivityCompat.startActivity(this, intent, options.toBundle());
         setResult(Activity.RESULT_OK);
+    }
+
+    public void likePost(View view) {
+        if (dislike_status == 1) {
+            AnimatedVectorDrawable animatedVectorDrawable =
+                    (AnimatedVectorDrawable) getDrawable(R.drawable.ic_thumb_down_liked_24dp);
+            mDisliked.setImageDrawable(animatedVectorDrawable);
+            assert animatedVectorDrawable != null;
+            animatedVectorDrawable.start();
+            dislike_status = 0;
+        }
+        if (like_status == 0) {
+            AnimatedVectorDrawable animatedVectorDrawable =
+                    (AnimatedVectorDrawable) getDrawable(R.drawable.ic_thumb_up_unliked_24dp);
+            mLiked.setImageDrawable(animatedVectorDrawable);
+            assert animatedVectorDrawable != null;
+            animatedVectorDrawable.start();
+            like_status = 1;
+        }
+        else {
+            AnimatedVectorDrawable animatedVectorDrawable =
+                    (AnimatedVectorDrawable) getDrawable(R.drawable.ic_thumb_up_liked_24dp);
+            mLiked.setImageDrawable(animatedVectorDrawable);
+            assert animatedVectorDrawable != null;
+            animatedVectorDrawable.start();
+            like_status = 0;
+        }
+    }
+
+    public void dislikePost(View view) {
+        if (like_status == 1) {
+            AnimatedVectorDrawable animatedVectorDrawable =
+                    (AnimatedVectorDrawable) getDrawable(R.drawable.ic_thumb_up_liked_24dp);
+            mLiked.setImageDrawable(animatedVectorDrawable);
+            assert animatedVectorDrawable != null;
+            animatedVectorDrawable.start();
+            like_status = 0;
+        }
+        if (dislike_status == 0) {
+            AnimatedVectorDrawable animatedVectorDrawable =
+                    (AnimatedVectorDrawable) getDrawable(R.drawable.ic_thumb_down_unliked_24dp);
+            mDisliked.setImageDrawable(animatedVectorDrawable);
+            assert animatedVectorDrawable != null;
+            animatedVectorDrawable.start();
+            dislike_status = 1;
+        }
+        else {
+            AnimatedVectorDrawable animatedVectorDrawable =
+                    (AnimatedVectorDrawable) getDrawable(R.drawable.ic_thumb_down_liked_24dp);
+            mDisliked.setImageDrawable(animatedVectorDrawable);
+            assert animatedVectorDrawable != null;
+            animatedVectorDrawable.start();
+            dislike_status = 0;
+        }
     }
 }

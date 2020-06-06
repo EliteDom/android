@@ -1419,7 +1419,6 @@ drawable gradient_2
 drawable gradient_3
 drawable gradient_list
 drawable ic_account_circle_white_24dp
-drawable ic_arrow_back_white_24dp
 drawable ic_calendar_black_24dp
 drawable ic_chat_white_24dp
 drawable ic_clear_black_24dp
@@ -1441,7 +1440,11 @@ drawable ic_reply_white_24dp
 drawable ic_reset
 drawable ic_share_white_24dp
 drawable ic_thumb_down_alt_white_24dp
+drawable ic_thumb_down_liked_24dp
+drawable ic_thumb_down_unliked_24dp
 drawable ic_thumb_up_alt_white_24dp
+drawable ic_thumb_up_liked_24dp
+drawable ic_thumb_up_unliked_24dp
 drawable message_bubble
 drawable mtrl_dialog_background
 drawable mtrl_dropdown_arrow
@@ -1588,6 +1591,7 @@ id dialog_button
 id dimensions
 id direct
 id disableHome
+id disliked
 id dropdown_menu
 id edit_query
 id edittext_chatbox
@@ -1639,6 +1643,7 @@ id last_name
 id layout_chatbox
 id left
 id light
+id liked
 id line1
 id line3
 id linearLayout
