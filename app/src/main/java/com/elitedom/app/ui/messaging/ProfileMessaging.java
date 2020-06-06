@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewOutlineProvider;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -41,7 +40,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileMessaging extends AppCompatActivity {
 
-    private SoftKeyboardAdapter softKeyboardAdapter;
     private EditText message;
     private String uid, dorm, authorImage;
     private FirebaseFirestore mDatabase;
@@ -54,9 +52,8 @@ public class ProfileMessaging extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_messaging);
 
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
         RelativeLayout relativeLayout = findViewById(R.id.user_feed_container);
@@ -65,7 +62,6 @@ public class ProfileMessaging extends AppCompatActivity {
         animationDrawable.setExitFadeDuration(4000);
         animationDrawable.start();
 
-        softKeyboardAdapter = new SoftKeyboardAdapter(this);
         TextView mUsername = findViewById(R.id.username);
         mUsername.setText(getIntent().getStringExtra("username"));
 
@@ -88,24 +84,6 @@ public class ProfileMessaging extends AppCompatActivity {
                 .into(mProfileImage);
         mRecyclerView.setAdapter(mAdapter);
         initializeData();
-    }
-
-    @Override
-    protected void onResume() {
-        softKeyboardAdapter.onResume();
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        softKeyboardAdapter.onPause();
-        super.onPause();
-    }
-
-    @Override
-    public void onDestroy() {
-        softKeyboardAdapter.onDestroy();
-        super.onDestroy();
     }
 
     private int returnFlagRes(String prev_author, String cur_author) {
