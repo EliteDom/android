@@ -41,6 +41,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileMessaging extends AppCompatActivity {
 
+    private SoftKeyboardAdapter softKeyboardAdapter;
     private EditText message;
     private String uid, dorm, authorImage;
     private FirebaseFirestore mDatabase;
@@ -64,6 +65,7 @@ public class ProfileMessaging extends AppCompatActivity {
         animationDrawable.setExitFadeDuration(4000);
         animationDrawable.start();
 
+        softKeyboardAdapter = new SoftKeyboardAdapter(this);
         TextView mUsername = findViewById(R.id.username);
         mUsername.setText(getIntent().getStringExtra("username"));
 
@@ -86,6 +88,24 @@ public class ProfileMessaging extends AppCompatActivity {
                 .into(mProfileImage);
         mRecyclerView.setAdapter(mAdapter);
         initializeData();
+    }
+
+    @Override
+    protected void onResume() {
+        softKeyboardAdapter.onResume();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        softKeyboardAdapter.onPause();
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        softKeyboardAdapter.onDestroy();
+        super.onDestroy();
     }
 
     private int returnFlagRes(String prev_author, String cur_author) {

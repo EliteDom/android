@@ -1677,6 +1677,8 @@ id mtrl_picker_text_input_date
 id mtrl_picker_text_input_range_end
 id mtrl_picker_text_input_range_start
 id mtrl_picker_title_text
+id multiple_received
+id multiple_sent
 id multiply
 id navigation_header_container
 id never
@@ -1743,6 +1745,8 @@ id showCustom
 id showHome
 id showTitle
 id single_card
+id single_received
+id single_sent
 id singlecardlayout
 id skipCollapsed
 id slide
