@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewOutlineProvider;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -44,14 +43,15 @@ public class FeedMessaging extends AppCompatActivity {
     private FirebaseFirestore mDatabase;
     private EditText message;
     private TextView mNoMessages;
+    private RecyclerView mRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed_messaging);
 
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
         RelativeLayout relativeLayout = findViewById(R.id.user_feed_container);
@@ -60,7 +60,7 @@ public class FeedMessaging extends AppCompatActivity {
         animationDrawable.setExitFadeDuration(4000);
         animationDrawable.start();
 
-        RecyclerView mRecyclerView = findViewById(R.id.messageList);
+        mRecyclerView = findViewById(R.id.messageList);
         mRecyclerView.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
         mRecyclerView.setClipToOutline(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -99,7 +99,7 @@ public class FeedMessaging extends AppCompatActivity {
                         }
                     }
                     mAdapter.notifyDataSetChanged();
-                    if (mAdapter.getItemCount() > 0) mNoMessages.animate().alpha(0.0f);
+                    if (mAdapter.getItemCount() > 0) scrollToBottom();
                     else mNoMessages.animate().alpha(1.0f);
                 }
             }
@@ -152,5 +152,15 @@ public class FeedMessaging extends AppCompatActivity {
             if (res.length() > 5) break;
         }
         return res.toString();
+    }
+
+    private void scrollToBottom() {
+        mNoMessages.animate().alpha(0.0f);
+        mRecyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                mRecyclerView.smoothScrollToPosition(mAdapter.getItemCount() - 1);
+            }
+        });
     }
 }

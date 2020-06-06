@@ -1,6 +1,7 @@
 package com.elitedom.app.ui.profile;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
@@ -9,6 +10,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -43,6 +46,7 @@ public class user_profile extends AppCompatActivity {
     private TextView username, appreciation, predictor;
     private String currentDorm;
     private CircleImageView imageView;
+    private RecyclerView mRecycler;
 
 
     @Override
@@ -69,15 +73,15 @@ public class user_profile extends AppCompatActivity {
         animationDrawable.setExitFadeDuration(4000);
         animationDrawable.start();
 
-        RecyclerView mRecyclerView = findViewById(R.id.recyclerView);
-        mRecyclerView.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
-        mRecyclerView.setClipToOutline(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecycler = findViewById(R.id.recyclerView);
+        mRecycler.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
+        mRecycler.setClipToOutline(true);
+        mRecycler.setLayoutManager(new LinearLayoutManager(this));
 
         mTitleData = new ArrayList<>();
         mAdapter = new PreviewAdapter(this, mTitleData, "post_expansion", 2);
         mAdapter.sendContext(findViewById(R.id.profile_image), findViewById(R.id.username), findViewById(R.id.user_profile_holder));
-        mRecyclerView.setAdapter(mAdapter);
+        mRecycler.setAdapter(mAdapter);
 
         mTopicNames = getIntent().getStringArrayListExtra("cards");
         initializeData();
@@ -117,6 +121,7 @@ public class user_profile extends AppCompatActivity {
                                 for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult()))
                                     mTitleData.add(new PreviewCard((String) document.get("title"), (String) document.get("postText"), document.get("author") + " | Authored " + document.get("timestamp") + " ago", document.getId(), user_profile.this.currentDorm, Uri.parse((String) document.get("image"))));
                                 mAdapter.notifyDataSetChanged();
+                                runLayoutAnimation(mRecycler);
                             }
                         }
                     });
@@ -126,5 +131,15 @@ public class user_profile extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         supportFinishAfterTransition();
+    }
+
+    private void runLayoutAnimation(final RecyclerView recyclerView) {
+        final Context context = recyclerView.getContext();
+        final LayoutAnimationController controller =
+                AnimationUtils.loadLayoutAnimation(context, R.anim.layout_topic_cards_animation);
+
+        recyclerView.setLayoutAnimation(controller);
+        Objects.requireNonNull(recyclerView.getAdapter()).notifyDataSetChanged();
+        recyclerView.scheduleLayoutAnimation();
     }
 }

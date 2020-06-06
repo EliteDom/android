@@ -114,9 +114,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
     }
 
     static class SentMultipleViewHolder extends RecyclerView.ViewHolder {
-
         private TextView message, timestamp;
-
         SentMultipleViewHolder(final View itemView) {
             super(itemView);
 
