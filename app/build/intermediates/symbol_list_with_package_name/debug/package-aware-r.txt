@@ -1439,10 +1439,8 @@ drawable ic_mtrl_chip_close_circle
 drawable ic_reply_white_24dp
 drawable ic_reset
 drawable ic_share_white_24dp
-drawable ic_thumb_down_alt_white_24dp
 drawable ic_thumb_down_liked_24dp
 drawable ic_thumb_down_unliked_24dp
-drawable ic_thumb_up_alt_white_24dp
 drawable ic_thumb_up_liked_24dp
 drawable ic_thumb_up_unliked_24dp
 drawable message_bubble
