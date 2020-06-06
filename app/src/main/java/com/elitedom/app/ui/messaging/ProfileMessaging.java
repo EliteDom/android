@@ -46,6 +46,7 @@ public class ProfileMessaging extends AppCompatActivity {
     private ArrayList<Message> messageArrayList;
     private MessageAdapter mAdapter;
     private TextView mNoMessages;
+    private RecyclerView mRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +66,7 @@ public class ProfileMessaging extends AppCompatActivity {
         TextView mUsername = findViewById(R.id.username);
         mUsername.setText(getIntent().getStringExtra("username"));
 
-        RecyclerView mRecyclerView = findViewById(R.id.messageList);
+        mRecyclerView = findViewById(R.id.messageList);
         mRecyclerView.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
         mRecyclerView.setClipToOutline(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -111,6 +112,7 @@ public class ProfileMessaging extends AppCompatActivity {
                     mAdapter.notifyDataSetChanged();
                     if (mAdapter.getItemCount() > 0) mNoMessages.animate().alpha(0.0f);
                     else mNoMessages.animate().alpha(1.0f);
+                    scrollToBottom();
                 }
             }
         });
@@ -162,5 +164,14 @@ public class ProfileMessaging extends AppCompatActivity {
             if (res.length() > 5) break;
         }
         return res.toString();
+    }
+
+    private void scrollToBottom() {
+        mRecyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                mRecyclerView.smoothScrollToPosition(mAdapter.getItemCount() - 1);
+            }
+        });
     }
 }

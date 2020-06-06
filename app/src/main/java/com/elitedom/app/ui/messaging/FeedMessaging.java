@@ -1,14 +1,11 @@
 package com.elitedom.app.ui.messaging;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewOutlineProvider;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -46,6 +43,7 @@ public class FeedMessaging extends AppCompatActivity {
     private FirebaseFirestore mDatabase;
     private EditText message;
     private TextView mNoMessages;
+    private RecyclerView mRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +60,7 @@ public class FeedMessaging extends AppCompatActivity {
         animationDrawable.setExitFadeDuration(4000);
         animationDrawable.start();
 
-        RecyclerView mRecyclerView = findViewById(R.id.messageList);
+        mRecyclerView = findViewById(R.id.messageList);
         mRecyclerView.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
         mRecyclerView.setClipToOutline(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -103,6 +101,7 @@ public class FeedMessaging extends AppCompatActivity {
                     mAdapter.notifyDataSetChanged();
                     if (mAdapter.getItemCount() > 0) mNoMessages.animate().alpha(0.0f);
                     else mNoMessages.animate().alpha(1.0f);
+                    scrollToBottom();
                 }
             }
         });
@@ -154,5 +153,14 @@ public class FeedMessaging extends AppCompatActivity {
             if (res.length() > 5) break;
         }
         return res.toString();
+    }
+
+    private void scrollToBottom() {
+        mRecyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                mRecyclerView.smoothScrollToPosition(mAdapter.getItemCount() - 1);
+            }
+        });
     }
 }

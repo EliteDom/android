@@ -43,19 +43,21 @@
         android:id="@+id/user_profile_holder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         android:animateLayoutChanges="true"
+        android:transitionName="post_cards"
         app:cardCornerRadius="16dp"
         app:cardElevation="0dp"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@id/profile_data"
+        tools:ignore="InefficientWeight">
 
         <RelativeLayout
             android:id="@+id/user_feed_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:animateLayoutChanges="true"
-            android:fitsSystemWindows="true"
             android:background="@drawable/gradient_list"
-            android:clipToPadding="false">
+            android:fitsSystemWindows="true">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/post_view"
@@ -64,6 +66,11 @@
                 android:layout_margin="16dp"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="0dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false">
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/action_cards"
@@ -94,7 +101,7 @@
                             android:layout_margin="6dp"
                             android:background="@drawable/message_bubble"
                             android:elevation="4dp"
-                            android:padding="5dp"
+                            android:padding="6dp"
                             android:text="@string/chatroom"
                             android:textSize="20sp"
                             android:textStyle="bold" />
@@ -108,7 +115,8 @@
                             android:background="@drawable/custom_relativelayout"
                             android:clipChildren="true"
                             android:layoutAnimation="@anim/layout_topic_cards_animation"
-                            android:padding="@dimen/activity_horizontal_margin"
+                            android:paddingHorizontal="6dp"
+                            android:paddingVertical="16dp"
                             android:scrollbars="none" />
 
                         <LinearLayout
@@ -146,9 +154,9 @@
                                 android:onClick="sendMessage"
                                 android:src="@drawable/ic_reply_white_24dp"
                                 tools:ignore="ContentDescription" />
-
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
+                </RelativeLayout>
             </androidx.cardview.widget.CardView>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
