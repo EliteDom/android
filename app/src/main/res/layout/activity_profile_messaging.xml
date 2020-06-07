@@ -137,6 +137,7 @@
                                 android:layout_weight="1"
                                 android:background="@drawable/message_bubble"
                                 android:hint="@string/message_prompt"
+                                android:textColor="@android:color/darker_gray"
                                 android:importantForAutofill="no"
                                 android:inputType="textCapSentences"
                                 android:maxLines="10"

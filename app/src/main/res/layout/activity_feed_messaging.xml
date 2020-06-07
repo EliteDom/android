@@ -85,6 +85,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="4dp"
                         android:layout_weight="1"
+                        android:textColor="@android:color/darker_gray"
                         android:background="@drawable/message_bubble"
                         android:hint="@string/message_prompt"
                         android:importantForAutofill="no"
