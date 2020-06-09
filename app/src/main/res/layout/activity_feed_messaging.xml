@@ -103,7 +103,7 @@
                         android:focusable="true"
                         android:gravity="center"
                         android:onClick="sendMessage"
-                        android:src="@drawable/ic_reply_white_24dp"
+                        android:src="@drawable/ic_send_black_24dp"
                         tools:ignore="ContentDescription" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>

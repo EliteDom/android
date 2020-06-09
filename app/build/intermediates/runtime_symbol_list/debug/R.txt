@@ -1435,8 +1435,8 @@ int drawable ic_mtrl_checked_circle 0x7f0700a0
 int drawable ic_mtrl_chip_checked_black 0x7f0700a1
 int drawable ic_mtrl_chip_checked_circle 0x7f0700a2
 int drawable ic_mtrl_chip_close_circle 0x7f0700a3
-int drawable ic_reply_white_24dp 0x7f0700a4
-int drawable ic_reset 0x7f0700a5
+int drawable ic_reset 0x7f0700a4
+int drawable ic_send_black_24dp 0x7f0700a5
 int drawable ic_share_white_24dp 0x7f0700a6
 int drawable ic_thumb_down_liked_24dp 0x7f0700a7
 int drawable ic_thumb_down_unliked_24dp 0x7f0700a8
