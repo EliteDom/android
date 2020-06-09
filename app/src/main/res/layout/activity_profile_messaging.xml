@@ -119,6 +119,19 @@
                             android:paddingVertical="16dp"
                             android:scrollbars="none" />
 
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/messageList"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="30dp"
+                            android:layout_marginBottom="44dp"
+                            android:background="@drawable/custom_relativelayout"
+                            android:clipChildren="true"
+                            android:layoutAnimation="@anim/layout_topic_cards_animation"
+                            android:paddingHorizontal="6dp"
+                            android:paddingVertical="16dp"
+                            android:scrollbars="none" />
+
                         <LinearLayout
                             android:id="@+id/layout_chatbox"
                             android:layout_width="match_parent"
@@ -137,6 +150,7 @@
                                 android:layout_weight="1"
                                 android:background="@drawable/message_bubble"
                                 android:hint="@string/message_prompt"
+                                android:textColor="@android:color/darker_gray"
                                 android:importantForAutofill="no"
                                 android:inputType="textCapSentences"
                                 android:maxLines="10"
@@ -152,7 +166,7 @@
                                 android:focusable="true"
                                 android:gravity="center"
                                 android:onClick="sendMessage"
-                                android:src="@drawable/ic_reply_white_24dp"
+                                android:src="@drawable/ic_send_black_24dp"
                                 tools:ignore="ContentDescription" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>

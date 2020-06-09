@@ -85,6 +85,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="4dp"
                         android:layout_weight="1"
+                        android:textColor="@android:color/darker_gray"
                         android:background="@drawable/message_bubble"
                         android:hint="@string/message_prompt"
                         android:importantForAutofill="no"
@@ -102,7 +103,7 @@
                         android:focusable="true"
                         android:gravity="center"
                         android:onClick="sendMessage"
-                        android:src="@drawable/ic_reply_white_24dp"
+                        android:src="@drawable/ic_send_black_24dp"
                         tools:ignore="ContentDescription" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>

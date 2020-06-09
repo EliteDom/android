@@ -1436,8 +1436,8 @@ drawable ic_mtrl_checked_circle
 drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
-drawable ic_reply_white_24dp
 drawable ic_reset
+drawable ic_send_black_24dp
 drawable ic_share_white_24dp
 drawable ic_thumb_down_liked_24dp
 drawable ic_thumb_down_unliked_24dp
