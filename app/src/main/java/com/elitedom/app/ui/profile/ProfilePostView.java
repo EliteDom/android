@@ -115,7 +115,28 @@ public class ProfilePostView extends AppCompatActivity {
                         }
                     }
                 });
-        // TODO: Check if a like/dislike has been made
+
+        mDatabase.collection("users").document(FirebaseAuth.getInstance().getUid()).collection("postActions").document(mPostTitle.getContentDescription().toString())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document != null && document.exists()) {
+                                long status = (long) document.get("status");
+                                if (status == 0) {
+                                    dislike_status = 1;
+                                    mDisliked.setImageResource(R.drawable.ic_thumb_down_black_24dp);
+                                }
+                                else if (status == 1) {
+                                    like_status = 1;
+                                    mLiked.setImageResource(R.drawable.ic_thumb_up_black_24dp);
+                                }
+                            }
+                        }
+                    }
+                });
     }
 
     public void backAction(View view) {
@@ -147,7 +168,7 @@ public class ProfilePostView extends AppCompatActivity {
             assert animatedVectorDrawable != null;
             animatedVectorDrawable.start();
             dislike_status = 0;
-            incrementVote();
+            incrementVote(1);
         }
         if (like_status == 0) {
             AnimatedVectorDrawable animatedVectorDrawable =
@@ -156,7 +177,7 @@ public class ProfilePostView extends AppCompatActivity {
             assert animatedVectorDrawable != null;
             animatedVectorDrawable.start();
             like_status = 1;
-            incrementVote();
+            incrementVote(1);
         } else {
             AnimatedVectorDrawable animatedVectorDrawable =
                     (AnimatedVectorDrawable) getDrawable(R.drawable.ic_thumb_up_liked_24dp);
@@ -164,7 +185,7 @@ public class ProfilePostView extends AppCompatActivity {
             assert animatedVectorDrawable != null;
             animatedVectorDrawable.start();
             like_status = 0;
-            decrementVote();
+            decrementVote(2);
         }
     }
 
@@ -176,7 +197,7 @@ public class ProfilePostView extends AppCompatActivity {
             assert animatedVectorDrawable != null;
             animatedVectorDrawable.start();
             like_status = 0;
-            decrementVote();
+            decrementVote(0);
         }
         if (dislike_status == 0) {
             AnimatedVectorDrawable animatedVectorDrawable =
@@ -185,7 +206,7 @@ public class ProfilePostView extends AppCompatActivity {
             assert animatedVectorDrawable != null;
             animatedVectorDrawable.start();
             dislike_status = 1;
-            decrementVote();
+            decrementVote(0);
         } else {
             AnimatedVectorDrawable animatedVectorDrawable =
                     (AnimatedVectorDrawable) getDrawable(R.drawable.ic_thumb_down_liked_24dp);
@@ -193,25 +214,31 @@ public class ProfilePostView extends AppCompatActivity {
             assert animatedVectorDrawable != null;
             animatedVectorDrawable.start();
             dislike_status = 0;
-            incrementVote();
+            incrementVote(2);
         }
     }
 
-    private void incrementVote() {
+    private void incrementVote(int statusId) {
         Map<String, Object> data = new HashMap<>();
         data.put("apprs", appreciations + 1);
         mDatabase.collection("dorms").document(mPostText.getContentDescription().toString()).collection("posts").document(mPostTitle.getContentDescription().toString())
                 .set(data, SetOptions.merge());
         appreciations += 1;
-        // TODO: Assign the increment to the user id
+        data = new HashMap<>();
+        data.put("status", statusId);
+        mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).collection("postActions").document(mPostTitle.getContentDescription().toString())
+                .set(data, SetOptions.merge());
     }
 
-    private void decrementVote() {
+    private void decrementVote(int statusId) {
         Map<String, Object> data = new HashMap<>();
         data.put("apprs", appreciations - 1);
         mDatabase.collection("dorms").document(mPostText.getContentDescription().toString()).collection("posts").document(mPostTitle.getContentDescription().toString())
                 .set(data, SetOptions.merge());
+        data = new HashMap<>();
+        data.put("status", statusId);
+        mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).collection("postActions").document(mPostTitle.getContentDescription().toString())
+                .set(data, SetOptions.merge());
         appreciations -= 1;
-        // TODO: Assign the decrement to the user id
     }
 }
