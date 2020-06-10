@@ -70,7 +70,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
-                        android:onClick="likePost"
+                        android:onClick="likeIcon"
                         android:src="@drawable/ic_thumb_up_unliked_24dp"
                         tools:ignore="ContentDescription" />
 
@@ -79,7 +79,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
-                        android:onClick="dislikePost"
+                        android:onClick="dislikeIcon"
                         android:src="@drawable/ic_thumb_down_unliked_24dp"
                         tools:ignore="ContentDescription" />
 

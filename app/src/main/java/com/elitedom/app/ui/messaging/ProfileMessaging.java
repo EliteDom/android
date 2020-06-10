@@ -85,6 +85,13 @@ public class ProfileMessaging extends AppCompatActivity {
                 .into(mProfileImage);
         mRecyclerView.setAdapter(mAdapter);
         initializeData();
+
+        message.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                scrollToBottom();
+            }
+        });
     }
 
     private int returnFlagRes(String prev_author, String cur_author) {

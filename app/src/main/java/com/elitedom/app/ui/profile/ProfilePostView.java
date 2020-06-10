@@ -33,7 +33,7 @@ import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class profile_post extends AppCompatActivity {
+public class ProfilePostView extends AppCompatActivity {
 
     private String profileImageUri;
     private CardView mCard;
@@ -121,7 +121,7 @@ public class profile_post extends AppCompatActivity {
         supportFinishAfterTransition();
     }
 
-    public void likePost(View view) {
+    public void likeIcon(View view) {
         if (dislike_status == 1) {
             AnimatedVectorDrawable animatedVectorDrawable =
                     (AnimatedVectorDrawable) getDrawable(R.drawable.ic_thumb_down_liked_24dp);
@@ -129,6 +129,7 @@ public class profile_post extends AppCompatActivity {
             assert animatedVectorDrawable != null;
             animatedVectorDrawable.start();
             dislike_status = 0;
+            incrementVote();
         }
         if (like_status == 0) {
             AnimatedVectorDrawable animatedVectorDrawable =
@@ -137,6 +138,7 @@ public class profile_post extends AppCompatActivity {
             assert animatedVectorDrawable != null;
             animatedVectorDrawable.start();
             like_status = 1;
+            incrementVote();
         }
         else {
             AnimatedVectorDrawable animatedVectorDrawable =
@@ -145,10 +147,11 @@ public class profile_post extends AppCompatActivity {
             assert animatedVectorDrawable != null;
             animatedVectorDrawable.start();
             like_status = 0;
+            decrementVote();
         }
     }
 
-    public void dislikePost(View view) {
+    public void dislikeIcon(View view) {
         if (like_status == 1) {
             AnimatedVectorDrawable animatedVectorDrawable =
                     (AnimatedVectorDrawable) getDrawable(R.drawable.ic_thumb_up_liked_24dp);
@@ -156,6 +159,7 @@ public class profile_post extends AppCompatActivity {
             assert animatedVectorDrawable != null;
             animatedVectorDrawable.start();
             like_status = 0;
+            decrementVote();
         }
         if (dislike_status == 0) {
             AnimatedVectorDrawable animatedVectorDrawable =
@@ -164,6 +168,7 @@ public class profile_post extends AppCompatActivity {
             assert animatedVectorDrawable != null;
             animatedVectorDrawable.start();
             dislike_status = 1;
+            decrementVote();
         }
         else {
             AnimatedVectorDrawable animatedVectorDrawable =
@@ -172,6 +177,15 @@ public class profile_post extends AppCompatActivity {
             assert animatedVectorDrawable != null;
             animatedVectorDrawable.start();
             dislike_status = 0;
+            incrementVote();
         }
+    }
+
+    private void incrementVote() {
+
+    }
+
+    private void decrementVote() {
+
     }
 }

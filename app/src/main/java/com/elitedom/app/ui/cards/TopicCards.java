@@ -34,7 +34,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class topic_cards extends AppCompatActivity {
+public class TopicCards extends AppCompatActivity {
 
     private FirebaseFirestore mDatabase;
     private ArrayList<Cards> mTopicData;

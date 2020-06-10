@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.elitedom.app.R;
-import com.elitedom.app.ui.cards.topic_cards;
+import com.elitedom.app.ui.cards.TopicCards;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class newUser extends AppCompatActivity {
+public class NewUser extends AppCompatActivity {
 
     private EditText mUsername, mFirstName, mLastName;
     private FirebaseFirestore mDatabase;
@@ -70,7 +70,7 @@ public class newUser extends AppCompatActivity {
                     .document(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
                     .set(userData);
 
-            startActivity(new Intent(this, topic_cards.class));
+            startActivity(new Intent(this, TopicCards.class));
             setResult(Activity.RESULT_OK);
             finish();
         } else

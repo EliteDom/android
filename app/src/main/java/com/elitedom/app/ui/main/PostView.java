@@ -5,13 +5,16 @@ import android.content.Intent;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
@@ -21,7 +24,15 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.elitedom.app.R;
 import com.elitedom.app.ui.messaging.FeedMessaging;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.core.operation.Merge;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class PostView extends AppCompatActivity {
@@ -29,7 +40,9 @@ public class PostView extends AppCompatActivity {
     private CardView mCard;
     private TextView mPostTitle, mPostText;
     private ImageView mLiked, mDisliked;
+    private FirebaseFirestore mDatabase;
     private int like_status, dislike_status;
+    private long appreciations;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +57,7 @@ public class PostView extends AppCompatActivity {
         mPostTitle = findViewById(R.id.title);
         mLiked = findViewById(R.id.liked);
         mDisliked = findViewById(R.id.disliked);
+        mDatabase = FirebaseFirestore.getInstance();
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         Objects.requireNonNull(getSupportActionBar()).hide();
@@ -63,9 +77,21 @@ public class PostView extends AppCompatActivity {
                 .load(intent.getStringExtra("image"))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(mPostImage);
-
         mPostImage.setClipToOutline(true);
         mPostText.setClipToOutline(true);
+
+        mDatabase.collection("dorms").document(mPostText.getContentDescription().toString()).collection("posts").document(mPostTitle.getContentDescription().toString())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document != null && document.exists()) appreciations = (long) document.get("apprs");
+                        }
+                    }
+                });
+        // TODO: Check if a like/dislike has been made
     }
 
     public void backAction(View view) {
@@ -82,7 +108,7 @@ public class PostView extends AppCompatActivity {
         setResult(Activity.RESULT_OK);
     }
 
-    public void likePost(View view) {
+    public void likeIcon(View view) {
         if (dislike_status == 1) {
             AnimatedVectorDrawable animatedVectorDrawable =
                     (AnimatedVectorDrawable) getDrawable(R.drawable.ic_thumb_down_liked_24dp);
@@ -90,6 +116,7 @@ public class PostView extends AppCompatActivity {
             assert animatedVectorDrawable != null;
             animatedVectorDrawable.start();
             dislike_status = 0;
+            incrementVote();
         }
         if (like_status == 0) {
             AnimatedVectorDrawable animatedVectorDrawable =
@@ -98,18 +125,19 @@ public class PostView extends AppCompatActivity {
             assert animatedVectorDrawable != null;
             animatedVectorDrawable.start();
             like_status = 1;
-        }
-        else {
+            incrementVote();
+        } else {
             AnimatedVectorDrawable animatedVectorDrawable =
                     (AnimatedVectorDrawable) getDrawable(R.drawable.ic_thumb_up_liked_24dp);
             mLiked.setImageDrawable(animatedVectorDrawable);
             assert animatedVectorDrawable != null;
             animatedVectorDrawable.start();
             like_status = 0;
+            decrementVote();
         }
     }
 
-    public void dislikePost(View view) {
+    public void dislikeIcon(View view) {
         if (like_status == 1) {
             AnimatedVectorDrawable animatedVectorDrawable =
                     (AnimatedVectorDrawable) getDrawable(R.drawable.ic_thumb_up_liked_24dp);
@@ -117,6 +145,7 @@ public class PostView extends AppCompatActivity {
             assert animatedVectorDrawable != null;
             animatedVectorDrawable.start();
             like_status = 0;
+            decrementVote();
         }
         if (dislike_status == 0) {
             AnimatedVectorDrawable animatedVectorDrawable =
@@ -125,14 +154,33 @@ public class PostView extends AppCompatActivity {
             assert animatedVectorDrawable != null;
             animatedVectorDrawable.start();
             dislike_status = 1;
-        }
-        else {
+            decrementVote();
+        } else {
             AnimatedVectorDrawable animatedVectorDrawable =
                     (AnimatedVectorDrawable) getDrawable(R.drawable.ic_thumb_down_liked_24dp);
             mDisliked.setImageDrawable(animatedVectorDrawable);
             assert animatedVectorDrawable != null;
             animatedVectorDrawable.start();
             dislike_status = 0;
+            incrementVote();
         }
+    }
+
+    private void incrementVote() {
+        Map<String, Object> data = new HashMap<>();
+        data.put("apprs", appreciations + 1);
+        mDatabase.collection("dorms").document(mPostText.getContentDescription().toString()).collection("posts").document(mPostTitle.getContentDescription().toString())
+                .set(data, SetOptions.merge());
+        appreciations += 1;
+        // TODO: Assign the increment to the user id
+    }
+
+    private void decrementVote() {
+        Map<String, Object> data = new HashMap<>();
+        data.put("apprs", appreciations - 1);
+        mDatabase.collection("dorms").document(mPostText.getContentDescription().toString()).collection("posts").document(mPostTitle.getContentDescription().toString())
+                .set(data,  SetOptions.merge());
+        appreciations -= 1;
+        // TODO: Assign the decrement to the user id
     }
 }

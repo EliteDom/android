@@ -37,7 +37,7 @@ import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class user_profile extends AppCompatActivity {
+public class UserProfile extends AppCompatActivity {
 
     private ArrayList<PreviewCard> mTitleData;
     private PreviewAdapter mAdapter;
@@ -102,7 +102,7 @@ public class user_profile extends AppCompatActivity {
                             username.setText(Objects.requireNonNull(document.get("firstName")).toString() + " " + Objects.requireNonNull(document.get("lastName")).toString() + "'s Profile");
                             String image = (String) document.get("image");
                             if (image != null && image.length() > 0)
-                                Glide.with(user_profile.this)
+                                Glide.with(UserProfile.this)
                                 .load(image)
                                 .into(imageView);
                             imageView.setContentDescription(image);
@@ -119,7 +119,7 @@ public class user_profile extends AppCompatActivity {
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult()))
-                                    mTitleData.add(new PreviewCard((String) document.get("title"), (String) document.get("postText"), document.get("author") + " | Authored " + document.get("timestamp") + " ago", document.getId(), user_profile.this.currentDorm, Uri.parse((String) document.get("image"))));
+                                    mTitleData.add(new PreviewCard((String) document.get("title"), (String) document.get("postText"), document.get("author") + " | Authored " + document.get("timestamp") + " ago", document.getId(), UserProfile.this.currentDorm, Uri.parse((String) document.get("image"))));
                                 mAdapter.notifyDataSetChanged();
                                 runLayoutAnimation(mRecycler);
                             }

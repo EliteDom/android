@@ -191,27 +191,27 @@ ADDED from /home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManife
 		ADDED from /home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:21:13-55
 	android:name
 		ADDED from /home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:20:13-55
-activity#com.elitedom.app.ui.profile.profile_post
-ADDED from /home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:22:9-61
+activity#com.elitedom.app.ui.profile.ProfilePostView
+ADDED from /home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:22:9-64
 	android:name
-		ADDED from /home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:22:19-58
-activity#com.elitedom.app.ui.profile.user_profile
+		ADDED from /home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:22:19-61
+activity#com.elitedom.app.ui.profile.UserProfile
 ADDED from /home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:23:9-25:39
 	android:exported
 		ADDED from /home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:25:13-36
 	android:name
-		ADDED from /home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:24:13-52
+		ADDED from /home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:24:13-51
 activity#com.elitedom.app.ui.main.PostView
 ADDED from /home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:26:9-54
 	android:name
 		ADDED from /home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:26:19-51
-activity#com.elitedom.app.ui.cards.topic_cards
+activity#com.elitedom.app.ui.cards.TopicCards
 ADDED from /home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:27:9-29:39
 	android:exported
 		ADDED from /home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:29:13-36
 	android:name
-		ADDED from /home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:28:13-49
-activity#com.elitedom.app.ui.login.newUser
+		ADDED from /home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:28:13-48
+activity#com.elitedom.app.ui.login.NewUser
 ADDED from /home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:30:9-54
 	android:name
 		ADDED from /home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:30:19-51
