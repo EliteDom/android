@@ -28,7 +28,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -39,7 +42,9 @@ public class ProfilePostView extends AppCompatActivity {
     private CardView mCard;
     private TextView mUsername, mPostTitle, mPostText;
     private ImageView mLiked, mDisliked;
+    private FirebaseFirestore mDatabase;
     private int like_status, dislike_status;
+    private long appreciations;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +61,7 @@ public class ProfilePostView extends AppCompatActivity {
         mPostTitle = findViewById(R.id.title);
         mLiked = findViewById(R.id.liked);
         mDisliked = findViewById(R.id.disliked);
-        FirebaseFirestore mDatabase = FirebaseFirestore.getInstance();
+        mDatabase = FirebaseFirestore.getInstance();
 
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
@@ -98,6 +103,19 @@ public class ProfilePostView extends AppCompatActivity {
 
         mPostImage.setClipToOutline(true);
         mPostText.setClipToOutline(true);
+
+        mDatabase.collection("dorms").document(mPostText.getContentDescription().toString()).collection("posts").document(mPostTitle.getContentDescription().toString())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document != null && document.exists()) appreciations = (long) document.get("apprs");
+                        }
+                    }
+                });
+        // TODO: Check if a like/dislike has been made
     }
 
     public void backAction(View view) {
@@ -139,8 +157,7 @@ public class ProfilePostView extends AppCompatActivity {
             animatedVectorDrawable.start();
             like_status = 1;
             incrementVote();
-        }
-        else {
+        } else {
             AnimatedVectorDrawable animatedVectorDrawable =
                     (AnimatedVectorDrawable) getDrawable(R.drawable.ic_thumb_up_liked_24dp);
             mLiked.setImageDrawable(animatedVectorDrawable);
@@ -169,8 +186,7 @@ public class ProfilePostView extends AppCompatActivity {
             animatedVectorDrawable.start();
             dislike_status = 1;
             decrementVote();
-        }
-        else {
+        } else {
             AnimatedVectorDrawable animatedVectorDrawable =
                     (AnimatedVectorDrawable) getDrawable(R.drawable.ic_thumb_down_liked_24dp);
             mDisliked.setImageDrawable(animatedVectorDrawable);
@@ -182,10 +198,20 @@ public class ProfilePostView extends AppCompatActivity {
     }
 
     private void incrementVote() {
-
+        Map<String, Object> data = new HashMap<>();
+        data.put("apprs", appreciations + 1);
+        mDatabase.collection("dorms").document(mPostText.getContentDescription().toString()).collection("posts").document(mPostTitle.getContentDescription().toString())
+                .set(data, SetOptions.merge());
+        appreciations += 1;
+        // TODO: Assign the increment to the user id
     }
 
     private void decrementVote() {
-
+        Map<String, Object> data = new HashMap<>();
+        data.put("apprs", appreciations - 1);
+        mDatabase.collection("dorms").document(mPostText.getContentDescription().toString()).collection("posts").document(mPostTitle.getContentDescription().toString())
+                .set(data, SetOptions.merge());
+        appreciations -= 1;
+        // TODO: Assign the decrement to the user id
     }
 }
