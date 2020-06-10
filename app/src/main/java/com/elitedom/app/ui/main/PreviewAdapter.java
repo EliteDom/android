@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.elitedom.app.R;
-import com.elitedom.app.ui.profile.profile_post;
+import com.elitedom.app.ui.profile.ProfilePostView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -141,7 +141,7 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
         }
 
         private void profileActivity(View v) {
-            Intent intent = new Intent(v.getContext(), profile_post.class);
+            Intent intent = new Intent(v.getContext(), ProfilePostView.class);
             intent.putExtra("author", mAuthor.getText().toString());
             intent.putExtra("title", mTitleText.getText().toString());
             intent.putExtra("subtext", mInfoText.getText().toString());

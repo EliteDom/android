@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.profile.user_profile">
+    tools:context=".ui.profile.UserProfile">
 
     <RelativeLayout
         android:id="@+id/profile_data"

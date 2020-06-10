@@ -18,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.elitedom.app.R;
-import com.elitedom.app.ui.cards.topic_cards;
+import com.elitedom.app.ui.cards.TopicCards;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -103,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_LONG).show();
-                            Intent mainscreen = new Intent(LoginActivity.this, newUser.class);
+                            Intent mainscreen = new Intent(LoginActivity.this, NewUser.class);
                             startActivity(mainscreen);
                             overridePendingTransition(0, 0);
                             //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
@@ -117,7 +117,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void topicActivity(FirebaseUser user) {
         if (user != null) {
-            Intent mainscreen = new Intent(this, topic_cards.class);
+            Intent mainscreen = new Intent(this, TopicCards.class);
             startActivity(mainscreen);
             setResult(Activity.RESULT_OK);
             finish();

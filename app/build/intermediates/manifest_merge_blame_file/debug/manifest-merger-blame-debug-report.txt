@@ -65,13 +65,13 @@
 37-->/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:20:13-55
 38            android:windowSoftInputMode="adjustResize" />
 38-->/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:21:13-55
-39        <activity android:name="com.elitedom.app.ui.profile.profile_post" />
-39-->/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:22:9-61
-39-->/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:22:19-58
+39        <activity android:name="com.elitedom.app.ui.profile.ProfilePostView" />
+39-->/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:22:9-64
+39-->/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:22:19-61
 40        <activity
 40-->/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:23:9-25:39
-41            android:name="com.elitedom.app.ui.profile.user_profile"
-41-->/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:24:13-52
+41            android:name="com.elitedom.app.ui.profile.UserProfile"
+41-->/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:24:13-51
 42            android:exported="true" />
 42-->/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:25:13-36
 43        <activity android:name="com.elitedom.app.ui.main.PostView" />
@@ -79,11 +79,11 @@
 43-->/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:26:19-51
 44        <activity
 44-->/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:27:9-29:39
-45            android:name="com.elitedom.app.ui.cards.topic_cards"
-45-->/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:28:13-49
+45            android:name="com.elitedom.app.ui.cards.TopicCards"
+45-->/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:28:13-48
 46            android:exported="true" />
 46-->/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:29:13-36
-47        <activity android:name="com.elitedom.app.ui.login.newUser" />
+47        <activity android:name="com.elitedom.app.ui.login.NewUser" />
 47-->/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:30:9-54
 47-->/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/AndroidManifest.xml:30:19-51
 48        <activity

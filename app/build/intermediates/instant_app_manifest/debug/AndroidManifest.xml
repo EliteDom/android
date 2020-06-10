@@ -37,15 +37,15 @@
         <activity
             android:name="com.elitedom.app.ui.messaging.FeedMessaging"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name="com.elitedom.app.ui.profile.profile_post" />
+        <activity android:name="com.elitedom.app.ui.profile.ProfilePostView" />
         <activity
-            android:name="com.elitedom.app.ui.profile.user_profile"
+            android:name="com.elitedom.app.ui.profile.UserProfile"
             android:exported="true" />
         <activity android:name="com.elitedom.app.ui.main.PostView" />
         <activity
-            android:name="com.elitedom.app.ui.cards.topic_cards"
+            android:name="com.elitedom.app.ui.cards.TopicCards"
             android:exported="true" />
-        <activity android:name="com.elitedom.app.ui.login.newUser" />
+        <activity android:name="com.elitedom.app.ui.login.NewUser" />
         <activity
             android:name="com.elitedom.app.ui.main.Feed"
             android:exported="true" />

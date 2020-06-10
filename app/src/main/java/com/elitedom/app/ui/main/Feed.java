@@ -22,9 +22,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.elitedom.app.R;
-import com.elitedom.app.ui.cards.topic_cards;
+import com.elitedom.app.ui.cards.TopicCards;
 import com.elitedom.app.ui.login.LoginActivity;
-import com.elitedom.app.ui.profile.user_profile;
+import com.elitedom.app.ui.profile.UserProfile;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -104,14 +104,14 @@ public class Feed extends AppCompatActivity {
     }
 
     public void profileUI(View view) {
-        Intent feed = new Intent(this, user_profile.class);
+        Intent feed = new Intent(this, UserProfile.class);
         feed.putExtra("cards", mTopicNames);
         startActivity(feed);
         setResult(Activity.RESULT_OK);
     }
 
     public void topicUI(View view) {
-        startActivity(new Intent(this, topic_cards.class));
+        startActivity(new Intent(this, TopicCards.class));
         setResult(Activity.RESULT_OK);
         finish();
     }
