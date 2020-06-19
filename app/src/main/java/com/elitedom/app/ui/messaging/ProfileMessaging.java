@@ -85,13 +85,6 @@ public class ProfileMessaging extends AppCompatActivity {
                 .into(mProfileImage);
         mRecyclerView.setAdapter(mAdapter);
         initializeData();
-
-        message.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                scrollToBottom();
-            }
-        });
     }
 
     private int returnFlagRes(String prev_author, String cur_author) {
@@ -137,6 +130,12 @@ public class ProfileMessaging extends AppCompatActivity {
                         }
                     }
                 });
+        message.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                scrollToBottom();
+            }
+        });
     }
 
     @Override
@@ -173,12 +172,14 @@ public class ProfileMessaging extends AppCompatActivity {
     }
 
     private void scrollToBottom() {
-        mNoMessages.animate().alpha(0.0f);
-        mRecyclerView.post(new Runnable() {
-            @Override
-            public void run() {
-                mRecyclerView.smoothScrollToPosition(mAdapter.getItemCount() - 1);
-            }
-        });
+        if (mAdapter.getItemCount() > 0) {
+            mNoMessages.animate().alpha(0.0f);
+            mRecyclerView.post(new Runnable() {
+                @Override
+                public void run() {
+                    mRecyclerView.smoothScrollToPosition(mAdapter.getItemCount() - 1);
+                }
+            });
+        }
     }
 }
