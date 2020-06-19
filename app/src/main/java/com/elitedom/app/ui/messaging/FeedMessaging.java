@@ -37,7 +37,7 @@ import java.util.Objects;
 
 public class FeedMessaging extends AppCompatActivity {
 
-    String dorm, uid, authorImage;
+    private String dorm, uid, authorImage;
     private ArrayList<Message> messageArrayList;
     private MessageAdapter mAdapter;
     private FirebaseFirestore mDatabase;
