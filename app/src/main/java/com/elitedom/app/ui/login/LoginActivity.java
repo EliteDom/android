@@ -16,6 +16,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
 
 import com.elitedom.app.R;
 import com.elitedom.app.ui.cards.TopicCards;
@@ -30,6 +32,7 @@ import java.util.Objects;
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+    private ConstraintLayout constraintLayout;
     private EditText emailEditText, passwordEditText;
 
     @Override
@@ -51,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.password);
         Button loginButton = findViewById(R.id.login);
         final Button passwordReset = findViewById(R.id.forgot_password);
-        final ConstraintLayout constraintLayout = findViewById(R.id.login_layout);
+        constraintLayout = findViewById(R.id.login_layout);
         TextView title = findViewById(R.id.title);
 
         Animation atg = AnimationUtils.loadAnimation(this, R.anim.atg);
@@ -118,7 +121,8 @@ public class LoginActivity extends AppCompatActivity {
     private void topicActivity(FirebaseUser user) {
         if (user != null) {
             Intent mainscreen = new Intent(this, TopicCards.class);
-            startActivity(mainscreen);
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, constraintLayout, "gradientShift");
+            ActivityCompat.startActivity(this, mainscreen, options.toBundle());
             setResult(Activity.RESULT_OK);
             finish();
         }
@@ -139,7 +143,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void resetPassword(View view) {
-        startActivity(new Intent(this, PasswordReset.class));
+        Intent forgotIntent = new Intent(this, PasswordReset.class);
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, constraintLayout, "gradientShift");
+        ActivityCompat.startActivity(this, forgotIntent, options.toBundle());
         setResult(Activity.RESULT_OK);
     }
 }

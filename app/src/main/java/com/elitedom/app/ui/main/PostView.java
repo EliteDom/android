@@ -36,11 +36,11 @@ import java.util.Objects;
 public class PostView extends AppCompatActivity {
 
     private CardView mCard;
-    private TextView mPostTitle, mPostText;
+    private long appreciations;
     private ImageView mLiked, mDisliked;
     private FirebaseFirestore mDatabase;
+    private TextView mPostTitle, mPostText;
     private int like_status, dislike_status;
-    private long appreciations;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -38,13 +38,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfilePostView extends AppCompatActivity {
 
-    private String profileImageUri;
     private CardView mCard;
-    private TextView mUsername, mPostTitle, mPostText;
+    private long appreciations;
+    private String profileImageUri;
     private ImageView mLiked, mDisliked;
     private FirebaseFirestore mDatabase;
     private int like_status, dislike_status;
-    private long appreciations;
+    private TextView mUsername, mPostTitle, mPostText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

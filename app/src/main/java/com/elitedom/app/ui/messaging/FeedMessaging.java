@@ -37,13 +37,13 @@ import java.util.Objects;
 
 public class FeedMessaging extends AppCompatActivity {
 
-    private String dorm, uid, authorImage;
-    private ArrayList<Message> messageArrayList;
-    private MessageAdapter mAdapter;
-    private FirebaseFirestore mDatabase;
     private EditText message;
     private TextView mNoMessages;
+    private MessageAdapter mAdapter;
     private RecyclerView mRecyclerView;
+    private FirebaseFirestore mDatabase;
+    private String uid, dorm, authorImage;
+    private ArrayList<Message> messageArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,7 +134,7 @@ public class FeedMessaging extends AppCompatActivity {
     }
 
     public void sendMessage(View view) {
-        if (message.getText().toString().length() > 0) {
+        if (validInput(message.getText().toString())) {
             FirebaseAuth auth = FirebaseAuth.getInstance();
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             Map<String, Object> messageBlock = new HashMap<>();
@@ -149,7 +149,13 @@ public class FeedMessaging extends AppCompatActivity {
             mAdapter.notifyDataSetChanged();
             if (mAdapter.getItemCount() >= 0) mNoMessages.animate().alpha(0.0f);
         } else
-            Toast.makeText(getApplicationContext(), "No message body!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Invalid message body!", Toast.LENGTH_SHORT).show();
+    }
+
+    private boolean validInput(String message) {
+        if (message.length() == 0) return false;
+        for(int i = 0; i < message.length(); i++) if (message.charAt(i) != ' ') return true;
+        return false;
     }
 
     private String getDate(String time) {
