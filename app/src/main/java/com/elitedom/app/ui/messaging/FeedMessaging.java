@@ -42,7 +42,7 @@ public class FeedMessaging extends AppCompatActivity {
     private MessageAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private FirebaseFirestore mDatabase;
-    private String dorm, uid, authorImage;
+    private String uid, dorm, authorImage;
     private ArrayList<Message> messageArrayList;
 
     @Override

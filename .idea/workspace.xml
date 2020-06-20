@@ -18,11 +18,10 @@
   <component name="ChangeListManager">
     <list default="true" id="268fafb7-d69c-4dc2-8005-8675de039d7f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/main/PostView.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/main/PostView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/login/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/login/LoginActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/messaging/FeedMessaging.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/messaging/FeedMessaging.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/messaging/ProfileMessaging.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/messaging/ProfileMessaging.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/profile/ProfilePostView.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/profile/ProfilePostView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_topic_cards.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_topic_cards.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
