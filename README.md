@@ -16,7 +16,7 @@ Elitedom values upholds privacy of its users to the highest pedestal. Our applic
 
 Elitedom is an open source app and is licensed under Apache 2.0. Everyone viewing the repository is free to use and modify the software for their private or commercial use, with no liability or warranty for modified software. The Elitedom trademark cannot be on modifier software.
 
-## Mission Statement:
+## Mission Statement
 
 Elitedom exists to connect you with the people that not only share a common love for your hobby or interest, but also possess as deep an understanding & passion for it as you.
 
@@ -24,7 +24,7 @@ Elitedom is for every banker that watches the F1 tyre selections, for every stor
 Elitedom is for the connoisseurs, the “madmen”, and the ignored talents of the world.
 Elitedom is for your forgotten dreams.
 
-## Vision Statement:
+## Vision Statement
 
 Elitedom aims to connect millions across the world to their calling, and the people that understand it. We aim to venture beyond just the domain of the normal social media app and become a part of how people live their lives and pursue their dreams with specialised services and specialised connectivity.
 Every man, woman and child has an inner calling, that Elitedom is ready to answer by equipping them to live up to their potential and tap on their talent through a positive feedback loop with other knowledgeable people in the field. 
