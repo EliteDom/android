@@ -13,7 +13,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
@@ -21,9 +20,6 @@ import androidx.core.app.ActivityOptionsCompat;
 
 import com.elitedom.app.R;
 import com.elitedom.app.ui.cards.TopicCards;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -80,20 +76,14 @@ public class LoginActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        new Thread(new Runnable() {
-            public void run() {
-                for (final char ch : s) {
-                    try {
-                        Thread.sleep(150);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    view.post(new Runnable() {
-                        public void run() {
-                            view.append("" + ch);
-                        }
-                    });
+        new Thread(() -> {
+            for (final char ch : s) {
+                try {
+                    Thread.sleep(150);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
+                view.post(() -> view.append("" + ch));
             }
         }).start();
     }
@@ -101,20 +91,17 @@ public class LoginActivity extends AppCompatActivity {
     private void addUser(String email, String password) {
         Toast.makeText(getApplicationContext(), "Creating new user", Toast.LENGTH_LONG).show();
         mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_LONG).show();
-                            Intent mainscreen = new Intent(LoginActivity.this, NewUser.class);
-                            startActivity(mainscreen);
-                            overridePendingTransition(0, 0);
-                            //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-                            setResult(Activity.RESULT_OK);
-                            finish();
-                        }
-                        else Toast.makeText(getApplicationContext(), "Unsuccessful - try again later?", Toast.LENGTH_LONG).show();
+                .addOnCompleteListener(LoginActivity.this, task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_LONG).show();
+                        Intent mainscreen = new Intent(LoginActivity.this, NewUser.class);
+                        startActivity(mainscreen);
+                        overridePendingTransition(0, 0);
+                        //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                        setResult(Activity.RESULT_OK);
+                        finish();
                     }
+                    else Toast.makeText(getApplicationContext(), "Unsuccessful - try again later?", Toast.LENGTH_LONG).show();
                 });
     }
 
@@ -133,12 +120,9 @@ public class LoginActivity extends AppCompatActivity {
         final String email = emailEditText.getText().toString();
         final String password = passwordEditText.getText().toString();
         (mAuth.signInWithEmailAndPassword(email, password))
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) topicActivity(mAuth.getCurrentUser());
-                        else addUser(email, password);
-                    }
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) topicActivity(mAuth.getCurrentUser());
+                    else addUser(email, password);
                 });
     }
 

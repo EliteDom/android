@@ -1,6 +1,5 @@
 package com.elitedom.app.ui.messaging;
 
-import android.annotation.SuppressLint;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,23 +10,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.elitedom.app.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -84,48 +76,36 @@ public class FeedMessaging extends AppCompatActivity {
     private void initializeData() {
         final String[] flag = {""};
         final CollectionReference chatRef = mDatabase.collection("dorms").document(dorm).collection("posts").document(uid).collection("chats");
-        chatRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                if (queryDocumentSnapshots != null) {
-                    messageArrayList.clear();
-                    for (QueryDocumentSnapshot document : Objects.requireNonNull(queryDocumentSnapshots)) {
-                        if (document != null) {
-                            if (document.get("sender") != null && !Objects.requireNonNull(document.get("sender")).toString().equals(FirebaseAuth.getInstance().getUid()))
-                                messageArrayList.add(new Message((String) document.get("message"), (String) document.get("timestamp"), (String) document.get("sender"), Uri.parse((String) document.get("image")), returnFlagRes(Objects.requireNonNull(flag[0]), (String) document.get("sender"))));
-                            else
-                                messageArrayList.add(new Message((String) document.get("message"), (String) document.get("timestamp"), returnFlagRes(Objects.requireNonNull(flag[0]), (String) document.get("sender"))));
-                            flag[0] = (String) document.get("sender");
-                        }
+        chatRef.addSnapshotListener((queryDocumentSnapshots, e) -> {
+            if (queryDocumentSnapshots != null) {
+                messageArrayList.clear();
+                for (QueryDocumentSnapshot document : Objects.requireNonNull(queryDocumentSnapshots)) {
+                    if (document != null) {
+                        if (document.get("sender") != null && !Objects.requireNonNull(document.get("sender")).toString().equals(FirebaseAuth.getInstance().getUid()))
+                            messageArrayList.add(new Message((String) document.get("message"), (String) document.get("timestamp"), (String) document.get("sender"), Uri.parse((String) document.get("image")), returnFlagRes(Objects.requireNonNull(flag[0]), (String) document.get("sender"))));
+                        else
+                            messageArrayList.add(new Message((String) document.get("message"), (String) document.get("timestamp"), returnFlagRes(Objects.requireNonNull(flag[0]), (String) document.get("sender"))));
+                        flag[0] = (String) document.get("sender");
                     }
-                    mAdapter.notifyDataSetChanged();
-                    if (mAdapter.getItemCount() > 0) scrollToBottom();
-                    else mNoMessages.animate().alpha(1.0f);
                 }
+                mAdapter.notifyDataSetChanged();
+                if (mAdapter.getItemCount() > 0) scrollToBottom();
+                else mNoMessages.animate().alpha(1.0f);
             }
         });
 
         mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            assert document != null;
-                            authorImage = (String) document.get("image");
-                            if (authorImage == null) authorImage = "";
-                        }
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        assert document != null;
+                        authorImage = (String) document.get("image");
+                        if (authorImage == null) authorImage = "";
                     }
                 });
 
-        message.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                scrollToBottom();
-            }
-        });
+        message.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> scrollToBottom());
     }
 
     @Override
@@ -170,12 +150,7 @@ public class FeedMessaging extends AppCompatActivity {
     private void scrollToBottom() {
         if (mAdapter.getItemCount() > 0) {
             mNoMessages.animate().alpha(0.0f);
-            mRecyclerView.post(new Runnable() {
-                @Override
-                public void run() {
-                    mRecyclerView.smoothScrollToPosition(mAdapter.getItemCount() - 1);
-                }
-            });
+            mRecyclerView.post(() -> mRecyclerView.smoothScrollToPosition(mAdapter.getItemCount() - 1));
         }
     }
 }

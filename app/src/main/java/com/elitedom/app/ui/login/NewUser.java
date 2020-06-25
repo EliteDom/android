@@ -62,7 +62,6 @@ public class NewUser extends AppCompatActivity {
             userData.put("firstName", mFirstName.getText().toString());
             userData.put("lastName", mLastName.getText().toString());
             userData.put("username", mUsername.getText().toString());
-            userData.put("posts", null);
             userData.put("appreciationPoints", 0);
             userData.put("predictorPoints", 0);
 

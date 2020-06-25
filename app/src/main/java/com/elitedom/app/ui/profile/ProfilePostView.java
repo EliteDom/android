@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
@@ -23,8 +22,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.elitedom.app.R;
 import com.elitedom.app.ui.messaging.ProfileMessaging;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -46,6 +43,7 @@ public class ProfilePostView extends AppCompatActivity {
     private int like_status, dislike_status;
     private TextView mUsername, mPostTitle, mPostText;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,15 +87,11 @@ public class ProfilePostView extends AppCompatActivity {
 
         mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            assert document != null;
-                            mUsername.setText(Objects.requireNonNull(document.get("firstName")).toString() + " " + Objects.requireNonNull(document.get("lastName")).toString() + "'s Profile");
-                        }
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        assert document != null;
+                        mUsername.setText(Objects.requireNonNull(document.get("firstName")).toString() + " " + Objects.requireNonNull(document.get("lastName")).toString() + "'s Profile");
                     }
                 });
 
@@ -106,33 +100,27 @@ public class ProfilePostView extends AppCompatActivity {
 
         mDatabase.collection("dorms").document(mPostText.getContentDescription().toString()).collection("posts").document(mPostTitle.getContentDescription().toString())
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document != null && document.exists()) appreciations = (long) document.get("apprs");
-                        }
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document != null && document.exists()) appreciations = (long) document.get("apprs");
                     }
                 });
 
         mDatabase.collection("users").document(FirebaseAuth.getInstance().getUid()).collection("postActions").document(mPostTitle.getContentDescription().toString())
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document != null && document.exists()) {
-                                long status = (long) document.get("status");
-                                if (status == 0) {
-                                    dislike_status = 1;
-                                    mDisliked.setImageResource(R.drawable.ic_thumb_down_black_24dp);
-                                }
-                                else if (status == 1) {
-                                    like_status = 1;
-                                    mLiked.setImageResource(R.drawable.ic_thumb_up_black_24dp);
-                                }
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document != null && document.exists()) {
+                            long status = (long) document.get("status");
+                            if (status == 0) {
+                                dislike_status = 1;
+                                mDisliked.setImageResource(R.drawable.ic_thumb_down_black_24dp);
+                            }
+                            else if (status == 1) {
+                                like_status = 1;
+                                mLiked.setImageResource(R.drawable.ic_thumb_up_black_24dp);
                             }
                         }
                     }

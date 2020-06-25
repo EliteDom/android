@@ -15,7 +15,6 @@ import android.view.animation.LayoutAnimationController;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,13 +23,10 @@ import com.bumptech.glide.Glide;
 import com.elitedom.app.R;
 import com.elitedom.app.ui.main.PreviewAdapter;
 import com.elitedom.app.ui.main.PreviewCard;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -39,12 +35,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserProfile extends AppCompatActivity {
 
+    private TextView mNoPosts;
     private ArrayList<PreviewCard> mTitleData;
     private PreviewAdapter mAdapter;
     private FirebaseFirestore mDatabase;
-    private ArrayList<String> mTopicNames;
     private TextView username, appreciation, predictor;
-    private String currentDorm;
     private CircleImageView imageView;
     private RecyclerView mRecycler;
 
@@ -60,7 +55,7 @@ public class UserProfile extends AppCompatActivity {
         appreciation = findViewById(R.id.appreciation_score);
         predictor = findViewById(R.id.predictor_score);
         imageView = findViewById(R.id.profile_image);
-        currentDorm = "";
+        mNoPosts = findViewById(R.id.no_posts);
 
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
@@ -83,49 +78,48 @@ public class UserProfile extends AppCompatActivity {
         mAdapter.sendContext(findViewById(R.id.profile_image), findViewById(R.id.username), findViewById(R.id.user_profile_holder));
         mRecycler.setAdapter(mAdapter);
 
-        mTopicNames = getIntent().getStringArrayListExtra("cards");
         initializeData();
     }
 
+    @SuppressLint("SetTextI18n")
     private void initializeData() {
+        mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).collection("authoredPosts")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful())
+                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                            mDatabase.collection("dorms").document((String) Objects.requireNonNull(document.get("dormName"))).collection("posts").document((String) Objects.requireNonNull(document.get("postId")))
+                                    .get()
+                                    .addOnCompleteListener(task1 -> {
+                                        if (task1.isSuccessful()) {
+                                            DocumentSnapshot document1 = task1.getResult();
+                                            assert document1 != null;
+                                            mTitleData.add(new PreviewCard((String) document1.get("title"), (String) document1.get("postText"), document1.get("author") + " | Authored " + document1.get("timestamp") + " ago", document1.getId(), (String) document.get("dormName"), Uri.parse((String) document1.get("image"))));
+                                            mAdapter.notifyDataSetChanged();
+                                            if (mAdapter.getItemCount() > 0) runLayoutAnimation(mRecycler);
+                                            else mNoPosts.animate().alpha(1.0f);
+                                        }
+                                    });
+                        }
+                    mTitleData.clear();
+                });
         mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            assert document != null;
-                            predictor.setText(Objects.requireNonNull(document.get("predictorPoints")).toString());
-                            appreciation.setText(Objects.requireNonNull(document.get("appreciationPoints")).toString());
-                            username.setText(Objects.requireNonNull(document.get("firstName")).toString() + " " + Objects.requireNonNull(document.get("lastName")).toString() + "'s Profile");
-                            String image = (String) document.get("image");
-                            if (image != null && image.length() > 0)
-                                Glide.with(UserProfile.this)
-                                .load(image)
-                                .into(imageView);
-                            imageView.setContentDescription(image);
-                        }
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        assert document != null;
+                        predictor.setText(Objects.requireNonNull(document.get("predictorPoints")).toString());
+                        appreciation.setText(Objects.requireNonNull(document.get("appreciationPoints")).toString());
+                        username.setText(Objects.requireNonNull(document.get("firstName")).toString() + " " + Objects.requireNonNull(document.get("lastName")).toString() + "'s Profile");
+                        String image = (String) document.get("image");
+                        if (image != null && image.length() > 0)
+                            Glide.with(UserProfile.this)
+                                    .load(image)
+                                    .into(imageView);
+                        imageView.setContentDescription(image);
                     }
                 });
-        mTitleData.clear();
-        for (String i : mTopicNames) {
-            currentDorm = i;
-            mDatabase.collection("dorms").document(i).collection("posts")
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult()))
-                                    mTitleData.add(new PreviewCard((String) document.get("title"), (String) document.get("postText"), document.get("author") + " | Authored " + document.get("timestamp") + " ago", document.getId(), UserProfile.this.currentDorm, Uri.parse((String) document.get("image"))));
-                                mAdapter.notifyDataSetChanged();
-                                runLayoutAnimation(mRecycler);
-                            }
-                        }
-                    });
-        }
     }
 
     @Override

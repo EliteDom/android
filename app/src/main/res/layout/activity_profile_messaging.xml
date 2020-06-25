@@ -39,139 +39,112 @@
             android:transitionName="username" />
     </RelativeLayout>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/user_profile_holder"
+    <RelativeLayout
+        android:id="@+id/user_feed_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:animateLayoutChanges="true"
-        android:transitionName="post_cards"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@id/profile_data"
-        tools:ignore="InefficientWeight">
+        android:background="@drawable/gradient_list"
+        android:fitsSystemWindows="true">
 
-        <RelativeLayout
-            android:id="@+id/user_feed_container"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/post_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/gradient_list"
-            android:fitsSystemWindows="true">
+            android:layout_margin="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/post_view"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="16dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="0dp">
+                android:clipToPadding="false">
 
-                <RelativeLayout
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/action_cards"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:clipToPadding="false">
+                    android:layout_margin="6dp"
+                    android:transitionName="messaging_transition"
+                    app:cardBackgroundColor="@color/colorAccent"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="0dp">
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/action_cards"
+                    <TextView
+                        android:id="@+id/no_messages"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:alpha="0.0"
+                        android:background="@drawable/message_bubble"
+                        android:clipToPadding="false"
+                        android:elevation="4dp"
+                        android:padding="8dp"
+                        android:text="@string/empty_chatroom" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="6dp"
+                        android:background="@drawable/message_bubble"
+                        android:elevation="4dp"
+                        android:padding="6dp"
+                        android:text="@string/chatroom"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/messageList"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="6dp"
-                        android:transitionName="messaging_transition"
-                        app:cardBackgroundColor="@color/colorAccent"
-                        app:cardCornerRadius="8dp"
-                        app:cardElevation="0dp">
+                        android:layout_marginTop="30dp"
+                        android:layout_marginBottom="44dp"
+                        android:background="@drawable/custom_relativelayout"
+                        android:clipChildren="true"
+                        android:layoutAnimation="@anim/layout_topic_cards_animation"
+                        android:paddingHorizontal="6dp"
+                        android:paddingVertical="16dp"
+                        android:scrollbars="none" />
 
-                        <TextView
-                            android:id="@+id/no_messages"
-                            android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/layout_chatbox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_margin="6dp"
+                        android:minHeight="48dp"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/edittext_chatbox"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:alpha="0.0"
+                            android:layout_margin="4dp"
+                            android:layout_weight="1"
                             android:background="@drawable/message_bubble"
-                            android:clipToPadding="false"
-                            android:elevation="4dp"
+                            android:hint="@string/message_prompt"
+                            android:importantForAutofill="no"
+                            android:inputType="textCapSentences"
+                            android:maxLines="10"
                             android:padding="8dp"
-                            android:text="@string/empty_chatroom" />
+                            android:textColor="@android:color/darker_gray" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_margin="6dp"
-                            android:background="@drawable/message_bubble"
-                            android:elevation="4dp"
-                            android:padding="6dp"
-                            android:text="@string/chatroom"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/messageList"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="30dp"
-                            android:layout_marginBottom="44dp"
-                            android:background="@drawable/custom_relativelayout"
-                            android:clipChildren="true"
-                            android:layoutAnimation="@anim/layout_topic_cards_animation"
-                            android:paddingHorizontal="6dp"
-                            android:paddingVertical="16dp"
-                            android:scrollbars="none" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/messageList"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="30dp"
-                            android:layout_marginBottom="44dp"
-                            android:background="@drawable/custom_relativelayout"
-                            android:clipChildren="true"
-                            android:layoutAnimation="@anim/layout_topic_cards_animation"
-                            android:paddingHorizontal="6dp"
-                            android:paddingVertical="16dp"
-                            android:scrollbars="none" />
-
-                        <LinearLayout
-                            android:id="@+id/layout_chatbox"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                        <ImageButton
+                            android:id="@+id/button_chatbox_send"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
                             android:layout_gravity="bottom"
-                            android:layout_margin="6dp"
-                            android:minHeight="48dp"
-                            android:orientation="horizontal">
-
-                            <EditText
-                                android:id="@+id/edittext_chatbox"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_margin="4dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/message_bubble"
-                                android:hint="@string/message_prompt"
-                                android:textColor="@android:color/darker_gray"
-                                android:importantForAutofill="no"
-                                android:inputType="textCapSentences"
-                                android:maxLines="10"
-                                android:padding="8dp" />
-
-                            <ImageButton
-                                android:id="@+id/button_chatbox_send"
-                                android:layout_width="48dp"
-                                android:layout_height="48dp"
-                                android:layout_gravity="bottom"
-                                android:background="@drawable/circle"
-                                android:clickable="true"
-                                android:focusable="true"
-                                android:gravity="center"
-                                android:onClick="sendMessage"
-                                android:src="@drawable/ic_send_black_24dp"
-                                tools:ignore="ContentDescription" />
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+                            android:background="@drawable/circle"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:onClick="sendMessage"
+                            android:src="@drawable/ic_send_black_24dp"
+                            tools:ignore="ContentDescription" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
 </LinearLayout>

@@ -129,6 +129,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="@id/profile_data">
 
+        <TextView
+            android:id="@+id/no_posts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:alpha="0.0"
+            android:background="@drawable/message_bubble"
+            android:clipToPadding="false"
+            android:elevation="4dp"
+            android:padding="8dp"
+            android:text="@string/no_posts" />
+
         <RelativeLayout
             android:id="@+id/user_feed_container"
             android:layout_width="match_parent"

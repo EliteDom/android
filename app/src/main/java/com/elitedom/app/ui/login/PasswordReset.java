@@ -1,19 +1,17 @@
 package com.elitedom.app.ui.login;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.elitedom.app.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -47,11 +45,8 @@ public class PasswordReset extends AppCompatActivity {
 
     public void resetPassword(View view) {
         mAuth.sendPasswordResetEmail(mEmail.getText().toString())
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) Toast.makeText(getApplicationContext(), "Check your inbox for password reset details!", Toast.LENGTH_LONG).show();
-                    }
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) Toast.makeText(getApplicationContext(), "Check your inbox for password reset details!", Toast.LENGTH_LONG).show();
                 });
         startActivity(new Intent(this, LoginActivity.class));
         setResult(Activity.RESULT_OK);
