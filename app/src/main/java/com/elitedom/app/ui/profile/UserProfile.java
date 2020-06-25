@@ -33,16 +33,19 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserProfile extends AppCompatActivity {
 
+    private TextView mNoPosts;
     private ArrayList<PreviewCard> mTitleData;
     private PreviewAdapter mAdapter;
     private FirebaseFirestore mDatabase;
-    private ArrayList<String> mTopicNames;
+    private Map<String, String> profilePosts;
     private TextView username, appreciation, predictor;
     private String currentDorm;
     private CircleImageView imageView;
@@ -60,6 +63,8 @@ public class UserProfile extends AppCompatActivity {
         appreciation = findViewById(R.id.appreciation_score);
         predictor = findViewById(R.id.predictor_score);
         imageView = findViewById(R.id.profile_image);
+        mNoPosts = findViewById(R.id.no_posts);
+        profilePosts = new HashMap<>();
         currentDorm = "";
 
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
@@ -83,11 +88,20 @@ public class UserProfile extends AppCompatActivity {
         mAdapter.sendContext(findViewById(R.id.profile_image), findViewById(R.id.username), findViewById(R.id.user_profile_holder));
         mRecycler.setAdapter(mAdapter);
 
-        mTopicNames = getIntent().getStringArrayListExtra("cards");
         initializeData();
     }
 
     private void initializeData() {
+        mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).collection("authoredPosts")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful())
+                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult()))
+                                profilePosts.put((String) document.get("postId"), (String) document.get("dormName"));
+                    }
+                });
         mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -103,29 +117,30 @@ public class UserProfile extends AppCompatActivity {
                             String image = (String) document.get("image");
                             if (image != null && image.length() > 0)
                                 Glide.with(UserProfile.this)
-                                .load(image)
-                                .into(imageView);
+                                        .load(image)
+                                        .into(imageView);
                             imageView.setContentDescription(image);
                         }
                     }
                 });
         mTitleData.clear();
-        for (String i : mTopicNames) {
-            currentDorm = i;
-            mDatabase.collection("dorms").document(i).collection("posts")
+        for (Map.Entry<String, String> singlePost : profilePosts.entrySet()) {
+            mDatabase.collection("dorms").document(singlePost.getValue()).collection("posts").document(singlePost.getKey())
                     .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                             if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult()))
-                                    mTitleData.add(new PreviewCard((String) document.get("title"), (String) document.get("postText"), document.get("author") + " | Authored " + document.get("timestamp") + " ago", document.getId(), UserProfile.this.currentDorm, Uri.parse((String) document.get("image"))));
-                                mAdapter.notifyDataSetChanged();
-                                runLayoutAnimation(mRecycler);
+                                DocumentSnapshot document = task.getResult();
+                                assert document != null;
+                                mTitleData.add(new PreviewCard((String) document.get("title"), (String) document.get("postText"), document.get("author") + " | Authored " + document.get("timestamp") + " ago", document.getId(), UserProfile.this.currentDorm, Uri.parse((String) document.get("image"))));
                             }
                         }
                     });
         }
+        mAdapter.notifyDataSetChanged();
+        if (mAdapter.getItemCount() > 0) runLayoutAnimation(mRecycler);
+        else mNoPosts.animate().alpha(1.0f);
     }
 
     @Override
