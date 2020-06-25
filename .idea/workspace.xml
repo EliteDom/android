@@ -24,11 +24,16 @@
       <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/classAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Elitedom.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Elitedom.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/outputs/apk/debug/app-debug.apk" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/outputs/apk/debug/app-debug.apk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/login/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/login/LoginActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/login/PasswordReset.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/login/PasswordReset.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/main/Feed.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/main/Feed.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/main/PostView.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/main/PostView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/main/PreviewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/main/PreviewAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/messaging/FeedMessaging.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/messaging/FeedMessaging.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/messaging/ProfileMessaging.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/messaging/ProfileMessaging.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/profile/ProfilePostView.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/profile/ProfilePostView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/profile/UserProfile.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/profile/UserProfile.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -497,22 +502,22 @@
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="738" y="310" width="424" height="483" key="FileChooserDialogImpl/0.27.1920.1053@0.27.1920.1053" timestamp="1591883822836" />
-    <state width="1136" height="296" key="GridCell.Tab.0.bottom" timestamp="1592605007075">
+    <state width="1874" height="294" key="GridCell.Tab.0.bottom" timestamp="1593082736475">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1136" height="296" key="GridCell.Tab.0.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1592605007075" />
-    <state width="1136" height="296" key="GridCell.Tab.0.center" timestamp="1592605007075">
+    <state width="1874" height="294" key="GridCell.Tab.0.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1593082736475" />
+    <state width="1874" height="294" key="GridCell.Tab.0.center" timestamp="1593082736473">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1136" height="296" key="GridCell.Tab.0.center/0.27.1920.1053@0.27.1920.1053" timestamp="1592605007075" />
-    <state width="1136" height="296" key="GridCell.Tab.0.left" timestamp="1592605007075">
+    <state width="1874" height="294" key="GridCell.Tab.0.center/0.27.1920.1053@0.27.1920.1053" timestamp="1593082736473" />
+    <state width="1874" height="294" key="GridCell.Tab.0.left" timestamp="1593082736471">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1136" height="296" key="GridCell.Tab.0.left/0.27.1920.1053@0.27.1920.1053" timestamp="1592605007075" />
-    <state width="1136" height="296" key="GridCell.Tab.0.right" timestamp="1592605007075">
+    <state width="1874" height="294" key="GridCell.Tab.0.left/0.27.1920.1053@0.27.1920.1053" timestamp="1593082736471" />
+    <state width="1874" height="294" key="GridCell.Tab.0.right" timestamp="1593082736474">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1136" height="296" key="GridCell.Tab.0.right/0.27.1920.1053@0.27.1920.1053" timestamp="1592605007075" />
+    <state width="1874" height="294" key="GridCell.Tab.0.right/0.27.1920.1053@0.27.1920.1053" timestamp="1593082736474" />
     <state width="937" height="343" key="GridCell.Tab.1.bottom" timestamp="1591814372271">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>

@@ -40,7 +40,6 @@ public class UserProfile extends AppCompatActivity {
     private PreviewAdapter mAdapter;
     private FirebaseFirestore mDatabase;
     private TextView username, appreciation, predictor;
-    private String currentDorm;
     private CircleImageView imageView;
     private RecyclerView mRecycler;
 
@@ -57,7 +56,6 @@ public class UserProfile extends AppCompatActivity {
         predictor = findViewById(R.id.predictor_score);
         imageView = findViewById(R.id.profile_image);
         mNoPosts = findViewById(R.id.no_posts);
-        currentDorm = "";
 
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
@@ -96,7 +94,7 @@ public class UserProfile extends AppCompatActivity {
                                         if (task1.isSuccessful()) {
                                             DocumentSnapshot document1 = task1.getResult();
                                             assert document1 != null;
-                                            mTitleData.add(new PreviewCard((String) document1.get("title"), (String) document1.get("postText"), document1.get("author") + " | Authored " + document1.get("timestamp") + " ago", document1.getId(), UserProfile.this.currentDorm, Uri.parse((String) document1.get("image"))));
+                                            mTitleData.add(new PreviewCard((String) document1.get("title"), (String) document1.get("postText"), document1.get("author") + " | Authored " + document1.get("timestamp") + " ago", document1.getId(), (String) document.get("dormName"), Uri.parse((String) document1.get("image"))));
                                             mAdapter.notifyDataSetChanged();
                                             if (mAdapter.getItemCount() > 0) runLayoutAnimation(mRecycler);
                                             else mNoPosts.animate().alpha(1.0f);

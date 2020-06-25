@@ -135,11 +135,11 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
 
         private void profileActivity(View v) {
             Intent intent = new Intent(v.getContext(), ProfilePostView.class);
-            intent.putExtra("author", mAuthor.getText().toString());
             intent.putExtra("title", mTitleText.getText().toString());
-            intent.putExtra("subtext", mInfoText.getText().toString());
             intent.putExtra("uid", mTitleText.getContentDescription().toString());
             intent.putExtra("dorm", mInfoText.getContentDescription().toString());
+            intent.putExtra("subtext", mInfoText.getText().toString());
+            intent.putExtra("author", mAuthor.getText().toString());
             intent.putExtra("image", mPostImage.getContentDescription().toString());
             intent.putExtra("profileImage", profileUri);
 
