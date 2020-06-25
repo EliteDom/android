@@ -54,15 +54,11 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
     private void getProfileUri() {
         mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            assert document != null;
-                            PreviewAdapter.this.profileUri = (String) document.get("image");
-                        }
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        assert document != null;
+                        PreviewAdapter.this.profileUri = (String) document.get("image");
                     }
                 });
     }
@@ -112,12 +108,9 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
             mDatabase = FirebaseFirestore.getInstance();
 
             itemView.setOnClickListener(this);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (intentID == 1) feedActivity(v);
-                    else profileActivity(v);
-                }
+            itemView.setOnClickListener(v -> {
+                if (intentID == 1) feedActivity(v);
+                else profileActivity(v);
             });
         }
 
@@ -153,7 +146,7 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
             Pair<View, String> t1 = Pair.create(image, "image");
             Pair<View, String> t2 = Pair.create(name, "username");
             Pair<View, String> t3 = Pair.create(card, "post_cards");
-            Pair<View, String> t4 = Pair.create((View) mCard, transitionType);
+            Pair<View, String> t4 = Pair.create(mCard, transitionType);
             ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) v.getContext(), t1, t2, t3, t4);
             ActivityCompat.startActivity(v.getContext(), intent, options.toBundle());
         }
