@@ -14,6 +14,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -98,8 +99,11 @@ public class UserProfile extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful())
-                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult()))
+                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                 profilePosts.put((String) document.get("postId"), (String) document.get("dormName"));
+                                Toast.makeText(getApplicationContext(), profilePosts.get((String) document.get("postId")), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), document.get("postId") + ", " + document.get("dormName"), Toast.LENGTH_SHORT).show();
+                            }
                     }
                 });
         mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
@@ -124,7 +128,9 @@ public class UserProfile extends AppCompatActivity {
                     }
                 });
         mTitleData.clear();
+        profilePosts.forEach((k,v) -> Toast.makeText(getApplicationContext(), k + ", " + v, Toast.LENGTH_SHORT).show());
         for (Map.Entry<String, String> singlePost : profilePosts.entrySet()) {
+            Toast.makeText(getApplicationContext(), singlePost.getValue() + ", " + singlePost.getKey(), Toast.LENGTH_SHORT).show();
             mDatabase.collection("dorms").document(singlePost.getValue()).collection("posts").document(singlePost.getKey())
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
