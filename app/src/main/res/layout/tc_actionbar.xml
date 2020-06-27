@@ -1,19 +1,36 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:orientation="vertical">
+    android:layout_marginTop="30dp"
+    android:orientation="horizontal">
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:background="@android:color/transparent"
+        android:baselineAlignBottom="true" />
 
     <TextView
         android:id="@+id/title"
         style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-        android:text="@string/topic_cards_action_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:gravity="center"
-        android:typeface="monospace"
+        android:text="@string/topic_cards_action_bar"
+        android:textColor="#FFFFFF"
         android:textStyle="bold"
-        android:layout_marginTop="24dp"
-        android:textColor="#FFFFFF" />
+        android:typeface="monospace" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:background="@android:color/transparent"
+        android:baselineAlignBottom="true"
+        android:onClick="logOut"
+        android:src="@drawable/ic_exit_to_app_white_24dp" />
 
 </LinearLayout>
