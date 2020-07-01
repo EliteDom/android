@@ -3,6 +3,7 @@ package com.elitedom.app.ui.messaging;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.widget.EditText;
@@ -81,11 +82,12 @@ public class FeedMessaging extends AppCompatActivity {
                 messageArrayList.clear();
                 for (QueryDocumentSnapshot document : Objects.requireNonNull(queryDocumentSnapshots)) {
                     if (document != null) {
-                        if (document.get("sender") != null && !Objects.requireNonNull(document.get("sender")).toString().equals(FirebaseAuth.getInstance().getUid()))
+                        if (document.get("message") == null) messageArrayList.add(new Message((String) document.get("timestamp")));
+                        else if (!Objects.requireNonNull(document.get("sender")).toString().equals(FirebaseAuth.getInstance().getUid()))
                             messageArrayList.add(new Message((String) document.get("message"), (String) document.get("timestamp"), (String) document.get("sender"), Uri.parse((String) document.get("image")), returnFlagRes(Objects.requireNonNull(flag[0]), (String) document.get("sender"))));
                         else
                             messageArrayList.add(new Message((String) document.get("message"), (String) document.get("timestamp"), returnFlagRes(Objects.requireNonNull(flag[0]), (String) document.get("sender"))));
-                        flag[0] = (String) document.get("sender");
+                        if (document.get("sender") != null) flag[0] = (String) document.get("sender");
                     }
                 }
                 mAdapter.notifyDataSetChanged();

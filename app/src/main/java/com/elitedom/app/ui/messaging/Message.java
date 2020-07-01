@@ -21,6 +21,10 @@ class Message {
         this.multipleFlag = multipleFlag;
     }
 
+    Message(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
     String getMessage() {
         return message;
     }
