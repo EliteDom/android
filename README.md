@@ -20,7 +20,7 @@ Elitedom is an open source app and is licensed under Apache 2.0. Everyone viewin
 
 Elitedom exists to connect you with the people that not only share a common love for your hobby or interest, but also possess as deep an understanding & passion for it as you.
 
-Elitedom is for every banker that watches the F1 tyre selections, for every store manager that’s secretly a football fanatic, every store salesman that discreetly places cricket bets from the changing room, every grandmother that’s more politically insightful than the news anchors we see on tv.
+Elitedom is for every banker who follows F1 races, for every store manager that’s secretly a football fanatic, every store salesman that discreetly places cricket bets from the changing room, every grandmother that’s more politically insightful than the news anchors we see on tv.
 Elitedom is for the connoisseurs, the “madmen”, and the ignored talents of the world.
 Elitedom is for your forgotten dreams.
 
