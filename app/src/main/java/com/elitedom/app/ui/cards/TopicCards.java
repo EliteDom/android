@@ -24,12 +24,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.elitedom.app.R;
+import com.elitedom.app.ui.login.LoginActivity;
 import com.elitedom.app.ui.main.Feed;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -98,15 +97,12 @@ public class TopicCards extends AppCompatActivity {
         mTopicData.clear();
         mDatabase.collection("dorms")
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult()))
-                                mTopicData.add(new Cards((String) document.get("name"), (String) document.get("description"), Uri.parse((String) document.get("image"))));
-                            mAdapter.notifyDataSetChanged();
-                            runLayoutAnimation(mRecycler);
-                        }
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult()))
+                            mTopicData.add(new Cards((String) document.get("name"), (String) document.get("description"), Uri.parse((String) document.get("image"))));
+                        mAdapter.notifyDataSetChanged();
+                        runLayoutAnimation(mRecycler);
                     }
                 });
     }
@@ -120,6 +116,13 @@ public class TopicCards extends AppCompatActivity {
             finish();
         } else
             Toast.makeText(getApplicationContext(), "Please select a Category!", Toast.LENGTH_SHORT).show();
+    }
+
+    public void logOut(View view) {
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(this, LoginActivity.class));
+        setResult(RESULT_OK);
+        finish();
     }
 
     private void runLayoutAnimation(final RecyclerView recyclerView) {

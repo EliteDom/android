@@ -10,23 +10,24 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.Adapter;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.elitedom.app.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-public class MessageAdapter extends RecyclerView.Adapter {
+@SuppressWarnings("rawtypes")
+public class MessageAdapter extends Adapter {
 
     private static final int VIEW_TYPE_MESSAGE_SENT = 1;
     private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
     private static final int VIEW_TYPE_MESSAGE_MULTIPLE_SENT = 3;
     private static final int VIEW_TYPE_MESSAGE_MULTIPLE_RECEIVED = 4;
+    private static final int VIEW_TYPE_DATESTAMP = 5;
     private FirebaseFirestore mDatabase;
     private ArrayList<Message> messages;
     private Context mContext;
@@ -41,7 +42,6 @@ public class MessageAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
-
         if (viewType == VIEW_TYPE_MESSAGE_SENT) {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_message_sent, parent, false);
@@ -58,6 +58,10 @@ public class MessageAdapter extends RecyclerView.Adapter {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_message_multiple_received, parent, false);
             return new ReceivedMultipleViewHolder(view);
+        } else if (viewType == VIEW_TYPE_DATESTAMP) {
+            view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_datestamp, parent, false);
+            return new DatestampViewHolder(view);
         } else //noinspection ConstantConditions
             return null;
     }
@@ -79,6 +83,9 @@ public class MessageAdapter extends RecyclerView.Adapter {
                 break;
             case VIEW_TYPE_MESSAGE_MULTIPLE_RECEIVED:
                 ((ReceivedMultipleViewHolder) holder).bindTo(currentMessage);
+                break;
+            case VIEW_TYPE_DATESTAMP:
+                ((DatestampViewHolder) holder).bindTo(currentMessage);
         }
     }
 
@@ -90,11 +97,26 @@ public class MessageAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position) {
         Message message = messages.get(position);
-        if (message.getSender() == null)
+        if (message.getMessage() == null) return VIEW_TYPE_DATESTAMP;
+        else if (message.getSender() == null)
             if (message.getMultipleFlag() == 1) return VIEW_TYPE_MESSAGE_SENT;
             else return VIEW_TYPE_MESSAGE_MULTIPLE_SENT;
         else if (message.getMultipleFlag() == 1) return VIEW_TYPE_MESSAGE_RECEIVED;
         return VIEW_TYPE_MESSAGE_MULTIPLE_RECEIVED;
+    }
+
+    static class DatestampViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView timestamp;
+
+        DatestampViewHolder(final View itemView) {
+            super(itemView);
+            timestamp = itemView.findViewById(R.id.text_datestamp);
+        }
+
+        void bindTo(Message currentMessage) {
+            timestamp.setText(currentMessage.getTimestamp());
+        }
     }
 
     static class SentViewHolder extends RecyclerView.ViewHolder {
@@ -160,6 +182,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
             image.setClipToOutline(true);
         }
 
+        @SuppressLint("SetTextI18n")
         void bindTo(Message currentMessage) {
             message.setText(currentMessage.getMessage());
             Glide.with(mContext)
@@ -169,15 +192,11 @@ public class MessageAdapter extends RecyclerView.Adapter {
             image.setContentDescription(currentMessage.getImageResource().toString());
             mDatabase.collection("users").document(currentMessage.getSender())
                     .get()
-                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @SuppressLint("SetTextI18n")
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            if (task.isSuccessful()) {
-                                DocumentSnapshot document = task.getResult();
-                                assert document != null;
-                                sender.setText(document.get("firstName") + " " + document.get("lastName"));
-                            }
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            assert document != null;
+                            sender.setText(document.get("firstName") + " " + document.get("lastName"));
                         }
                     });
             timestamp.setText(currentMessage.getTimestamp());

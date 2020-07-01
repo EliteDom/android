@@ -1580,6 +1580,7 @@ id customPanel
 id cut
 id dark
 id date_picker_actions
+id datestamp
 id decor_content_parent
 id default_activity_button
 id design_bottom_sheet
@@ -1791,6 +1792,7 @@ id textEnd
 id textSpacerNoButtons
 id textSpacerNoTitle
 id textStart
+id text_datestamp
 id text_input_end_icon
 id text_input_start_icon
 id text_message_body
@@ -1920,6 +1922,7 @@ layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_end_icon
 layout design_text_input_start_icon
+layout item_datestamp
 layout item_message_multiple_received
 layout item_message_multiple_sent
 layout item_message_received
