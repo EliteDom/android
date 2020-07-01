@@ -34,7 +34,7 @@ public class FeedMessaging extends AppCompatActivity {
     private MessageAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private FirebaseFirestore mDatabase;
-    private String uid, dorm, authorImage;
+    private String uid, dorm, authorImage, date;
     private ArrayList<Message> messageArrayList;
 
     @Override
@@ -65,6 +65,7 @@ public class FeedMessaging extends AppCompatActivity {
         messageArrayList = new ArrayList<>();
         mAdapter = new MessageAdapter(this, messageArrayList);
         mRecyclerView.setAdapter(mAdapter);
+        date = "";
         initializeData();
     }
 
@@ -81,7 +82,10 @@ public class FeedMessaging extends AppCompatActivity {
                 messageArrayList.clear();
                 for (QueryDocumentSnapshot document : Objects.requireNonNull(queryDocumentSnapshots)) {
                     if (document != null) {
-                        if (document.get("message") == null) messageArrayList.add(new Message((String) document.get("timestamp")));
+                        if (document.get("message") == null) {
+                            messageArrayList.add(new Message((String) document.get("timestamp")));
+                            date = (String) document.get("timestamp");
+                        }
                         else if (!Objects.requireNonNull(document.get("sender")).toString().equals(FirebaseAuth.getInstance().getUid()))
                             messageArrayList.add(new Message((String) document.get("message"), (String) document.get("timestamp"), (String) document.get("sender"), Uri.parse((String) document.get("image")), returnFlagRes(Objects.requireNonNull(flag[0]), (String) document.get("sender"))));
                         else
@@ -116,8 +120,15 @@ public class FeedMessaging extends AppCompatActivity {
 
     public void sendMessage(View view) {
         if (validInput(message.getText().toString())) {
-            FirebaseAuth auth = FirebaseAuth.getInstance();
+            if (!new java.util.Date().toString().substring(4, 10).equals(date)) {
+                Map<String, Object> messageBlock = new HashMap<>();
+                messageBlock.put("timestamp", new java.util.Date().toString().substring(4, 10));
+                mDatabase.collection("dorms").document(dorm).collection("posts").document(uid).collection("chats").document(String.valueOf(new Timestamp(System.currentTimeMillis()).getTime()))
+                        .set(messageBlock);
+            }
+
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            FirebaseAuth auth = FirebaseAuth.getInstance();
             Map<String, Object> messageBlock = new HashMap<>();
             String date = getDate(timestamp.toString());
             messageBlock.put("message", message.getText().toString());
@@ -133,12 +144,6 @@ public class FeedMessaging extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Invalid message body!", Toast.LENGTH_SHORT).show();
     }
 
-    private boolean validInput(String message) {
-        if (message.length() == 0) return false;
-        for(int i = 0; i < message.length(); i++) if (message.charAt(i) != ' ') return true;
-        return false;
-    }
-
     private String getDate(String time) {
         StringBuilder res = new StringBuilder();
         for (char ch : time.toCharArray()) {
@@ -146,6 +151,12 @@ public class FeedMessaging extends AppCompatActivity {
             if (res.length() > 5) break;
         }
         return res.toString();
+    }
+
+    private boolean validInput(String message) {
+        if (message.length() == 0) return false;
+        for(int i = 0; i < message.length(); i++) if (message.charAt(i) != ' ') return true;
+        return false;
     }
 
     private void scrollToBottom() {

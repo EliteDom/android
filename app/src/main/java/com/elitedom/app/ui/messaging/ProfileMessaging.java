@@ -37,7 +37,7 @@ public class ProfileMessaging extends AppCompatActivity {
     private MessageAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private FirebaseFirestore mDatabase;
-    private String uid, dorm, authorImage;
+    private String uid, dorm, authorImage, date;
     private ArrayList<Message> messageArrayList;
 
     @Override
@@ -70,6 +70,7 @@ public class ProfileMessaging extends AppCompatActivity {
         mNoMessages = findViewById(R.id.no_messages);
         mAdapter = new MessageAdapter(this, messageArrayList);
         mDatabase = FirebaseFirestore.getInstance();
+        date = "";
         CircleImageView mProfileImage = findViewById(R.id.profile_image);
 
         Glide.with(this)
@@ -92,12 +93,15 @@ public class ProfileMessaging extends AppCompatActivity {
                 messageArrayList.clear();
                 for (QueryDocumentSnapshot document : Objects.requireNonNull(queryDocumentSnapshots)) {
                     if (document != null) {
-                        if (document.get("message") == null) messageArrayList.add(new Message((String) document.get("timestamp")));
+                        if (document.get("message") == null) {
+                            messageArrayList.add(new Message((String) document.get("timestamp")));
+                            date = (String) document.get("timestamp");
+                        }
                         else if (!Objects.requireNonNull(document.get("sender")).toString().equals(FirebaseAuth.getInstance().getUid()))
                             messageArrayList.add(new Message((String) document.get("message"), (String) document.get("timestamp"), (String) document.get("sender"), Uri.parse((String) document.get("image")), returnFlagRes(Objects.requireNonNull(flag[0]), (String) document.get("sender"))));
                         else
                             messageArrayList.add(new Message((String) document.get("message"), (String) document.get("timestamp"), returnFlagRes(Objects.requireNonNull(flag[0]), (String) document.get("sender"))));
-                        flag[0] = (String) document.get("sender");
+                        if (document.get("sender") != null) flag[0] = (String) document.get("sender");
                     }
                 }
                 mAdapter.notifyDataSetChanged();
@@ -127,8 +131,15 @@ public class ProfileMessaging extends AppCompatActivity {
 
     public void sendMessage(View view) {
         if (validInput(message.getText().toString())) {
-            FirebaseAuth auth = FirebaseAuth.getInstance();
+            if (!new java.util.Date().toString().substring(4, 10).equals(date)) {
+                Map<String, Object> messageBlock = new HashMap<>();
+                messageBlock.put("timestamp", new java.util.Date().toString().substring(4, 10));
+                mDatabase.collection("dorms").document(dorm).collection("posts").document(uid).collection("chats").document(String.valueOf(new Timestamp(System.currentTimeMillis()).getTime()))
+                        .set(messageBlock);
+            }
+
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            FirebaseAuth auth = FirebaseAuth.getInstance();
             Map<String, Object> messageBlock = new HashMap<>();
             String date = getDate(timestamp.toString());
             messageBlock.put("message", message.getText().toString());
