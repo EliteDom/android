@@ -118,13 +118,6 @@ public class TopicCards extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Please select a Category!", Toast.LENGTH_SHORT).show();
     }
 
-    public void logOut(View view) {
-        FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(this, LoginActivity.class));
-        setResult(RESULT_OK);
-        finish();
-    }
-
     private void runLayoutAnimation(final RecyclerView recyclerView) {
         final Context context = recyclerView.getContext();
         final LayoutAnimationController controller =

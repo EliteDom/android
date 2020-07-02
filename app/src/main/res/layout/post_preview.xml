@@ -42,7 +42,6 @@
                 android:layout_below="@id/title"
                 android:paddingHorizontal="8dp"
                 android:paddingBottom="8dp"
-                android:text="Jinen Setpal | Authored 3h ago"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 tools:ignore="SmallSp" />
