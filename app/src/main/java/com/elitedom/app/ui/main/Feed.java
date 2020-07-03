@@ -25,6 +25,7 @@ import com.elitedom.app.ui.cards.TopicCards;
 import com.elitedom.app.ui.login.LoginActivity;
 import com.elitedom.app.ui.profile.UserProfile;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -53,8 +54,8 @@ public class Feed extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.mainfeed_actionbar);
-        //        Objects.requireNonNull(getSupportActionBar()).hide();
+        getSupportActionBar().setCustomView(R.layout.actionbar_mainfeed);
+//        Objects.requireNonNull(getSupportActionBar()).hide();
 
         AnimationDrawable animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
         animationDrawable.setEnterFadeDuration(2000);
@@ -76,6 +77,15 @@ public class Feed extends AppCompatActivity {
 
     private void initializeData() {
         mTitleData.clear();
+        mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        assert document != null;
+                        mTitleData.add(new PreviewCard(Uri.parse((String) document.get("image"))));
+                    }
+                });
         for (final String i : mTopicNames) {
             mDatabase.collection("dorms").document(i).collection("posts")
                     .get()

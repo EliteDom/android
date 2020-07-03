@@ -1633,6 +1633,7 @@ id ifRoom
 id image
 id image_layer
 id image_message_profile
+id image_profile
 id info
 id information
 id invisible
@@ -1896,6 +1897,8 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
+layout actionbar_mainfeed
+layout actionbar_topic_cards
 layout activity_feed
 layout activity_feed_messaging
 layout activity_login
@@ -1927,7 +1930,9 @@ layout item_message_multiple_received
 layout item_message_multiple_sent
 layout item_message_received
 layout item_message_sent
-layout mainfeed_actionbar
+layout item_post_creator
+layout item_post_preview
+layout item_topic_card
 layout mtrl_alert_dialog
 layout mtrl_alert_dialog_actions
 layout mtrl_alert_dialog_title
@@ -1962,13 +1967,10 @@ layout notification_template_custom_big
 layout notification_template_icon_group
 layout notification_template_part_chronometer
 layout notification_template_part_time
-layout post_preview
 layout select_dialog_item_material
 layout select_dialog_multichoice_material
 layout select_dialog_singlechoice_material
-layout single_topic_card
 layout support_simple_spinner_dropdown_item
-layout tc_actionbar
 layout test_action_chip
 layout test_design_checkbox
 layout test_reflow_chipgroup

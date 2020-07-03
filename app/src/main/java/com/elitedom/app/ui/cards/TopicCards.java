@@ -24,9 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.elitedom.app.R;
-import com.elitedom.app.ui.login.LoginActivity;
 import com.elitedom.app.ui.main.Feed;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -50,7 +48,7 @@ public class TopicCards extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.tc_actionbar);
+        getSupportActionBar().setCustomView(R.layout.actionbar_topic_cards);
         // Objects.requireNonNull(getSupportActionBar()).hide();
 
         mTopicData = new ArrayList<>();
