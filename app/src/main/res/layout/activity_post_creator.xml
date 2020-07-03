@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/gradient_list"
-        android:paddingTop="60dp"
+        android:paddingTop="48dp"
         android:paddingBottom="@dimen/activity_vertical_margin"
         tools:context="com.example.android.materialme.MainActivity">
 
@@ -38,19 +38,20 @@
                     android:id="@+id/image_profile"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:layout_marginTop="12dp"
                     android:layout_marginStart="8dp"
+                    android:layout_marginTop="12dp"
                     android:background="@drawable/circle"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="ContentDescription" />
 
                 <EditText
-                    android:id="@+id/editor"
+                    android:id="@+id/editor_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:clickable="false"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:hint="@string/contribute_something_interesting"
                     android:importantForAutofill="no"
                     android:inputType="textCapSentences"
@@ -58,8 +59,34 @@
                     app:layout_constraintLeft_toRightOf="@id/image_profile"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/postImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="6dp"
+                    android:layout_marginTop="6dp"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/rounded_image"
+                    android:src="@drawable/wp_linux"
+                    app:layout_constraintTop_toBottomOf="@id/editor_title"
+                    tools:ignore="ContentDescription" />
+
+                <EditText
+                    android:id="@+id/editor_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:clickable="false"
+                    android:hint="@string/post_body"
+                    android:importantForAutofill="no"
+                    android:inputType="textMultiLine"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/postImage" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
-
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

@@ -84,8 +84,12 @@ public class Feed extends AppCompatActivity {
                         DocumentSnapshot document = task.getResult();
                         assert document != null;
                         mTitleData.add(new PreviewCard(Uri.parse((String) document.get("image"))));
+                        loadPosts();
                     }
                 });
+    }
+
+    private void loadPosts() {
         for (final String i : mTopicNames) {
             mDatabase.collection("dorms").document(i).collection("posts")
                     .get()

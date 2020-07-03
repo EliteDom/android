@@ -29,5 +29,6 @@
     <string name="forgot_password">Forgot Password</string>
     <string name="empty_chatroom">No messages yet. Be the first!</string>
     <string name="no_posts">You haven\'t authored any post yet!</string>
-    <string name="contribute_something_interesting">Contribute something interesting!</string>
+    <string name="contribute_something_interesting">The start of something interesting…</string>
+    <string name="post_body">Post body here</string>
 </resources>

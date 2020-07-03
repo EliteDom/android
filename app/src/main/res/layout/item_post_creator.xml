@@ -43,6 +43,8 @@
                 android:layout_height="match_parent"
                 android:layout_margin="8dp"
                 android:clickable="false"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:hint="@string/contribute_something_interesting"
                 android:importantForAutofill="no"
                 android:inputType="textCapSentences"

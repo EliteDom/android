@@ -1597,6 +1597,8 @@ id disliked
 id dropdown_menu
 id edit_query
 id editor
+id editor_body
+id editor_title
 id edittext_chatbox
 id elite
 id email
@@ -1655,6 +1657,7 @@ id listMode
 id list_item
 id login
 id login_layout
+id main
 id masked
 id message
 id messageList
@@ -1719,6 +1722,7 @@ id post_text
 id post_view
 id predictor_score
 id predictor_text
+id profile
 id profile_data
 id profile_image
 id progress_circular
@@ -2114,6 +2118,7 @@ string path_password_eye
 string path_password_eye_mask_strike_through
 string path_password_eye_mask_visible
 string path_password_strike_through
+string post_body
 string predictor_text
 string profile_name
 string project_id

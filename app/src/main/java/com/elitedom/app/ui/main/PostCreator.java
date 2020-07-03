@@ -4,7 +4,9 @@ import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -37,14 +39,24 @@ public class PostCreator extends AppCompatActivity {
         animationDrawable.setEnterFadeDuration(2000);
         animationDrawable.setExitFadeDuration(4000);
         animationDrawable.start();
-        animationDrawable.setColorFilter(Color.rgb(123, 123, 123), android.graphics.PorterDuff.Mode.MULTIPLY);
+        animationDrawable.setColorFilter(Color.rgb(190, 190, 190), android.graphics.PorterDuff.Mode.MULTIPLY);
 
+        EditText title = findViewById(R.id.editor_title);
         ImageView profileImage = findViewById(R.id.image_profile);
+        ImageView postImage = findViewById(R.id.postImage);
+
         Glide.with(this)
                 .load(getIntent().getStringExtra("image"))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(profileImage);
         profileImage.setContentDescription(getIntent().getStringExtra("image"));
+        title.setText(getIntent().getStringExtra("title"));
         profileImage.setClipToOutline(true);
+        postImage.setClipToOutline(true);
     }
+
+    public void profileUI(View view) {} // Nothing run, functions exist for exception handling only
+    public void topicUI(View view) {}
+    public void logOut(View view) {}
+
 }

@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -22,7 +21,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.elitedom.app.R;
-import com.elitedom.app.ui.login.LoginActivity;
 import com.elitedom.app.ui.profile.ProfilePostView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -142,6 +140,7 @@ public class PreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         private void createPost(View view) {
             Intent intent = new Intent(mContext, PostCreator.class);
             intent.putExtra("image", image.getContentDescription());
+            intent.putExtra("title", editor.getText().toString());
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, mCard, transitionType);
             ActivityCompat.startActivity(mContext, intent, options.toBundle());
         }
