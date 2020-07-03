@@ -30,7 +30,9 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/AppTheme" >
-        <activity android:name="com.elitedom.app.ui.main.PostCreator" />
+        <activity
+            android:name="com.elitedom.app.ui.main.PostCreator"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name="com.elitedom.app.ui.login.PasswordReset" />
         <activity
             android:name="com.elitedom.app.ui.messaging.ProfileMessaging"
