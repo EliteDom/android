@@ -1596,6 +1596,7 @@ id disableHome
 id disliked
 id dropdown_menu
 id edit_query
+id editor
 id edittext_chatbox
 id elite
 id email
@@ -1906,6 +1907,7 @@ layout activity_feed_messaging
 layout activity_login
 layout activity_new_user
 layout activity_password_reset
+layout activity_post_creator
 layout activity_post_view
 layout activity_profile_messaging
 layout activity_profile_post
@@ -2045,6 +2047,7 @@ string common_google_play_services_wear_update_text
 string common_open_on_phone
 string common_signin_button_text
 string common_signin_button_text_long
+string contribute_something_interesting
 string default_web_client_id
 string elite_name
 string elitedom

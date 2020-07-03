@@ -236,6 +236,10 @@
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/layout/activity_profile_messaging.xml"
     },
     {
+        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/layout_activity_post_creator.xml.flat",
+        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/layout/activity_post_creator.xml"
+    },
+    {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable-v24_gradient_2.xml.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable-v24/gradient_2.xml"
     },

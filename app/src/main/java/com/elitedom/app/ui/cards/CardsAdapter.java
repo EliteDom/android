@@ -143,7 +143,7 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
             Glide.with(mContext)
                     .load(currentTopic.getImageResource())
                     .into(mTopicImage);
-            mTopicImage.setColorFilter(Color.rgb(180, 180, 180), android.graphics.PorterDuff.Mode.MULTIPLY);
+            mTopicImage.setColorFilter(Color.rgb(200, 200, 200), android.graphics.PorterDuff.Mode.MULTIPLY);
         }
 
         @Override

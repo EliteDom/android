@@ -8,8 +8,10 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -20,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.elitedom.app.R;
+import com.elitedom.app.ui.login.LoginActivity;
 import com.elitedom.app.ui.profile.ProfilePostView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -76,8 +79,7 @@ public class PreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             view = LayoutInflater.from(mContext)
                     .inflate(R.layout.item_post_preview, parent, false);
             return new PostViewHolder(view);
-        }
-        else if (viewType == VIEW_TYPE_CREATOR){
+        } else if (viewType == VIEW_TYPE_CREATOR) {
             view = LayoutInflater.from(mContext)
                     .inflate(R.layout.item_post_creator, parent, false);
             return new CreatorViewHolder(view);
@@ -113,10 +115,14 @@ public class PreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     class CreatorViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView image;
+        private EditText editor;
+        private CardView mCard;
 
         CreatorViewHolder(final View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.image_profile);
+            editor = itemView.findViewById(R.id.editor);
+            mCard = itemView.findViewById(R.id.creator_card);
         }
 
         void bindTo(PreviewCard currentPost) {
@@ -127,10 +133,20 @@ public class PreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                         .into(image);
                 image.setContentDescription(currentPost.getImageResource().toString());
                 image.setClipToOutline(true);
+
+                itemView.setOnClickListener(this::createPost);
+                editor.setOnClickListener(this::createPost);
             }
         }
+
+        private void createPost(View view) {
+            Intent intent = new Intent(mContext, PostCreator.class);
+            intent.putExtra("image", image.getContentDescription());
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, mCard, transitionType);
+            ActivityCompat.startActivity(mContext, intent, options.toBundle());
+        }
     }
-    
+
     class PostViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView mTitleText, mInfoText, mAuthor;

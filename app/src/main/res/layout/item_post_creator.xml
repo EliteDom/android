@@ -38,13 +38,15 @@
                 tools:ignore="ContentDescription" />
 
             <EditText
+                android:id="@+id/editor"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="8dp"
+                android:clickable="false"
                 android:hint="@string/contribute_something_interesting"
-                android:textSize="14sp"
                 android:importantForAutofill="no"
                 android:inputType="textCapSentences"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/image_profile"
                 app:layout_constraintRight_toRightOf="parent"

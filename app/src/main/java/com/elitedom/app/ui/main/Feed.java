@@ -61,6 +61,7 @@ public class Feed extends AppCompatActivity {
         animationDrawable.setEnterFadeDuration(2000);
         animationDrawable.setExitFadeDuration(4000);
         animationDrawable.start();
+//        animationDrawable.setColorFilter(Color.rgb(123, 123, 123), android.graphics.PorterDuff.Mode.MULTIPLY);
 
         mRecycler = findViewById(R.id.recyclerView);
         mRecycler.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
@@ -71,7 +72,6 @@ public class Feed extends AppCompatActivity {
         mAdapter = new PreviewAdapter(this, mTitleData, "post_expansion", 1);
         mRecycler.setAdapter(mAdapter);
         mTopicNames = getIntent().getStringArrayListExtra("cards");
-
         initializeData();
     }
 

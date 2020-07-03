@@ -38,6 +38,5 @@
             android:backgroundTint="@color/colorAccent"
             android:onClick="feedActivity"
             android:src="@drawable/ic_keyboard_arrow_right_white_24dp" />
-
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
