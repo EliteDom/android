@@ -83,6 +83,25 @@ public class UserProfile extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void initializeData() {
+        mTitleData.clear();
+        mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        assert document != null;
+                        predictor.setText(Objects.requireNonNull(document.get("predictorPoints")).toString());
+                        appreciation.setText(Objects.requireNonNull(document.get("appreciationPoints")).toString());
+                        username.setText(Objects.requireNonNull(document.get("firstName")).toString() + " " + Objects.requireNonNull(document.get("lastName")).toString() + "'s Profile");
+                        String image = (String) document.get("image");
+                        if (image != null && image.length() > 0)
+                            Glide.with(UserProfile.this)
+                                    .load(image)
+                                    .into(imageView);
+                        imageView.setContentDescription(image);
+                        mTitleData.add(new PreviewCard(Uri.parse(image)));
+                    }
+                });
         mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).collection("authoredPosts")
                 .get()
                 .addOnCompleteListener(task -> {
@@ -101,24 +120,6 @@ public class UserProfile extends AppCompatActivity {
                                         }
                                     });
                         }
-                    mTitleData.clear();
-                });
-        mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        assert document != null;
-                        predictor.setText(Objects.requireNonNull(document.get("predictorPoints")).toString());
-                        appreciation.setText(Objects.requireNonNull(document.get("appreciationPoints")).toString());
-                        username.setText(Objects.requireNonNull(document.get("firstName")).toString() + " " + Objects.requireNonNull(document.get("lastName")).toString() + "'s Profile");
-                        String image = (String) document.get("image");
-                        if (image != null && image.length() > 0)
-                            Glide.with(UserProfile.this)
-                                    .load(image)
-                                    .into(imageView);
-                        imageView.setContentDescription(image);
-                    }
                 });
     }
 

@@ -1575,6 +1575,7 @@ id container
 id content
 id contentPanel
 id coordinator
+id creator_card
 id custom
 id customPanel
 id cut
@@ -1712,6 +1713,7 @@ id peekHeight
 id percent
 id pin
 id postImage
+id post_creator
 id post_text
 id post_view
 id predictor_score

@@ -28,8 +28,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 public class PreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int VIEW_TYPE_POST = 1;
@@ -122,11 +120,14 @@ public class PreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
 
         void bindTo(PreviewCard currentPost) {
-            Glide.with(mContext)
-                    .load(currentPost.getImageResource())
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(image);
-            image.setContentDescription(currentPost.getImageResource().toString());
+            if (currentPost.getImageResource() != null && currentPost.getImageResource().toString().length() > 0) {
+                Glide.with(mContext)
+                        .load(currentPost.getImageResource())
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(image);
+                image.setContentDescription(currentPost.getImageResource().toString());
+                image.setClipToOutline(true);
+            }
         }
     }
     
