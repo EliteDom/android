@@ -58,7 +58,6 @@ public class PostCreator extends AppCompatActivity {
         FloatingActionButton fabTick = findViewById(R.id.fabTick);
         FloatingActionButton fabDecline = findViewById(R.id.fabDecline);
 
-        fab.setOnClickListener(v -> isRotate = ViewAnimator.rotateFab(v, !isRotate));
         ViewAnimator.init(fabTick);
         ViewAnimator.init(fabDecline);
         fab.setOnClickListener(v -> {
@@ -70,6 +69,7 @@ public class PostCreator extends AppCompatActivity {
                 ViewAnimator.showOut(fabTick);
                 ViewAnimator.showOut(fabDecline);
             }
+
         });
     }
 
