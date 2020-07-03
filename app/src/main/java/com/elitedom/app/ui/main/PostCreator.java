@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -24,6 +23,7 @@ public class PostCreator extends AppCompatActivity {
 
     private static final int SELECT_PICTURE = 1;
     private ImageView postImage;
+    private boolean isRotate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +43,7 @@ public class PostCreator extends AppCompatActivity {
         EditText title = findViewById(R.id.editor_title);
         ImageView profileImage = findViewById(R.id.image_profile);
         postImage = findViewById(R.id.postImage);
+        isRotate = false;
 
         Glide.with(this)
                 .load(getIntent().getStringExtra("image"))
@@ -52,6 +53,24 @@ public class PostCreator extends AppCompatActivity {
         title.setText(getIntent().getStringExtra("title"));
         profileImage.setClipToOutline(true);
         postImage.setClipToOutline(true);
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        FloatingActionButton fabTick = findViewById(R.id.fabTick);
+        FloatingActionButton fabDecline = findViewById(R.id.fabDecline);
+
+        fab.setOnClickListener(v -> isRotate = ViewAnimator.rotateFab(v, !isRotate));
+        ViewAnimator.init(fabTick);
+        ViewAnimator.init(fabDecline);
+        fab.setOnClickListener(v -> {
+            isRotate = ViewAnimator.rotateFab(v, !isRotate);
+            if(isRotate){
+                ViewAnimator.showIn(fabTick);
+                ViewAnimator.showIn(fabDecline);
+            }else{
+                ViewAnimator.showOut(fabTick);
+                ViewAnimator.showOut(fabDecline);
+            }
+        });
     }
 
     @Override
@@ -75,7 +94,7 @@ public class PostCreator extends AppCompatActivity {
         pickIntent.setType("image/*");
 
         Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
 
         startActivityForResult(chooserIntent, SELECT_PICTURE);
     }
