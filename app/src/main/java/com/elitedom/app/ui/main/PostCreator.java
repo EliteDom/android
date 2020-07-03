@@ -1,9 +1,16 @@
 package com.elitedom.app.ui.main;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -20,6 +27,9 @@ import com.elitedom.app.R;
 import java.util.Objects;
 
 public class PostCreator extends AppCompatActivity {
+
+    private static final int SELECT_PICTURE = 1;
+    private ImageView postImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +53,7 @@ public class PostCreator extends AppCompatActivity {
 
         EditText title = findViewById(R.id.editor_title);
         ImageView profileImage = findViewById(R.id.image_profile);
-        ImageView postImage = findViewById(R.id.postImage);
+        postImage = findViewById(R.id.postImage);
 
         Glide.with(this)
                 .load(getIntent().getStringExtra("image"))
@@ -53,6 +63,32 @@ public class PostCreator extends AppCompatActivity {
         title.setText(getIntent().getStringExtra("title"));
         profileImage.setClipToOutline(true);
         postImage.setClipToOutline(true);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            Glide.with(this)
+                    .load(data.getData())
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .centerCrop()
+                    .into(postImage);
+        }
+    }
+
+    @SuppressLint("IntentReset")
+    public void imageInput(View view) {
+        Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        getIntent.setType("image/*");
+
+        Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        pickIntent.setType("image/*");
+
+        Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
+
+        startActivityForResult(chooserIntent, SELECT_PICTURE);
     }
 
     public void profileUI(View view) {} // Nothing run, functions exist for exception handling only
