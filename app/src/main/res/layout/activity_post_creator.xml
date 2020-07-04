@@ -95,6 +95,7 @@
         android:layout_margin="40dp"
         android:backgroundTint="@color/pastelGrey"
         android:src="@drawable/ic_done_black_18dp"
+        android:onClick="submitPost"
         app:fabSize="mini"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
@@ -104,9 +105,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="40dp"
-        app:fabSize="mini"
         android:backgroundTint="@color/pastelGrey"
         android:src="@drawable/ic_clear_black_18dp"
+        android:onClick="discardPost"
+        app:fabSize="mini"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 

@@ -110,4 +110,10 @@ public class PostCreator extends AppCompatActivity {
                 .rotation(rotate ? 135f : 0f);
         isRotated = rotate;
     }
+
+    public void submitPost(View view) {
+    }
+
+    public void discardPost(View view) {
+    }
 }
