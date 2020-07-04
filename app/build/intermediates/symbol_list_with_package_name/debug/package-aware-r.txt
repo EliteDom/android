@@ -1278,6 +1278,8 @@ dimen notification_small_icon_size_as_large
 dimen notification_subtext_size
 dimen notification_top_pad
 dimen notification_top_pad_large_text
+dimen standard_115
+dimen standard_65
 dimen test_mtrl_calendar_day_cornerSize
 dimen tooltip_corner_radius
 dimen tooltip_horizontal_padding
@@ -1419,11 +1421,12 @@ drawable gradient_2
 drawable gradient_3
 drawable gradient_list
 drawable ic_account_circle_white_24dp
-drawable ic_add_black_18dp
+drawable ic_add_black_24dp
 drawable ic_calendar_black_24dp
 drawable ic_chat_white_24dp
+drawable ic_clear_black_18dp
 drawable ic_clear_black_24dp
-drawable ic_done_black_24dp
+drawable ic_done_black_18dp
 drawable ic_done_outline_white_24dp
 drawable ic_edit_black_24dp
 drawable ic_exit_to_app_white_24dp

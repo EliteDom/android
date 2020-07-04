@@ -1,5 +1,7 @@
 package com.elitedom.app.ui.main;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
@@ -23,7 +25,7 @@ public class PostCreator extends AppCompatActivity {
 
     private static final int SELECT_PICTURE = 1;
     private ImageView postImage;
-    private boolean isRotate;
+    private boolean isRotated;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +45,7 @@ public class PostCreator extends AppCompatActivity {
         EditText title = findViewById(R.id.editor_title);
         ImageView profileImage = findViewById(R.id.image_profile);
         postImage = findViewById(R.id.postImage);
-        isRotate = false;
+        isRotated = false;
 
         Glide.with(this)
                 .load(getIntent().getStringExtra("image"))
@@ -58,16 +60,14 @@ public class PostCreator extends AppCompatActivity {
         FloatingActionButton fabTick = findViewById(R.id.fabTick);
         FloatingActionButton fabDecline = findViewById(R.id.fabDecline);
 
-        ViewAnimator.init(fabTick);
-        ViewAnimator.init(fabDecline);
         fab.setOnClickListener(v -> {
-            isRotate = ViewAnimator.rotateFab(v, !isRotate);
-            if(isRotate){
-                ViewAnimator.showIn(fabTick);
-                ViewAnimator.showIn(fabDecline);
+            rotateFab(v, !isRotated);
+            if(isRotated){
+                fabTick.animate().translationY(-getResources().getDimension(R.dimen.standard_65));
+                fabDecline.animate().translationY(-getResources().getDimension(R.dimen.standard_115));
             }else{
-                ViewAnimator.showOut(fabTick);
-                ViewAnimator.showOut(fabDecline);
+                fabTick.animate().translationY(0);
+                fabDecline.animate().translationY(0);
             }
 
         });
@@ -97,5 +97,17 @@ public class PostCreator extends AppCompatActivity {
         chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
 
         startActivityForResult(chooserIntent, SELECT_PICTURE);
+    }
+
+    private void rotateFab(final View v, boolean rotate) {
+        v.animate().setDuration(200)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                    }
+                })
+                .rotation(rotate ? 135f : 0f);
+        isRotated = rotate;
     }
 }

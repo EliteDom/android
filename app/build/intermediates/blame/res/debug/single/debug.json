@@ -8,28 +8,28 @@
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/layout/item_datestamp.xml"
     },
     {
-        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/mipmap-anydpi-v26_ic_launcher.xml.flat",
-        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml"
+        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png"
     },
     {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/mipmap-xxhdpi_ic_launcher_round.png.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png"
     },
     {
-        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi_ic_launcher_round.png.flat",
-        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png"
+        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml"
     },
     {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/layout_activity_feed.xml.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/layout/activity_feed.xml"
     },
     {
-        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable-v24_ic_launcher_foreground.xml.flat",
-        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable-v24/ic_launcher_foreground.xml"
-    },
-    {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_ic_thumb_up_liked_24dp.xml.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/ic_thumb_up_liked_24dp.xml"
+    },
+    {
+        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable-v24_ic_launcher_foreground.xml.flat",
+        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable-v24/ic_launcher_foreground.xml"
     },
     {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_ic_thumb_up_unliked_24dp.xml.flat",
@@ -38,6 +38,10 @@
     {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/anim_atg.xml.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/anim/atg.xml"
+    },
+    {
+        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_ic_done_black_18dp.xml.flat",
+        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/ic_done_black_18dp.xml"
     },
     {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/layout_activity_profile_post.xml.flat",
@@ -184,10 +188,6 @@
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/layout/item_message_multiple_sent.xml"
     },
     {
-        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_ic_done_black_24dp.xml.flat",
-        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/ic_done_black_24dp.xml"
-    },
-    {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_ic_keyboard_arrow_right_white_24dp.xml.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/ic_keyboard_arrow_right_white_24dp.xml"
     },
@@ -206,6 +206,10 @@
     {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_ic_share_white_24dp.xml.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/ic_share_white_24dp.xml"
+    },
+    {
+        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_ic_clear_black_18dp.xml.flat",
+        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/ic_clear_black_18dp.xml"
     },
     {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/anim_atg2.xml.flat",
@@ -244,6 +248,10 @@
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/layout/activity_post_creator.xml"
     },
     {
+        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_ic_add_black_24dp.xml.flat",
+        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/ic_add_black_24dp.xml"
+    },
+    {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable-v24_gradient_2.xml.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable-v24/gradient_2.xml"
     },
@@ -266,14 +274,6 @@
     {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/anim_fab_pop.xml.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/anim/fab_pop.xml"
-    },
-    {
-        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_ic_add_black_18dp.xml.flat",
-        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/ic_add_black_18dp.xml"
-    },
-    {
-        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_ic_clear_black_24dp.xml.flat",
-        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/ic_clear_black_24dp.xml"
     },
     {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/anim_slide_in_left.xml.flat",
