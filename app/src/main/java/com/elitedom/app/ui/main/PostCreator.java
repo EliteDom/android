@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -17,19 +18,25 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.elitedom.app.R;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @SuppressWarnings("rawtypes")
 public class PostCreator extends AppCompatActivity {
 
     private static final int SELECT_PICTURE = 1;
+    private static final int BACK_ID = 1;
     private FirebaseFirestore mDatabase;
     private ArrayList submitDorms;
     private ImageView postImage;
@@ -141,7 +148,12 @@ public class PostCreator extends AppCompatActivity {
             new MaterialAlertDialogBuilder(this)
                     .setTitle("Pick a Dorm!")
                     .setItems(getStringArray(submitDorms), (dialog, which) -> {
-
+                        Map<String, Object> post = new HashMap<>();
+                        post.put("title", title.getText().toString());
+                        post.put("postText", body.getText().toString());
+                        mDatabase.collection("dorms").document((String) submitDorms.get(which)).collection("posts")
+                                .add(post)
+                                .addOnSuccessListener(documentReference -> Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_SHORT).show());
                     })
                     .show();
         }
@@ -153,17 +165,18 @@ public class PostCreator extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        new MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
-                .setTitle("Discard Post")
-                .setMessage("Confirm Discard?")
-                .setPositiveButton("Exit", (dialogInterface, i) -> supportFinishAfterTransition())
-                .setNeutralButton("Continue Editing", (dialogInterface, i) -> {
-                })
-                .show();
+        if (BACK_ID == 1)
+            new MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
+                    .setTitle("Discard Post")
+                    .setMessage("Confirm Discard?")
+                    .setPositiveButton("Exit", (dialogInterface, i) -> supportFinishAfterTransition())
+                    .setNeutralButton("Continue Editing", (dialogInterface, i) -> {
+                    })
+                    .show();
+        else supportFinishAfterTransition();
     }
 
-    private String[] getStringArray(ArrayList<String> arr)
-    {
+    private String[] getStringArray(ArrayList<String> arr) {
         String[] str_arr = new String[arr.size()];
         for (int j = 0; j < arr.size(); j++) {
             str_arr[j] = arr.get(j);
