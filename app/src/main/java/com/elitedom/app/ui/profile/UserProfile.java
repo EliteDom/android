@@ -83,26 +83,7 @@ public class UserProfile extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void initializeData() {
-        mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).collection("authoredPosts")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful())
-                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                            mDatabase.collection("dorms").document((String) Objects.requireNonNull(document.get("dormName"))).collection("posts").document((String) Objects.requireNonNull(document.get("postId")))
-                                    .get()
-                                    .addOnCompleteListener(task1 -> {
-                                        if (task1.isSuccessful()) {
-                                            DocumentSnapshot document1 = task1.getResult();
-                                            assert document1 != null;
-                                            mTitleData.add(new PreviewCard((String) document1.get("title"), (String) document1.get("postText"), document1.get("author") + " | Authored " + document1.get("timestamp") + " ago", document1.getId(), (String) document.get("dormName"), Uri.parse((String) document1.get("image"))));
-                                            mAdapter.notifyDataSetChanged();
-                                            if (mAdapter.getItemCount() > 0) runLayoutAnimation(mRecycler);
-                                            else mNoPosts.animate().alpha(1.0f);
-                                        }
-                                    });
-                        }
-                    mTitleData.clear();
-                });
+        mTitleData.clear();
         mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
                 .get()
                 .addOnCompleteListener(task -> {
@@ -118,7 +99,29 @@ public class UserProfile extends AppCompatActivity {
                                     .load(image)
                                     .into(imageView);
                         imageView.setContentDescription(image);
+                        mTitleData.add(new PreviewCard(Uri.parse(image)));
                     }
+                });
+        mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).collection("authoredPosts")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful())
+                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                            mDatabase.collection("dorms").document((String) Objects.requireNonNull(document.get("dormName"))).collection("posts").document((String) Objects.requireNonNull(document.get("postId")))
+                                    .get()
+                                    .addOnCompleteListener(task1 -> {
+                                        if (task1.isSuccessful()) {
+                                            DocumentSnapshot document1 = task1.getResult();
+                                            assert document1 != null;
+                                            if (document1.get("image") != null)
+                                                mTitleData.add(new PreviewCard((String) document1.get("title"), (String) document1.get("postText"), document1.get("author") + " | Authored " + document1.get("timestamp") + " ago", document1.getId(), (String) document.get("dormName"), Uri.parse((String) document1.get("image"))));
+                                            else mTitleData.add(new PreviewCard((String) document1.get("title"), (String) document1.get("postText"), document1.get("author") + " | Authored " + document1.get("timestamp") + " ago", document1.getId(), (String) document.get("dormName")));
+                                            mAdapter.notifyDataSetChanged();
+                                            if (mAdapter.getItemCount() > 0) runLayoutAnimation(mRecycler);
+                                            else mNoPosts.animate().alpha(1.0f);
+                                        }
+                                    });
+                        }
                 });
     }
 

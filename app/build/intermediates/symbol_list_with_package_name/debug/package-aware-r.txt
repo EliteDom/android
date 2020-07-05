@@ -1278,6 +1278,8 @@ dimen notification_small_icon_size_as_large
 dimen notification_subtext_size
 dimen notification_top_pad
 dimen notification_top_pad_large_text
+dimen standard_115
+dimen standard_65
 dimen test_mtrl_calendar_day_cornerSize
 dimen tooltip_corner_radius
 dimen tooltip_horizontal_padding
@@ -1419,9 +1421,12 @@ drawable gradient_2
 drawable gradient_3
 drawable gradient_list
 drawable ic_account_circle_white_24dp
+drawable ic_add_black_24dp
 drawable ic_calendar_black_24dp
 drawable ic_chat_white_24dp
+drawable ic_clear_black_18dp
 drawable ic_clear_black_24dp
+drawable ic_done_black_18dp
 drawable ic_done_outline_white_24dp
 drawable ic_edit_black_24dp
 drawable ic_exit_to_app_white_24dp
@@ -1575,6 +1580,7 @@ id container
 id content
 id contentPanel
 id coordinator
+id creator_card
 id custom
 id customPanel
 id cut
@@ -1595,6 +1601,9 @@ id disableHome
 id disliked
 id dropdown_menu
 id edit_query
+id editor
+id editor_body
+id editor_title
 id edittext_chatbox
 id elite
 id email
@@ -1605,6 +1614,8 @@ id exitUntilCollapsed
 id expand_activities_button
 id expanded_menu
 id fab
+id fabDecline
+id fabTick
 id fade
 id feed_container
 id fill
@@ -1633,6 +1644,7 @@ id ifRoom
 id image
 id image_layer
 id image_message_profile
+id image_profile
 id info
 id information
 id invisible
@@ -1652,6 +1664,7 @@ id listMode
 id list_item
 id login
 id login_layout
+id main
 id masked
 id message
 id messageList
@@ -1711,10 +1724,12 @@ id peekHeight
 id percent
 id pin
 id postImage
+id post_creator
 id post_text
 id post_view
 id predictor_score
 id predictor_text
+id profile
 id profile_data
 id profile_image
 id progress_circular
@@ -1792,6 +1807,7 @@ id textEnd
 id textSpacerNoButtons
 id textSpacerNoTitle
 id textStart
+id textView
 id text_datestamp
 id text_input_end_icon
 id text_input_start_icon
@@ -1896,11 +1912,14 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
+layout actionbar_mainfeed
+layout actionbar_topic_cards
 layout activity_feed
 layout activity_feed_messaging
 layout activity_login
 layout activity_new_user
 layout activity_password_reset
+layout activity_post_creator
 layout activity_post_view
 layout activity_profile_messaging
 layout activity_profile_post
@@ -1927,7 +1946,9 @@ layout item_message_multiple_received
 layout item_message_multiple_sent
 layout item_message_received
 layout item_message_sent
-layout mainfeed_actionbar
+layout item_post_creator
+layout item_post_preview
+layout item_topic_card
 layout mtrl_alert_dialog
 layout mtrl_alert_dialog_actions
 layout mtrl_alert_dialog_title
@@ -1962,13 +1983,10 @@ layout notification_template_custom_big
 layout notification_template_icon_group
 layout notification_template_part_chronometer
 layout notification_template_part_time
-layout post_preview
 layout select_dialog_item_material
 layout select_dialog_multichoice_material
 layout select_dialog_singlechoice_material
-layout single_topic_card
 layout support_simple_spinner_dropdown_item
-layout tc_actionbar
 layout test_action_chip
 layout test_design_checkbox
 layout test_reflow_chipgroup
@@ -2041,6 +2059,7 @@ string common_google_play_services_wear_update_text
 string common_open_on_phone
 string common_signin_button_text
 string common_signin_button_text_long
+string contribute_something_interesting
 string default_web_client_id
 string elite_name
 string elitedom
@@ -2107,6 +2126,7 @@ string path_password_eye
 string path_password_eye_mask_strike_through
 string path_password_eye_mask_visible
 string path_password_strike_through
+string post_body
 string predictor_text
 string profile_name
 string project_id
@@ -2121,8 +2141,12 @@ string topic_cards_action_bar
 string topic_info_placeholder
 string username
 string welcome
+style Alert_Button_Neutral
+style Alert_Button_Positive
+style Alert_Shape_Round
 style AlertDialog_AppCompat
 style AlertDialog_AppCompat_Light
+style AlertDialogTheme
 style Animation_AppCompat_Dialog
 style Animation_AppCompat_DropDownUp
 style Animation_AppCompat_Tooltip

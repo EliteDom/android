@@ -25,6 +25,7 @@ import com.elitedom.app.ui.cards.TopicCards;
 import com.elitedom.app.ui.login.LoginActivity;
 import com.elitedom.app.ui.profile.UserProfile;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -53,13 +54,14 @@ public class Feed extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.mainfeed_actionbar);
-        //        Objects.requireNonNull(getSupportActionBar()).hide();
+        getSupportActionBar().setCustomView(R.layout.actionbar_mainfeed);
+//        Objects.requireNonNull(getSupportActionBar()).hide();
 
         AnimationDrawable animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
         animationDrawable.setEnterFadeDuration(2000);
         animationDrawable.setExitFadeDuration(4000);
         animationDrawable.start();
+//        animationDrawable.setColorFilter(Color.rgb(123, 123, 123), android.graphics.PorterDuff.Mode.MULTIPLY);
 
         mRecycler = findViewById(R.id.recyclerView);
         mRecycler.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
@@ -70,19 +72,34 @@ public class Feed extends AppCompatActivity {
         mAdapter = new PreviewAdapter(this, mTitleData, "post_expansion", 1);
         mRecycler.setAdapter(mAdapter);
         mTopicNames = getIntent().getStringArrayListExtra("cards");
-
         initializeData();
     }
 
     private void initializeData() {
         mTitleData.clear();
+        mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        assert document != null;
+                        mTitleData.add(new PreviewCard(Uri.parse((String) document.get("image"))));
+                        loadPosts();
+                    }
+                });
+    }
+
+    private void loadPosts() {
         for (final String i : mTopicNames) {
             mDatabase.collection("dorms").document(i).collection("posts")
                     .get()
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult()))
+                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                if (document.get("image") != null)
                                 mTitleData.add(new PreviewCard((String) document.get("title"), (String) document.get("postText"), document.get("author") + " | Authored " + document.get("timestamp") + " ago", document.getId(), i, Uri.parse((String) document.get("image"))));
+                                else mTitleData.add(new PreviewCard((String) document.get("title"), (String) document.get("postText"), document.get("author") + " | Authored " + document.get("timestamp") + " ago", document.getId(), i));
+                            }
                             mAdapter.notifyDataSetChanged();
                             runLayoutAnimation(mRecycler);
                         }

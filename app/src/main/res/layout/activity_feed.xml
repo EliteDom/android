@@ -27,6 +27,6 @@
             android:background="@drawable/custom_relativelayout"
             android:clipChildren="true"
             android:layoutAnimation="@anim/layout_topic_cards_animation"
-            android:scrollbars="none" />
+            android:scrollbars="none"/>
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

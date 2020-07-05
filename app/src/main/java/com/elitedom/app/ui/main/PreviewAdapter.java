@@ -1,6 +1,5 @@
 package com.elitedom.app.ui.main;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
@@ -9,6 +8,7 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,8 +22,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.elitedom.app.R;
 import com.elitedom.app.ui.profile.ProfilePostView;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -31,8 +29,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHolder> {
+public class PreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private static final int VIEW_TYPE_POST = 1;
+    private static final int VIEW_TYPE_CREATOR = 2;
     private String profileUri;
     private FirebaseFirestore mDatabase;
     private ArrayList<PreviewCard> mTopicsData;
@@ -71,18 +71,31 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
 
     @NonNull
     @Override
-    public PreviewAdapter.ViewHolder onCreateViewHolder(
-            @NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(mContext).
-                inflate(R.layout.post_preview, parent, false)) {
-        };
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view;
+        if (viewType == VIEW_TYPE_POST) {
+            view = LayoutInflater.from(mContext)
+                    .inflate(R.layout.item_post_preview, parent, false);
+            return new PostViewHolder(view);
+        } else if (viewType == VIEW_TYPE_CREATOR) {
+            view = LayoutInflater.from(mContext)
+                    .inflate(R.layout.item_post_creator, parent, false);
+            return new CreatorViewHolder(view);
+        } else //noinspection ConstantConditions
+            return null;
     }
 
     @Override
-    public void onBindViewHolder(PreviewAdapter.ViewHolder holder,
+    public void onBindViewHolder(RecyclerView.ViewHolder holder,
                                  int position) {
-        PreviewCard currentTopic = mTopicsData.get(position);
-        holder.bindTo(currentTopic);
+        PreviewCard currentPost = mTopicsData.get(position);
+        switch (holder.getItemViewType()) {
+            case VIEW_TYPE_POST:
+                ((PreviewAdapter.PostViewHolder) holder).bindTo(currentPost);
+                break;
+            case VIEW_TYPE_CREATOR:
+                ((PreviewAdapter.CreatorViewHolder) holder).bindTo(currentPost);
+        }
     }
 
     @Override
@@ -90,13 +103,57 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
         return mTopicsData.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    @Override
+    public int getItemViewType(int position) {
+        PreviewCard currentPost = mTopicsData.get(position);
+        if (currentPost.getTitle() == null) return VIEW_TYPE_CREATOR;
+        else return VIEW_TYPE_POST;
+    }
+
+    class CreatorViewHolder extends RecyclerView.ViewHolder {
+
+        private ImageView image;
+        private EditText editor;
+        private CardView mCard;
+
+        CreatorViewHolder(final View itemView) {
+            super(itemView);
+            image = itemView.findViewById(R.id.image_profile);
+            editor = itemView.findViewById(R.id.editor);
+            mCard = itemView.findViewById(R.id.creator_card);
+        }
+
+        void bindTo(PreviewCard currentPost) {
+            if (currentPost.getImageResource() != null && currentPost.getImageResource().toString().length() > 0) {
+                Glide.with(mContext)
+                        .load(currentPost.getImageResource())
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(image);
+                image.setContentDescription(currentPost.getImageResource().toString());
+                image.setClipToOutline(true);
+
+                itemView.setOnClickListener(this::createPost);
+                editor.setOnClickListener(this::createPost);
+            }
+        }
+
+        private void createPost(View view) {
+            Intent intent = new Intent(mContext, PostCreator.class);
+            intent.putExtra("image", image.getContentDescription());
+            intent.putExtra("title", editor.getText().toString());
+            editor.setText("");
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, mCard, transitionType);
+            ActivityCompat.startActivity(mContext, intent, options.toBundle());
+        }
+    }
+
+    class PostViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView mTitleText, mInfoText, mAuthor;
         private ImageView mPostImage;
         private CardView mCard;
 
-        ViewHolder(final View itemView) {
+        PostViewHolder(final View itemView) {
             super(itemView);
 
             mTitleText = itemView.findViewById(R.id.title);
@@ -118,7 +175,7 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAdapter.ViewHold
             mTitleText.setContentDescription(currentPost.getUid());
             mTitleText.setText(currentPost.getTitle());
             mInfoText.setContentDescription(currentPost.getDorm());
-            mInfoText.setText(currentPost.getSubtext());
+            mInfoText.setText(currentPost.getBody());
             mAuthor.setText(currentPost.getAuthor());
             Glide.with(mContext)
                     .load(currentPost.getImageResource())

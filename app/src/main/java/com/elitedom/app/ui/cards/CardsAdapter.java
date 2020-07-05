@@ -3,6 +3,7 @@ package com.elitedom.app.ui.cards;
 import android.animation.LayoutTransition;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +40,7 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
     public CardsAdapter.ViewHolder onCreateViewHolder(
             @NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(mContext).
-                inflate(R.layout.single_topic_card, parent, false));
+                inflate(R.layout.item_topic_card, parent, false));
     }
 
     @Override
@@ -126,16 +127,13 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
             mInfoText.setTranslationY(-170f);
             mInfoText.setVisibility(GONE);
             itemView.setOnClickListener(this);
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    mCardLayout.setLayoutTransition(new LayoutTransition());
-                    if (mInfoText.getVisibility() != View.VISIBLE) {
-                        mInfoText.setVisibility(View.VISIBLE);
-                        mInfoText.startAnimation(out);
-                    } else mInfoText.startAnimation(in);
-                    return true;
-                }
+            itemView.setOnLongClickListener(v -> {
+                mCardLayout.setLayoutTransition(new LayoutTransition());
+                if (mInfoText.getVisibility() != View.VISIBLE) {
+                    mInfoText.setVisibility(View.VISIBLE);
+                    mInfoText.startAnimation(out);
+                } else mInfoText.startAnimation(in);
+                return true;
             });
         }
 
@@ -145,6 +143,7 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
             Glide.with(mContext)
                     .load(currentTopic.getImageResource())
                     .into(mTopicImage);
+            mTopicImage.setColorFilter(Color.rgb(200, 200, 200), android.graphics.PorterDuff.Mode.MULTIPLY);
         }
 
         @Override
