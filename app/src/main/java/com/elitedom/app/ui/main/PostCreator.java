@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -20,14 +19,22 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.elitedom.app.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
+@SuppressWarnings("rawtypes")
 public class PostCreator extends AppCompatActivity {
 
     private static final int SELECT_PICTURE = 1;
+    private FirebaseFirestore mDatabase;
+    private ArrayList submitDorms;
     private ImageView postImage;
     private boolean isRotated;
+    private EditText title, body;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +51,12 @@ public class PostCreator extends AppCompatActivity {
         animationDrawable.start();
         animationDrawable.setColorFilter(Color.rgb(190, 190, 190), android.graphics.PorterDuff.Mode.MULTIPLY);
 
-        EditText title = findViewById(R.id.editor_title);
         ImageView profileImage = findViewById(R.id.image_profile);
+        title = findViewById(R.id.editor_title);
+        body = findViewById(R.id.editor_body);
         postImage = findViewById(R.id.postImage);
+        mDatabase = FirebaseFirestore.getInstance();
+        submitDorms = new ArrayList<>();
         isRotated = false;
 
         Glide.with(this)
@@ -73,6 +83,7 @@ public class PostCreator extends AppCompatActivity {
             }
 
         });
+        getDorms();
     }
 
     @Override
@@ -85,6 +96,18 @@ public class PostCreator extends AppCompatActivity {
                     .centerCrop()
                     .into(postImage);
         }
+    }
+
+    public void getDorms() {
+        mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document != null) submitDorms = (ArrayList) document.get("eliteDorms");
+                        else submitDorms = new ArrayList<>();
+                    }
+                });
     }
 
     @SuppressLint("IntentReset")
@@ -114,20 +137,37 @@ public class PostCreator extends AppCompatActivity {
     }
 
     public void submitPost(View view) {
-        new MaterialAlertDialogBuilder(this)
-                .setTitle("Discard Post")
-                .setMessage("Confirm Discard?")
-                .setPositiveButton("Exit", (dialogInterface, i) -> Toast.makeText(getApplicationContext(), "Exit", Toast.LENGTH_SHORT).show())
-                .setNeutralButton("Continue Editing", (dialogInterface, i) -> Toast.makeText(getApplicationContext(), "Continue Editing", Toast.LENGTH_SHORT).show())
-                .show();
+        if (body.getText().toString().length() > 0 && title.getText().toString().length() > 0) {
+            new MaterialAlertDialogBuilder(this)
+                    .setTitle("Pick a Dorm!")
+                    .setItems(getStringArray(submitDorms), (dialog, which) -> {
+
+                    })
+                    .show();
+        }
     }
 
     public void discardPost(View view) {
-        new MaterialAlertDialogBuilder(this)
+        onBackPressed();
+    }
+
+    @Override
+    public void onBackPressed() {
+        new MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
                 .setTitle("Discard Post")
                 .setMessage("Confirm Discard?")
-                .setPositiveButton("Exit", (dialogInterface, i) -> Toast.makeText(getApplicationContext(), "Exit", Toast.LENGTH_SHORT).show())
-                .setNeutralButton("Continue Editing", (dialogInterface, i) -> Toast.makeText(getApplicationContext(), "Continue Editing", Toast.LENGTH_SHORT).show())
+                .setPositiveButton("Exit", (dialogInterface, i) -> supportFinishAfterTransition())
+                .setNeutralButton("Continue Editing", (dialogInterface, i) -> {
+                })
                 .show();
+    }
+
+    private String[] getStringArray(ArrayList<String> arr)
+    {
+        String[] str_arr = new String[arr.size()];
+        for (int j = 0; j < arr.size(); j++) {
+            str_arr[j] = arr.get(j);
+        }
+        return str_arr;
     }
 }
