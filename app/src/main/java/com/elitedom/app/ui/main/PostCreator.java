@@ -10,22 +10,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.elitedom.app.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -38,7 +32,6 @@ import java.util.Objects;
 public class PostCreator extends AppCompatActivity {
 
     private static final int SELECT_PICTURE = 1;
-    private static final int BACK_ID = 1;
     private FirebaseFirestore mDatabase;
     private ArrayList submitDorms;
     private ImageView postImage;
@@ -150,6 +143,7 @@ public class PostCreator extends AppCompatActivity {
             new MaterialAlertDialogBuilder(this)
                     .setTitle("Pick a Dorm!")
                     .setItems(getStringArray(submitDorms), (dialog, which) -> {
+                        supportFinishAfterTransition();
                         mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
                                 .get()
                                 .addOnCompleteListener(task -> {
@@ -174,7 +168,6 @@ public class PostCreator extends AppCompatActivity {
                                 });
                     })
                     .show();
-            supportFinishAfterTransition();
         }
     }
 
@@ -184,15 +177,13 @@ public class PostCreator extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (BACK_ID == 1)
-            new MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
-                    .setTitle("Discard Post")
-                    .setMessage("Confirm Discard?")
-                    .setPositiveButton("Exit", (dialogInterface, i) -> supportFinishAfterTransition())
-                    .setNeutralButton("Continue Editing", (dialogInterface, i) -> {
-                    })
-                    .show();
-        else supportFinishAfterTransition();
+        new MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
+                .setTitle("Discard Post")
+                .setMessage("Confirm Discard?")
+                .setPositiveButton("Exit", (dialogInterface, i) -> supportFinishAfterTransition())
+                .setNeutralButton("Continue Editing", (dialogInterface, i) -> {
+                })
+                .show();
     }
 
     private String[] getStringArray(ArrayList<String> arr) {
