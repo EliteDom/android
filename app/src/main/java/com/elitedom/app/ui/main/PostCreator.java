@@ -149,8 +149,14 @@ public class PostCreator extends AppCompatActivity {
 
     public void submitPost(View view) {
         if (body.getText().toString().length() > 0 && title.getText().toString().length() > 0) {
-            if (localUri != null) uploadImage();
-            else sendPost();
+            new MaterialAlertDialogBuilder(this)
+                    .setTitle("Pick a Dorm!")
+                    .setItems(getStringArray(submitDorms), (dialog, which) -> {
+                        supportFinishAfterTransition();
+                        if (localUri != null) uploadImage(which);
+                        else sendData(which);
+                    })
+                    .show();
         }
     }
 
@@ -177,7 +183,7 @@ public class PostCreator extends AppCompatActivity {
         return str_arr;
     }
 
-    private void uploadImage() {
+    private void uploadImage(int which) {
         final StorageReference ref = mStorage.child("images/" + UUID.randomUUID().toString() + ".jpg");
         UploadTask uploadTask = ref.putFile(localUri);
         uploadTask.continueWithTask(task -> {
@@ -188,40 +194,34 @@ public class PostCreator extends AppCompatActivity {
         }).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 downloadUri = task.getResult();
-                sendPost();
+                sendData(which);
             }
         });
     }
 
-    private void sendPost() {
-        new MaterialAlertDialogBuilder(this)
-                .setTitle("Pick a Dorm!")
-                .setItems(getStringArray(submitDorms), (dialog, which) -> {
-                    supportFinishAfterTransition();
-                    mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
-                            .get()
-                            .addOnCompleteListener(task -> {
-                                if (task.isSuccessful()) {
-                                    DocumentSnapshot document = task.getResult();
-                                    assert document != null;
-                                    Map<String, Object> post = new HashMap<>();
-                                    post.put("title", title.getText().toString());
-                                    post.put("postText", body.getText().toString());
-                                    post.put("apprs", 0);
-                                    post.put("author", document.get("firstName") + " " + document.get("lastName"));
-                                    if (downloadUri != null) post.put("image", downloadUri.toString());
-                                    mDatabase.collection("dorms").document((String) submitDorms.get(which)).collection("posts")
-                                            .add(post)
-                                            .addOnSuccessListener(documentReference -> {
-                                                Map<String, Object> userEntry = new HashMap<>();
-                                                userEntry.put("dormName", submitDorms.get(which));
-                                                userEntry.put("postId", documentReference.getId());
-                                                mDatabase.collection("users").document(FirebaseAuth.getInstance().getUid()).collection("authoredPosts")
-                                                        .add(userEntry);
-                                            });
-                                }
-                            });
-                })
-                .show();
+    private void sendData(int which) {
+        mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        assert document != null;
+                        Map<String, Object> post = new HashMap<>();
+                        post.put("apprs", 0);
+                        post.put("title", title.getText().toString());
+                        post.put("postText", body.getText().toString());
+                        post.put("author", document.get("firstName") + " " + document.get("lastName"));
+                        if (downloadUri != null) post.put("image", downloadUri.toString());
+                        mDatabase.collection("dorms").document((String) submitDorms.get(which)).collection("posts")
+                                .add(post)
+                                .addOnSuccessListener(documentReference -> {
+                                    Map<String, Object> userEntry = new HashMap<>();
+                                    userEntry.put("dormName", submitDorms.get(which));
+                                    userEntry.put("postId", documentReference.getId());
+                                    mDatabase.collection("users").document(FirebaseAuth.getInstance().getUid()).collection("authoredPosts")
+                                            .add(userEntry);
+                                });
+                    }
+                });
     }
 }
