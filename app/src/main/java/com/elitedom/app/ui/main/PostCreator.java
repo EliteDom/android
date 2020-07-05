@@ -12,12 +12,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.elitedom.app.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -148,14 +150,31 @@ public class PostCreator extends AppCompatActivity {
             new MaterialAlertDialogBuilder(this)
                     .setTitle("Pick a Dorm!")
                     .setItems(getStringArray(submitDorms), (dialog, which) -> {
-                        Map<String, Object> post = new HashMap<>();
-                        post.put("title", title.getText().toString());
-                        post.put("postText", body.getText().toString());
-                        mDatabase.collection("dorms").document((String) submitDorms.get(which)).collection("posts")
-                                .add(post)
-                                .addOnSuccessListener(documentReference -> Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_SHORT).show());
+                        mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
+                                .get()
+                                .addOnCompleteListener(task -> {
+                                    if (task.isSuccessful()) {
+                                        DocumentSnapshot document = task.getResult();
+                                        assert document != null;
+                                        Map<String, Object> post = new HashMap<>();
+                                        post.put("title", title.getText().toString());
+                                        post.put("postText", body.getText().toString());
+                                        post.put("apprs", 0);
+                                        post.put("author", document.get("firstName") + " " + document.get("lastName"));
+                                        mDatabase.collection("dorms").document((String) submitDorms.get(which)).collection("posts")
+                                                .add(post)
+                                                .addOnSuccessListener(documentReference -> {
+                                                    Map<String, Object> userEntry = new HashMap<>();
+                                                    userEntry.put("dormName", submitDorms.get(which));
+                                                    userEntry.put("postId", documentReference.getId());
+                                                    mDatabase.collection("users").document(FirebaseAuth.getInstance().getUid()).collection("authoredPosts")
+                                                            .add(userEntry);
+                                                });
+                                    }
+                                });
                     })
                     .show();
+            supportFinishAfterTransition();
         }
     }
 

@@ -95,8 +95,11 @@ public class Feed extends AppCompatActivity {
                     .get()
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult()))
+                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                if (document.get("image") != null)
                                 mTitleData.add(new PreviewCard((String) document.get("title"), (String) document.get("postText"), document.get("author") + " | Authored " + document.get("timestamp") + " ago", document.getId(), i, Uri.parse((String) document.get("image"))));
+                                else mTitleData.add(new PreviewCard((String) document.get("title"), (String) document.get("postText"), document.get("author") + " | Authored " + document.get("timestamp") + " ago", document.getId(), i));
+                            }
                             mAdapter.notifyDataSetChanged();
                             runLayoutAnimation(mRecycler);
                         }

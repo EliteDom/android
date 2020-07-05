@@ -27,7 +27,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/outputs/apk/debug/app-debug.apk" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/outputs/apk/debug/app-debug.apk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/main/Feed.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/main/Feed.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/main/PostCreator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/main/PostCreator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/main/PreviewCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/main/PreviewCard.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -548,10 +550,10 @@
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="698" y="303" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1593903273761" />
-    <state x="698" y="303" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog" timestamp="1593722377986">
+    <state x="698" y="303" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog" timestamp="1593957553788">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state x="698" y="303" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1593722377986" />
+    <state x="698" y="303" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1593957553788" />
     <state x="820" y="369" key="AndroidCreateXmlResourceDialog" timestamp="1593781064948">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
@@ -564,22 +566,22 @@
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="738" y="310" width="424" height="483" key="FileChooserDialogImpl/0.27.1920.1053@0.27.1920.1053" timestamp="1593903318184" />
-    <state width="1874" height="285" key="GridCell.Tab.0.bottom" timestamp="1593953395249">
+    <state width="1874" height="285" key="GridCell.Tab.0.bottom" timestamp="1593956500003">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="285" key="GridCell.Tab.0.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1593953395249" />
-    <state width="1874" height="285" key="GridCell.Tab.0.center" timestamp="1593953395246">
+    <state width="1874" height="285" key="GridCell.Tab.0.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1593956500003" />
+    <state width="1874" height="285" key="GridCell.Tab.0.center" timestamp="1593956500000">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="285" key="GridCell.Tab.0.center/0.27.1920.1053@0.27.1920.1053" timestamp="1593953395246" />
-    <state width="1874" height="285" key="GridCell.Tab.0.left" timestamp="1593953395244">
+    <state width="1874" height="285" key="GridCell.Tab.0.center/0.27.1920.1053@0.27.1920.1053" timestamp="1593956500000" />
+    <state width="1874" height="285" key="GridCell.Tab.0.left" timestamp="1593956499999">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="285" key="GridCell.Tab.0.left/0.27.1920.1053@0.27.1920.1053" timestamp="1593953395244" />
-    <state width="1874" height="285" key="GridCell.Tab.0.right" timestamp="1593953395247">
+    <state width="1874" height="285" key="GridCell.Tab.0.left/0.27.1920.1053@0.27.1920.1053" timestamp="1593956499999" />
+    <state width="1874" height="285" key="GridCell.Tab.0.right" timestamp="1593956500001">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="285" key="GridCell.Tab.0.right/0.27.1920.1053@0.27.1920.1053" timestamp="1593953395247" />
+    <state width="1874" height="285" key="GridCell.Tab.0.right/0.27.1920.1053@0.27.1920.1053" timestamp="1593956500001" />
     <state width="937" height="343" key="GridCell.Tab.1.bottom" timestamp="1591814372271">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
@@ -608,9 +610,9 @@
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="624" y="254" width="672" height="677" key="run.anything.popup/0.27.1920.1053@0.27.1920.1053" timestamp="1593952237883" />
-    <state x="623" y="259" width="672" height="678" key="search.everywhere.popup" timestamp="1593899132831">
+    <state x="623" y="259" width="672" height="678" key="search.everywhere.popup" timestamp="1593961834829">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state x="623" y="259" width="672" height="678" key="search.everywhere.popup/0.27.1920.1053@0.27.1920.1053" timestamp="1593899132831" />
+    <state x="623" y="259" width="672" height="678" key="search.everywhere.popup/0.27.1920.1053@0.27.1920.1053" timestamp="1593961834829" />
   </component>
 </project>

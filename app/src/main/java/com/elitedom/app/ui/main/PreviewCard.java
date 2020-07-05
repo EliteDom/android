@@ -3,7 +3,7 @@ package com.elitedom.app.ui.main;
 import android.net.Uri;
 
 public class PreviewCard {
-    private final Uri imageResource;
+    final private Uri imageResource;
     private String title, body, author, uid, dorm;
 
     public PreviewCard(String title, String body, String author, String uid, String dorm, Uri imageResource) {
@@ -13,6 +13,15 @@ public class PreviewCard {
         this.uid = uid;
         this.dorm = dorm;
         this.imageResource = imageResource;
+    }
+
+    public PreviewCard(String title, String body, String author, String uid, String dorm) {
+        this.title = title;
+        this.body = body;
+        this.author = author;
+        this.uid = uid;
+        this.dorm = dorm;
+        this.imageResource = Uri.parse("");
     }
 
     public PreviewCard(Uri imageResource) {
