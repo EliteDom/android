@@ -2140,8 +2140,12 @@ string topic_cards_action_bar
 string topic_info_placeholder
 string username
 string welcome
+style Alert_Button_Neutral
+style Alert_Button_Positive
+style Alert_Shape_Round
 style AlertDialog_AppCompat
 style AlertDialog_AppCompat_Light
+style AlertDialogTheme
 style Animation_AppCompat_Dialog
 style Animation_AppCompat_DropDownUp
 style Animation_AppCompat_Tooltip
@@ -2360,6 +2364,7 @@ style Base_Widget_MaterialComponents_TextView
 style CardView
 style CardView_Dark
 style CardView_Light
+style CustomFont
 style EmptyTheme
 style MaterialAlertDialog_MaterialComponents
 style MaterialAlertDialog_MaterialComponents_Body_Text

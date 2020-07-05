@@ -30,6 +30,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.elitedom.app.ui.main.PostCreator"
+            android:exported="true"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name="com.elitedom.app.ui.login.PasswordReset" />
         <activity

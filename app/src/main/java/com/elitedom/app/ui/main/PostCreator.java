@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -17,6 +18,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.elitedom.app.R;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Objects;
@@ -62,10 +64,10 @@ public class PostCreator extends AppCompatActivity {
 
         fab.setOnClickListener(v -> {
             rotateFab(v, !isRotated);
-            if(isRotated){
+            if (isRotated) {
                 fabTick.animate().translationY(-getResources().getDimension(R.dimen.standard_65));
                 fabDecline.animate().translationY(-getResources().getDimension(R.dimen.standard_115));
-            }else{
+            } else {
                 fabTick.animate().translationY(0);
                 fabDecline.animate().translationY(0);
             }
@@ -112,8 +114,20 @@ public class PostCreator extends AppCompatActivity {
     }
 
     public void submitPost(View view) {
+        new MaterialAlertDialogBuilder(this)
+                .setTitle("Discard Post")
+                .setMessage("Confirm Discard?")
+                .setPositiveButton("Exit", (dialogInterface, i) -> Toast.makeText(getApplicationContext(), "Exit", Toast.LENGTH_SHORT).show())
+                .setNeutralButton("Continue Editing", (dialogInterface, i) -> Toast.makeText(getApplicationContext(), "Continue Editing", Toast.LENGTH_SHORT).show())
+                .show();
     }
 
     public void discardPost(View view) {
+        new MaterialAlertDialogBuilder(this)
+                .setTitle("Discard Post")
+                .setMessage("Confirm Discard?")
+                .setPositiveButton("Exit", (dialogInterface, i) -> Toast.makeText(getApplicationContext(), "Exit", Toast.LENGTH_SHORT).show())
+                .setNeutralButton("Continue Editing", (dialogInterface, i) -> Toast.makeText(getApplicationContext(), "Continue Editing", Toast.LENGTH_SHORT).show())
+                .show();
     }
 }

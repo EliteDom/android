@@ -141,6 +141,7 @@ public class PreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             Intent intent = new Intent(mContext, PostCreator.class);
             intent.putExtra("image", image.getContentDescription());
             intent.putExtra("title", editor.getText().toString());
+            editor.setText("");
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, mCard, transitionType);
             ActivityCompat.startActivity(mContext, intent, options.toBundle());
         }
