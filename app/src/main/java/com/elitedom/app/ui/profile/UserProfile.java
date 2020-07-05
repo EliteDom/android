@@ -113,7 +113,9 @@ public class UserProfile extends AppCompatActivity {
                                         if (task1.isSuccessful()) {
                                             DocumentSnapshot document1 = task1.getResult();
                                             assert document1 != null;
-                                            mTitleData.add(new PreviewCard((String) document1.get("title"), (String) document1.get("postText"), document1.get("author") + " | Authored " + document1.get("timestamp") + " ago", document1.getId(), (String) document.get("dormName"), Uri.parse((String) document1.get("image"))));
+                                            if (document1.get("image") != null)
+                                                mTitleData.add(new PreviewCard((String) document1.get("title"), (String) document1.get("postText"), document1.get("author") + " | Authored " + document1.get("timestamp") + " ago", document1.getId(), (String) document.get("dormName"), Uri.parse((String) document1.get("image"))));
+                                            else mTitleData.add(new PreviewCard((String) document1.get("title"), (String) document1.get("postText"), document1.get("author") + " | Authored " + document1.get("timestamp") + " ago", document1.getId(), (String) document.get("dormName")));
                                             mAdapter.notifyDataSetChanged();
                                             if (mAdapter.getItemCount() > 0) runLayoutAnimation(mRecycler);
                                             else mNoPosts.animate().alpha(1.0f);

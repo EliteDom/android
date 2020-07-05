@@ -17,20 +17,20 @@
         app:cardCornerRadius="8dp"
         app:cardElevation="0dp">
 
-        <RelativeLayout
+        <androidx.cardview.widget.CardView
+            android:id="@+id/action_cards"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clipToPadding="false">
+            android:layout_margin="6dp"
+            android:transitionName="messaging_transition"
+            app:cardBackgroundColor="@color/colorAccent"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/action_cards"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="6dp"
-                android:transitionName="messaging_transition"
-                app:cardBackgroundColor="@color/colorAccent"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="0dp">
+                android:clipToPadding="false">
 
                 <TextView
                     android:id="@+id/no_messages"
@@ -42,9 +42,14 @@
                     android:clipToPadding="false"
                     android:elevation="4dp"
                     android:padding="8dp"
-                    android:text="@string/empty_chatroom" />
+                    android:text="@string/empty_chatroom"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -54,20 +59,24 @@
                     android:padding="6dp"
                     android:text="@string/chatroom"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/messageList"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginBottom="44dp"
+                    android:layout_marginVertical="4dp"
+                    android:layout_height="0dp"
                     android:background="@drawable/custom_relativelayout"
                     android:clipChildren="true"
                     android:layoutAnimation="@anim/layout_topic_cards_animation"
                     android:paddingHorizontal="6dp"
                     android:paddingVertical="16dp"
-                    android:scrollbars="none" />
+                    android:scrollbars="none"
+                    app:layout_constraintBottom_toTopOf="@id/layout_chatbox"
+                    app:layout_constraintTop_toBottomOf="@+id/textView" />
 
                 <LinearLayout
                     android:id="@+id/layout_chatbox"
@@ -76,7 +85,10 @@
                     android:layout_gravity="bottom"
                     android:layout_margin="6dp"
                     android:minHeight="48dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent">
 
                     <EditText
                         android:id="@+id/edittext_chatbox"
@@ -85,13 +97,13 @@
                         android:layout_gravity="center"
                         android:layout_margin="4dp"
                         android:layout_weight="1"
-                        android:textColor="@android:color/darker_gray"
                         android:background="@drawable/message_bubble"
                         android:hint="@string/message_prompt"
                         android:importantForAutofill="no"
-                        android:inputType="textMultiLine"
+                        android:inputType="textMultiLine|textCapSentences"
                         android:maxLines="10"
-                        android:padding="8dp" />
+                        android:padding="8dp"
+                        android:textColor="@android:color/darker_gray" />
 
                     <ImageButton
                         android:id="@+id/button_chatbox_send"
@@ -106,7 +118,7 @@
                         android:src="@drawable/ic_send_black_24dp"
                         tools:ignore="ContentDescription" />
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
-        </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>
