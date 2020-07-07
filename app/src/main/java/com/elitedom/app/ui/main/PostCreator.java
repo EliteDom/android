@@ -8,7 +8,9 @@ import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.transition.Transition;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -77,6 +79,23 @@ public class PostCreator extends AppCompatActivity {
         title.setText(getIntent().getStringExtra("title"));
         profileImage.setClipToOutline(true);
         postImage.setClipToOutline(true);
+
+        getWindow().getSharedElementEnterTransition().addListener(new Transition.TransitionListener() {
+                                                                      @Override
+                                                                      public void onTransitionStart(Transition transition) {}
+                                                                      @Override
+                                                                      public void onTransitionEnd(Transition transition) {
+                                                                          ViewGroup.LayoutParams layoutParams = postImage.getLayoutParams();
+                                                                          layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                                                                          postImage.setLayoutParams(layoutParams);
+                                                                      }
+                                                                      @Override
+                                                                      public void onTransitionCancel(Transition transition) {}
+                                                                      @Override
+                                                                      public void onTransitionPause(Transition transition) {}
+                                                                      @Override
+                                                                      public void onTransitionResume(Transition transition) {}
+                                                                  });
 
         FloatingActionButton fab = findViewById(R.id.fab);
         FloatingActionButton fabTick = findViewById(R.id.fabTick);

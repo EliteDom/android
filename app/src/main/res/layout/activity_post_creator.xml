@@ -60,8 +60,7 @@
             <ImageView
                 android:id="@+id/postImage"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxHeight="256dp"
+                android:layout_height="214dp"
                 android:layout_marginHorizontal="6dp"
                 android:layout_marginTop="6dp"
                 android:adjustViewBounds="true"
