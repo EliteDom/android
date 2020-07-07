@@ -2,6 +2,7 @@ package com.elitedom.app.ui.messaging;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView.Adapter;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.elitedom.app.R;
+import com.elitedom.app.ui.profile.UserProfile;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -179,6 +181,11 @@ public class MessageAdapter extends Adapter {
             timestamp = itemView.findViewById(R.id.text_message_time);
             sender = itemView.findViewById(R.id.text_message_name);
             image = itemView.findViewById(R.id.image_message_profile);
+            image.setOnClickListener(v -> {
+                Intent profile_intent = new Intent(mContext, UserProfile.class);
+                profile_intent.putExtra("auth", sender.getContentDescription());
+                mContext.startActivity(profile_intent);
+            });
             image.setClipToOutline(true);
         }
 
@@ -197,6 +204,7 @@ public class MessageAdapter extends Adapter {
                             DocumentSnapshot document = task.getResult();
                             assert document != null;
                             sender.setText(document.get("firstName") + " " + document.get("lastName"));
+                            sender.setContentDescription(currentMessage.getSender());
                         }
                     });
             timestamp.setText(currentMessage.getTimestamp());

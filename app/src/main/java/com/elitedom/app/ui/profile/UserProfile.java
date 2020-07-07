@@ -8,6 +8,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.view.WindowManager;
@@ -51,6 +52,7 @@ public class UserProfile extends AppCompatActivity {
     private PreviewAdapter mAdapter;
     private RecyclerView mRecycler;
     private TextView mNoPosts;
+    private String uid;
     private Uri localUri;
 
 
@@ -61,12 +63,19 @@ public class UserProfile extends AppCompatActivity {
 
         RelativeLayout relativeLayout = findViewById(R.id.user_feed_container);
         mDatabase = FirebaseFirestore.getInstance();
+        mStorage = FirebaseStorage.getInstance().getReference();
         username = findViewById(R.id.username);
         appreciation = findViewById(R.id.appreciation_score);
         predictor = findViewById(R.id.predictor_score);
         imageView = findViewById(R.id.profile_image);
         mNoPosts = findViewById(R.id.no_posts);
-        mStorage = FirebaseStorage.getInstance().getReference();
+        uid = FirebaseAuth.getInstance().getUid();
+        if (getIntent().getStringExtra("auth") != null) {
+            uid = getIntent().getStringExtra("auth");
+            assert uid != null;
+            Log.d("UID", uid);
+            imageView.setClickable(false);
+        }
 
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
@@ -94,7 +103,7 @@ public class UserProfile extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void initializeData() {
-        mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
+        mDatabase.collection("users").document(uid)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -111,14 +120,14 @@ public class UserProfile extends AppCompatActivity {
                                     .into(imageView);
                         imageView.setContentDescription(image);
                         mTitleData.clear();
-                        mTitleData.add(new PreviewCard(Uri.parse(image)));
+                        if (uid.equals(FirebaseAuth.getInstance().getUid())) mTitleData.add(new PreviewCard(Uri.parse(image)));
                         loadPosts();
                     }
                 });
     }
 
     private void loadPosts() {
-        mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).collection("authoredPosts")
+        mDatabase.collection("users").document(uid).collection("authoredPosts")
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful())
@@ -213,7 +222,7 @@ public class UserProfile extends AppCompatActivity {
             return ref.getDownloadUrl();
         }).addOnCompleteListener(task -> {
             if (task.isSuccessful())
-                mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
+                mDatabase.collection("users").document(uid)
                         .update("image", Objects.requireNonNull(task.getResult()).toString());
         });
     }

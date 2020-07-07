@@ -107,8 +107,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void topicActivity(FirebaseUser user) {
         if (user != null) {
-            Intent mainscreen = new Intent(this, TopicCards.class);
-            startActivity(mainscreen);
+            startActivity(new Intent(this, TopicCards.class));
             setResult(Activity.RESULT_OK);
             finish();
         }
