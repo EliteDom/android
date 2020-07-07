@@ -39,13 +39,13 @@ import java.util.UUID;
 public class PostCreator extends AppCompatActivity {
 
     private static final int SELECT_PICTURE = 1;
+    private ImageView postImage;
     private FirebaseFirestore mDatabase;
     private StorageReference mStorage;
+    private Uri localUri, downloadUri;
     private ArrayList submitDorms;
     private EditText title, body;
-    private ImageView postImage;
     private boolean isRotated;
-    private Uri localUri, downloadUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,13 +71,13 @@ public class PostCreator extends AppCompatActivity {
         submitDorms = new ArrayList<>();
         isRotated = false;
 
-        Glide.with(this)
+        Glide.with(PostCreator.this)
                 .load(getIntent().getStringExtra("image"))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(profileImage);
         profileImage.setContentDescription(getIntent().getStringExtra("image"));
-        title.setText(getIntent().getStringExtra("title"));
         profileImage.setClipToOutline(true);
+        title.setText(getIntent().getStringExtra("title"));
         postImage.setClipToOutline(true);
 
         getWindow().getSharedElementEnterTransition().addListener(new Transition.TransitionListener() {
