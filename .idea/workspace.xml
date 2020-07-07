@@ -16,7 +16,12 @@
     <option name="TOOL_WINDOW_REGEXP_FILTER" value="false" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="85683d46-af4e-4ea3-83e3-d2e8f7b7d107" name="Default Changelist" comment="" />
+    <list default="true" id="85683d46-af4e-4ea3-83e3-d2e8f7b7d107" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/login/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/login/LoginActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/main/PostCreator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/elitedom/app/ui/main/PostCreator.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -106,7 +111,7 @@
       <command value="adb connect 192.168.29.97" />
     </option>
   </component>
-  <component name="RunManager" selected="Android App.topic_cards">
+  <component name="RunManager" selected="Android App.app">
     <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
       <option name="TEST_OBJECT" value="class" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
@@ -592,10 +597,10 @@
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="461" y="189" key="SettingsEditor/0.27.1920.1053@0.27.1920.1053" timestamp="1593899168358" />
-    <state x="639" y="381" key="com.intellij.ide.util.TipDialog" timestamp="1593940383029">
+    <state x="639" y="381" key="com.intellij.ide.util.TipDialog" timestamp="1594113313237">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state x="639" y="381" key="com.intellij.ide.util.TipDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1593940383029" />
+    <state x="639" y="381" key="com.intellij.ide.util.TipDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1594113313237" />
     <state x="624" y="254" width="672" height="677" key="run.anything.popup" timestamp="1593952237883">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -109,8 +108,7 @@ public class LoginActivity extends AppCompatActivity {
     private void topicActivity(FirebaseUser user) {
         if (user != null) {
             Intent mainscreen = new Intent(this, TopicCards.class);
-            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, constraintLayout, "gradientShift");
-            ActivityCompat.startActivity(this, mainscreen, options.toBundle());
+            startActivity(mainscreen);
             setResult(Activity.RESULT_OK);
             finish();
         }

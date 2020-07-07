@@ -184,7 +184,7 @@ public class PostCreator extends AppCompatActivity {
     }
 
     private void uploadImage(int which) {
-        final StorageReference ref = mStorage.child("images/" + UUID.randomUUID().toString() + ".jpg");
+        final StorageReference ref = mStorage.child("posts/" + UUID.randomUUID().toString() + ".jpg");
         UploadTask uploadTask = ref.putFile(localUri);
         uploadTask.continueWithTask(task -> {
             if (!task.isSuccessful()) {
