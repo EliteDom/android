@@ -108,15 +108,17 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginBottom="24dp"
-
-                android:background="@drawable/custom_button"
+                android:backgroundTint="@android:color/transparent"
                 android:fontFamily="monospace"
                 android:onClick="submitData"
+
                 android:text="@string/action_sign_in"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:strokeColor="@color/white"
+                app:strokeWidth="2dp" />
 
         </LinearLayout>
     </RelativeLayout>

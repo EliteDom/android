@@ -8,7 +8,9 @@ import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.transition.Transition;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -37,13 +39,13 @@ import java.util.UUID;
 public class PostCreator extends AppCompatActivity {
 
     private static final int SELECT_PICTURE = 1;
+    private ImageView postImage;
     private FirebaseFirestore mDatabase;
     private StorageReference mStorage;
+    private Uri localUri, downloadUri;
     private ArrayList submitDorms;
     private EditText title, body;
-    private ImageView postImage;
     private boolean isRotated;
-    private Uri localUri, downloadUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,14 +71,31 @@ public class PostCreator extends AppCompatActivity {
         submitDorms = new ArrayList<>();
         isRotated = false;
 
-        Glide.with(this)
+        Glide.with(PostCreator.this)
                 .load(getIntent().getStringExtra("image"))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(profileImage);
         profileImage.setContentDescription(getIntent().getStringExtra("image"));
-        title.setText(getIntent().getStringExtra("title"));
         profileImage.setClipToOutline(true);
+        title.setText(getIntent().getStringExtra("title"));
         postImage.setClipToOutline(true);
+
+        getWindow().getSharedElementEnterTransition().addListener(new Transition.TransitionListener() {
+                                                                      @Override
+                                                                      public void onTransitionStart(Transition transition) {}
+                                                                      @Override
+                                                                      public void onTransitionEnd(Transition transition) {
+                                                                          ViewGroup.LayoutParams layoutParams = postImage.getLayoutParams();
+                                                                          layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                                                                          postImage.setLayoutParams(layoutParams);
+                                                                      }
+                                                                      @Override
+                                                                      public void onTransitionCancel(Transition transition) {}
+                                                                      @Override
+                                                                      public void onTransitionPause(Transition transition) {}
+                                                                      @Override
+                                                                      public void onTransitionResume(Transition transition) {}
+                                                                  });
 
         FloatingActionButton fab = findViewById(R.id.fab);
         FloatingActionButton fabTick = findViewById(R.id.fabTick);
@@ -103,7 +122,7 @@ public class PostCreator extends AppCompatActivity {
             Glide.with(this)
                     .load(data.getData())
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .centerCrop()
+                    .fitCenter()
                     .into(postImage);
             localUri = data.getData();
         }
@@ -170,8 +189,7 @@ public class PostCreator extends AppCompatActivity {
                 .setTitle("Discard Post")
                 .setMessage("Confirm Discard?")
                 .setPositiveButton("Exit", (dialogInterface, i) -> supportFinishAfterTransition())
-                .setNeutralButton("Continue Editing", (dialogInterface, i) -> {
-                })
+                .setNeutralButton("Continue Editing", (dialogInterface, i) -> {})
                 .show();
     }
 
@@ -184,7 +202,7 @@ public class PostCreator extends AppCompatActivity {
     }
 
     private void uploadImage(int which) {
-        final StorageReference ref = mStorage.child("images/" + UUID.randomUUID().toString() + ".jpg");
+        final StorageReference ref = mStorage.child("posts/" + UUID.randomUUID().toString() + ".jpg");
         UploadTask uploadTask = ref.putFile(localUri);
         uploadTask.continueWithTask(task -> {
             if (!task.isSuccessful()) {

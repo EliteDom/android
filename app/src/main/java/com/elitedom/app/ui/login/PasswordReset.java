@@ -44,12 +44,15 @@ public class PasswordReset extends AppCompatActivity {
     }
 
     public void resetPassword(View view) {
-        mAuth.sendPasswordResetEmail(mEmail.getText().toString())
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) Toast.makeText(getApplicationContext(), "Check your inbox for password reset details!", Toast.LENGTH_LONG).show();
-                });
-        startActivity(new Intent(this, LoginActivity.class));
-        setResult(Activity.RESULT_OK);
-        finish();
+        if (mEmail.getText().toString().length() > 0) {
+            mAuth.sendPasswordResetEmail(mEmail.getText().toString())
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful())
+                            Toast.makeText(getApplicationContext(), "Check your inbox for password reset details!", Toast.LENGTH_LONG).show();
+                    });
+            startActivity(new Intent(this, LoginActivity.class));
+            setResult(Activity.RESULT_OK);
+            finish();
+        }
     }
 }

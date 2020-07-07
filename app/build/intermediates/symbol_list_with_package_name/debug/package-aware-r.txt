@@ -1405,7 +1405,6 @@ drawable common_google_signin_btn_text_light
 drawable common_google_signin_btn_text_light_focused
 drawable common_google_signin_btn_text_light_normal
 drawable common_google_signin_btn_text_light_normal_background
-drawable custom_button
 drawable custom_card
 drawable custom_relativelayout
 drawable design_bottom_navigation_item_background
@@ -1561,6 +1560,7 @@ id buttonPanel
 id button_chatbox_send
 id cancel_button
 id card_container
+id card_view
 id cardview
 id center
 id center_horizontal
@@ -1767,6 +1767,7 @@ id showCustom
 id showHome
 id showTitle
 id single_card
+id single_card_layout
 id single_received
 id single_sent
 id singlecardlayout
