@@ -94,7 +94,6 @@ public class UserProfile extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void initializeData() {
-        mTitleData.clear();
         mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
                 .get()
                 .addOnCompleteListener(task -> {
@@ -111,9 +110,14 @@ public class UserProfile extends AppCompatActivity {
                                     .fitCenter()
                                     .into(imageView);
                         imageView.setContentDescription(image);
+                        mTitleData.clear();
                         mTitleData.add(new PreviewCard(Uri.parse(image)));
+                        loadPosts();
                     }
                 });
+    }
+
+    private void loadPosts() {
         mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).collection("authoredPosts")
                 .get()
                 .addOnCompleteListener(task -> {
@@ -127,10 +131,8 @@ public class UserProfile extends AppCompatActivity {
                                             assert document1 != null;
                                             if (document1.get("image") != null)
                                                 mTitleData.add(new PreviewCard((String) document1.get("title"), (String) document1.get("postText"), document1.get("author") + " | Authored " + document1.get("timestamp") + " ago", document1.getId(), (String) document.get("dormName"), Uri.parse((String) document1.get("image"))));
-                                            else
-                                                mTitleData.add(new PreviewCard((String) document1.get("title"), (String) document1.get("postText"), document1.get("author") + " | Authored " + document1.get("timestamp") + " ago", document1.getId(), (String) document.get("dormName")));
-                                            mAdapter.notifyDataSetChanged();
-                                            if (mAdapter.getItemCount() > 0)
+                                            else mTitleData.add(new PreviewCard((String) document1.get("title"), (String) document1.get("postText"), document1.get("author") + " | Authored " + document1.get("timestamp") + " ago", document1.getId(), (String) document.get("dormName")));
+                                            if (mAdapter.getItemCount() > 1)
                                                 runLayoutAnimation(mRecycler);
                                             else mNoPosts.animate().alpha(1.0f);
                                         }
@@ -179,6 +181,7 @@ public class UserProfile extends AppCompatActivity {
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .fitCenter()
                     .into(imageView);
+            mTitleData.clear();
             mAdapter.notifyDataSetChanged();
             new MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
                     .setTitle("Update Profile")
@@ -196,6 +199,7 @@ public class UserProfile extends AppCompatActivity {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .fitCenter()
                 .into(imageView);
+        mTitleData.clear();
         mAdapter.notifyDataSetChanged();
     }
 
