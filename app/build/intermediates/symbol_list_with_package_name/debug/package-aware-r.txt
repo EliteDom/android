@@ -1560,6 +1560,7 @@ id buttonPanel
 id button_chatbox_send
 id cancel_button
 id card_container
+id card_view
 id cardview
 id center
 id center_horizontal
@@ -1766,6 +1767,7 @@ id showCustom
 id showHome
 id showTitle
 id single_card
+id single_card_layout
 id single_received
 id single_sent
 id singlecardlayout

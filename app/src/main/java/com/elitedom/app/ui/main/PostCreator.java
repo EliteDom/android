@@ -103,7 +103,7 @@ public class PostCreator extends AppCompatActivity {
             Glide.with(this)
                     .load(data.getData())
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .centerCrop()
+                    .fitCenter()
                     .into(postImage);
             localUri = data.getData();
         }
@@ -170,8 +170,7 @@ public class PostCreator extends AppCompatActivity {
                 .setTitle("Discard Post")
                 .setMessage("Confirm Discard?")
                 .setPositiveButton("Exit", (dialogInterface, i) -> supportFinishAfterTransition())
-                .setNeutralButton("Continue Editing", (dialogInterface, i) -> {
-                })
+                .setNeutralButton("Continue Editing", (dialogInterface, i) -> {})
                 .show();
     }
 
