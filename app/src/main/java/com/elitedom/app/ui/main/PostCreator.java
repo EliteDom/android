@@ -80,23 +80,6 @@ public class PostCreator extends AppCompatActivity {
         title.setText(getIntent().getStringExtra("title"));
         postImage.setClipToOutline(true);
 
-        getWindow().getSharedElementEnterTransition().addListener(new Transition.TransitionListener() {
-                                                                      @Override
-                                                                      public void onTransitionStart(Transition transition) {}
-                                                                      @Override
-                                                                      public void onTransitionEnd(Transition transition) {
-                                                                          ViewGroup.LayoutParams layoutParams = postImage.getLayoutParams();
-                                                                          layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-                                                                          postImage.setLayoutParams(layoutParams);
-                                                                      }
-                                                                      @Override
-                                                                      public void onTransitionCancel(Transition transition) {}
-                                                                      @Override
-                                                                      public void onTransitionPause(Transition transition) {}
-                                                                      @Override
-                                                                      public void onTransitionResume(Transition transition) {}
-                                                                  });
-
         FloatingActionButton fab = findViewById(R.id.fab);
         FloatingActionButton fabTick = findViewById(R.id.fabTick);
         FloatingActionButton fabDecline = findViewById(R.id.fabDecline);
@@ -122,7 +105,6 @@ public class PostCreator extends AppCompatActivity {
             Glide.with(this)
                     .load(data.getData())
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .fitCenter()
                     .into(postImage);
             localUri = data.getData();
         }
