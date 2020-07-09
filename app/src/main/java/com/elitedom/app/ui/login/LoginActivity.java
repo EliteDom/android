@@ -100,8 +100,8 @@ public class LoginActivity extends AppCompatActivity {
                         //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                         setResult(Activity.RESULT_OK);
                         finish();
-                    }
-                    else Toast.makeText(getApplicationContext(), "Unsuccessful - try again later?", Toast.LENGTH_LONG).show();
+                    } else
+                        Toast.makeText(getApplicationContext(), "Unsuccessful - try again later?", Toast.LENGTH_LONG).show();
                 });
     }
 
@@ -120,7 +120,14 @@ public class LoginActivity extends AppCompatActivity {
         (mAuth.signInWithEmailAndPassword(email, password))
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) topicActivity(mAuth.getCurrentUser());
-                    else addUser(email, password);
+                    else
+                        mAuth.fetchSignInMethodsForEmail(email)
+                                .addOnCompleteListener(task1 -> {
+                                    if (Objects.requireNonNull(Objects.requireNonNull(task1.getResult()).getSignInMethods()).isEmpty())
+                                        addUser(email, password);
+                                    else
+                                        Toast.makeText(getApplicationContext(), "Incorrect Password!", Toast.LENGTH_SHORT).show();
+                                });
                 });
     }
 
