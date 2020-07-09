@@ -1646,6 +1646,7 @@ id image
 id image_layer
 id image_message_profile
 id image_profile
+id image_url
 id info
 id information
 id invisible
@@ -2138,6 +2139,7 @@ string reset_password
 string search_menu_title
 string status_bar_notification_info_overflow
 string subtitle_detail_text
+string text_url_prompt
 string title_placeholder
 string topic_cards_action_bar
 string topic_info_placeholder
