@@ -83,7 +83,7 @@ public class Feed extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
                         assert document != null;
-                        mTitleData.add(new PreviewCard(Uri.parse((String) document.get("image"))));
+                        mTitleData.add(new PreviewCard(Uri.parse("" + document.get("image"))));
                         loadPosts();
                     }
                 });

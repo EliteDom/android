@@ -52,8 +52,8 @@ public class UserProfile extends AppCompatActivity {
     private PreviewAdapter mAdapter;
     private RecyclerView mRecycler;
     private TextView mNoPosts;
-    private String uid;
     private Uri localUri;
+    private String uid;
 
 
     @Override
