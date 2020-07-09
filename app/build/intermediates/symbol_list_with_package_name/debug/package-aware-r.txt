@@ -1603,6 +1603,7 @@ id dropdown_menu
 id edit_query
 id editor
 id editor_body
+id editor_scroll_body
 id editor_title
 id edittext_chatbox
 id elite

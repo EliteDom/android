@@ -79,6 +79,7 @@ public class PostCreator extends AppCompatActivity {
         profileImage.setClipToOutline(true);
         title.setText(getIntent().getStringExtra("title"));
         postImage.setClipToOutline(true);
+        findViewById(R.id.editor_scroll_body).setClipToOutline(true);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         FloatingActionButton fabTick = findViewById(R.id.fabTick);
