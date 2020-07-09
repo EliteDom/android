@@ -1,8 +1,8 @@
 # Elitedom [Android]
-
+ 
 This is the development repository for Elitedom's Android application. [First commit on 4:04AM 20/03/2020]
 
-We here at Elitedom truly appreciate the marvel bestowed to society through the internet. The world has never been closer. It is unfortunate however, to look at corporations make the most of user data. We believe the user to be the consumer and not corporation. The embodiment of free thought, collaboration and discussion are fundamental principles we believe in, a vision we hope to share with you.
+We here at Elitedom truly appreciate the marvel bestowed to society that is the internet. The world has never been closer. It is unfortunate however, to look at corporations make the most of user data. We believe the user to be the consumer and not corporation. The embodiment of free thought, collaboration and discussion are fundamental principles we believe in, a vision we hope to share with you.
 
 ## Privacy Policy
 
