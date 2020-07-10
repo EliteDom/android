@@ -8,7 +8,6 @@ import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.view.WindowManager;
@@ -20,6 +19,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -44,6 +44,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class UserProfile extends AppCompatActivity {
 
     private TextView username, appreciation, predictor;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private static final int SELECT_PICTURE = 1;
     private ArrayList<PreviewCard> mTitleData;
     private FirebaseFirestore mDatabase;
@@ -52,8 +53,8 @@ public class UserProfile extends AppCompatActivity {
     private PreviewAdapter mAdapter;
     private RecyclerView mRecycler;
     private TextView mNoPosts;
-    private String uid;
     private Uri localUri;
+    private String uid;
 
 
     @Override
@@ -72,8 +73,6 @@ public class UserProfile extends AppCompatActivity {
         uid = FirebaseAuth.getInstance().getUid();
         if (getIntent().getStringExtra("auth") != null) {
             uid = getIntent().getStringExtra("auth");
-            assert uid != null;
-            Log.d("UID", uid);
             imageView.setClickable(false);
         }
 
@@ -98,6 +97,9 @@ public class UserProfile extends AppCompatActivity {
         mAdapter.sendContext(imageView, username, findViewById(R.id.user_profile_holder));
         mRecycler.setAdapter(mAdapter);
 
+
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout.setOnRefreshListener(this::initializeData);
         initializeData();
     }
 
@@ -112,15 +114,16 @@ public class UserProfile extends AppCompatActivity {
                         predictor.setText(Objects.requireNonNull(document.get("predictorPoints")).toString());
                         appreciation.setText(Objects.requireNonNull(document.get("appreciationPoints")).toString());
                         username.setText(Objects.requireNonNull(document.get("firstName")).toString() + " " + Objects.requireNonNull(document.get("lastName")).toString() + "'s Profile");
-                        String image = (String) document.get("image");
-                        if (image != null && image.length() > 0)
+                        String image = "" + document.get("image");
+                        if (image.length() > 0)
                             Glide.with(UserProfile.this)
                                     .load(image)
                                     .fitCenter()
                                     .into(imageView);
                         imageView.setContentDescription(image);
                         mTitleData.clear();
-                        if (uid.equals(FirebaseAuth.getInstance().getUid())) mTitleData.add(new PreviewCard(Uri.parse(image)));
+                        if (uid.equals(FirebaseAuth.getInstance().getUid()))
+                            mTitleData.add(new PreviewCard(Uri.parse(image)));
                         loadPosts();
                     }
                 });
@@ -140,13 +143,16 @@ public class UserProfile extends AppCompatActivity {
                                             assert document1 != null;
                                             if (document1.get("image") != null)
                                                 mTitleData.add(new PreviewCard((String) document1.get("title"), (String) document1.get("postText"), document1.get("author") + " | Authored " + document1.get("timestamp") + " ago", document1.getId(), (String) document.get("dormName"), Uri.parse((String) document1.get("image"))));
-                                            else mTitleData.add(new PreviewCard((String) document1.get("title"), (String) document1.get("postText"), document1.get("author") + " | Authored " + document1.get("timestamp") + " ago", document1.getId(), (String) document.get("dormName")));
-                                            if (mAdapter.getItemCount() > 1)
-                                                runLayoutAnimation(mRecycler);
-                                            else mNoPosts.animate().alpha(1.0f);
+                                            else
+                                                mTitleData.add(new PreviewCard((String) document1.get("title"), (String) document1.get("postText"), document1.get("author") + " | Authored " + document1.get("timestamp") + " ago", document1.getId(), (String) document.get("dormName")));
                                         }
                                     });
                         }
+                    mAdapter.notifyDataSetChanged();
+                    if (mAdapter.getItemCount() > 1)
+                        runLayoutAnimation(mRecycler);
+                    else mNoPosts.animate().alpha(1.0f);
+                    swipeRefreshLayout.setRefreshing(false);
                 });
     }
 
@@ -190,8 +196,8 @@ public class UserProfile extends AppCompatActivity {
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .fitCenter()
                     .into(imageView);
-            mTitleData.clear();
-            mAdapter.notifyDataSetChanged();
+//            mTitleData.clear();
+//            mAdapter.notifyDataSetChanged();
             new MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
                     .setTitle("Update Profile")
                     .setMessage("Change your profile picture??")
@@ -208,8 +214,8 @@ public class UserProfile extends AppCompatActivity {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .fitCenter()
                 .into(imageView);
-        mTitleData.clear();
-        mAdapter.notifyDataSetChanged();
+//        mTitleData.clear();
+//        mAdapter.notifyDataSetChanged();
     }
 
     private void uploadImage() {

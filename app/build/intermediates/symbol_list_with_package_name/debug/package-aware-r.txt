@@ -1603,6 +1603,7 @@ id dropdown_menu
 id edit_query
 id editor
 id editor_body
+id editor_scroll_body
 id editor_title
 id edittext_chatbox
 id elite
@@ -1645,8 +1646,8 @@ id image
 id image_layer
 id image_message_profile
 id image_profile
+id image_url
 id info
-id information
 id invisible
 id italic
 id item_touch_helper_previous_elevation
@@ -1766,6 +1767,7 @@ id shortcut
 id showCustom
 id showHome
 id showTitle
+id sign_up_window
 id single_card
 id single_card_layout
 id single_received
@@ -1791,6 +1793,7 @@ id stretch
 id subTitle
 id submenuarrow
 id submit_area
+id swipe_refresh
 id tabMode
 id tag_accessibility_actions
 id tag_accessibility_clickable_spans
@@ -2137,6 +2140,7 @@ string reset_password
 string search_menu_title
 string status_bar_notification_info_overflow
 string subtitle_detail_text
+string text_url_prompt
 string title_placeholder
 string topic_cards_action_bar
 string topic_info_placeholder

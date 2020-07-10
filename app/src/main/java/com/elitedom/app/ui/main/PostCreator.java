@@ -8,9 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.transition.Transition;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -44,7 +42,7 @@ public class PostCreator extends AppCompatActivity {
     private StorageReference mStorage;
     private Uri localUri, downloadUri;
     private ArrayList submitDorms;
-    private EditText title, body;
+    private EditText title, body, imageUri;
     private boolean isRotated;
 
     @Override
@@ -63,8 +61,9 @@ public class PostCreator extends AppCompatActivity {
         animationDrawable.setColorFilter(Color.rgb(190, 190, 190), android.graphics.PorterDuff.Mode.MULTIPLY);
 
         ImageView profileImage = findViewById(R.id.image_profile);
-        title = findViewById(R.id.editor_title);
         body = findViewById(R.id.editor_body);
+        imageUri = findViewById(R.id.image_url);
+        title = findViewById(R.id.editor_title);
         postImage = findViewById(R.id.postImage);
         mDatabase = FirebaseFirestore.getInstance();
         mStorage = FirebaseStorage.getInstance().getReference();
@@ -79,23 +78,7 @@ public class PostCreator extends AppCompatActivity {
         profileImage.setClipToOutline(true);
         title.setText(getIntent().getStringExtra("title"));
         postImage.setClipToOutline(true);
-
-        getWindow().getSharedElementEnterTransition().addListener(new Transition.TransitionListener() {
-                                                                      @Override
-                                                                      public void onTransitionStart(Transition transition) {}
-                                                                      @Override
-                                                                      public void onTransitionEnd(Transition transition) {
-                                                                          ViewGroup.LayoutParams layoutParams = postImage.getLayoutParams();
-                                                                          layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-                                                                          postImage.setLayoutParams(layoutParams);
-                                                                      }
-                                                                      @Override
-                                                                      public void onTransitionCancel(Transition transition) {}
-                                                                      @Override
-                                                                      public void onTransitionPause(Transition transition) {}
-                                                                      @Override
-                                                                      public void onTransitionResume(Transition transition) {}
-                                                                  });
+        findViewById(R.id.editor_scroll_body).setClipToOutline(true);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         FloatingActionButton fabTick = findViewById(R.id.fabTick);
@@ -122,7 +105,6 @@ public class PostCreator extends AppCompatActivity {
             Glide.with(this)
                     .load(data.getData())
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .fitCenter()
                     .into(postImage);
             localUri = data.getData();
         }
@@ -172,7 +154,8 @@ public class PostCreator extends AppCompatActivity {
                     .setTitle("Pick a Dorm!")
                     .setItems(getStringArray(submitDorms), (dialog, which) -> {
                         supportFinishAfterTransition();
-                        if (localUri != null) uploadImage(which);
+                        if (downloadUri != null) sendData(which); // Added same as else statement for prioritization
+                        else if (localUri != null) uploadImage(which);
                         else sendData(which);
                     })
                     .show();
@@ -241,5 +224,13 @@ public class PostCreator extends AppCompatActivity {
                                 });
                     }
                 });
+    }
+
+    public void imageUri(View view) {
+        Glide.with(this)
+                .load(imageUri.getText().toString())
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(postImage);
+        downloadUri = Uri.parse(imageUri.getText().toString());
     }
 }

@@ -10,7 +10,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -19,10 +18,13 @@ import androidx.core.app.ActivityOptionsCompat;
 
 import com.elitedom.app.R;
 import com.elitedom.app.ui.cards.TopicCards;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -89,19 +91,28 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void addUser(String email, String password) {
-        Toast.makeText(getApplicationContext(), "Creating new user", Toast.LENGTH_LONG).show();
+        Snackbar.make(constraintLayout, "Creating new user ", Snackbar.LENGTH_LONG)
+                .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
+                .setAnchorView(R.id.sign_up_window)
+                .show();
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(LoginActivity.this, task -> {
                     if (task.isSuccessful()) {
-                        Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_LONG).show();
+                        Snackbar.make(constraintLayout, "Success ", Snackbar.LENGTH_LONG)
+                                .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
+                                .setAnchorView(R.id.sign_up_window)
+                                .show();
                         Intent mainscreen = new Intent(LoginActivity.this, NewUser.class);
                         startActivity(mainscreen);
-                        overridePendingTransition(0, 0);
-                        //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+//                        overridePendingTransition(0, 0);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                         setResult(Activity.RESULT_OK);
                         finish();
-                    }
-                    else Toast.makeText(getApplicationContext(), "Unsuccessful - try again later?", Toast.LENGTH_LONG).show();
+                    } else
+                        Snackbar.make(constraintLayout, "Unsuccessful - try again later?", Snackbar.LENGTH_LONG)
+                                .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
+                                .setAnchorView(R.id.sign_up_window)
+                                .show();
                 });
     }
 
@@ -114,14 +125,38 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void loginButton(View view) {
-        Toast.makeText(getApplicationContext(), "Logging you in", Toast.LENGTH_LONG).show();
+        Snackbar.make(constraintLayout, "Logging you in", Snackbar.LENGTH_LONG)
+                .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
+                .setAnchorView(R.id.sign_up_window)
+                .show();
         final String email = emailEditText.getText().toString();
         final String password = passwordEditText.getText().toString();
-        (mAuth.signInWithEmailAndPassword(email, password))
-                .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) topicActivity(mAuth.getCurrentUser());
-                    else addUser(email, password);
-                });
+        if (emailEditText.getText().toString().length() == 0 || passwordEditText.getText().toString().length() == 0)
+            Snackbar.make(constraintLayout, "Fill both options!", Snackbar.LENGTH_LONG)
+                    .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
+                    .setAnchorView(R.id.sign_up_window)
+                    .show();
+        else if (!isValid(email))
+            Snackbar.make(constraintLayout, "Invalid email!", Snackbar.LENGTH_LONG)
+                    .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
+                    .setAnchorView(R.id.sign_up_window)
+                    .show();
+        else
+            (mAuth.signInWithEmailAndPassword(email, password))
+                    .addOnCompleteListener(this, task -> {
+                        if (task.isSuccessful()) topicActivity(mAuth.getCurrentUser());
+                        else
+                            mAuth.fetchSignInMethodsForEmail(email)
+                                    .addOnCompleteListener(task1 -> {
+                                        if (Objects.requireNonNull(Objects.requireNonNull(task1.getResult()).getSignInMethods()).isEmpty())
+                                            addUser(email, password);
+                                        else
+                                            Snackbar.make(constraintLayout, "Incorrect Password! ", Snackbar.LENGTH_LONG)
+                                                    .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
+                                                    .setAnchorView(R.id.sign_up_window)
+                                                    .show();
+                                    });
+                    });
     }
 
     public void resetPassword(View view) {
@@ -129,6 +164,18 @@ public class LoginActivity extends AppCompatActivity {
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, constraintLayout, "gradientShift");
         ActivityCompat.startActivity(this, forgotIntent, options.toBundle());
         setResult(Activity.RESULT_OK);
+    }
+
+    private boolean isValid(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
+                "[a-zA-Z0-9_+&*-]+)*@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                "A-Z]{2,7}$";
+
+        Pattern pat = Pattern.compile(emailRegex);
+        if (email == null)
+            return false;
+        return pat.matcher(email).matches();
     }
 }
 

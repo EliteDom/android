@@ -132,8 +132,8 @@ public class PreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 image.setContentDescription(currentPost.getImageResource().toString());
                 image.setClipToOutline(true);
 
-                itemView.setOnClickListener(this::createPost);
                 editor.setOnClickListener(this::createPost);
+                itemView.setOnClickListener(this::createPost);
             }
         }
 
@@ -177,10 +177,12 @@ public class PreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             mInfoText.setContentDescription(currentPost.getDorm());
             mInfoText.setText(currentPost.getBody());
             mAuthor.setText(currentPost.getAuthor());
-            Glide.with(mContext)
-                    .load(currentPost.getImageResource())
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(mPostImage);
+            if (currentPost.getImageResource() != null && currentPost.getImageResource().toString().length() > 0)
+                Glide.with(mContext)
+                        .load(currentPost.getImageResource())
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(mPostImage);
+            else itemView.findViewById(R.id.post_text).setVisibility(View.VISIBLE);
             mPostImage.setContentDescription(currentPost.getImageResource().toString());
         }
 

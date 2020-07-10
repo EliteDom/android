@@ -14,7 +14,6 @@ import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -25,6 +24,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.elitedom.app.R;
 import com.elitedom.app.ui.main.Feed;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -37,6 +38,7 @@ public class TopicCards extends AppCompatActivity {
     private ArrayList<Cards> mTopicData;
     private CardsAdapter mAdapter;
     private RecyclerView mRecycler;
+    private String imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,7 @@ public class TopicCards extends AppCompatActivity {
         mDatabase = FirebaseFirestore.getInstance();
         RelativeLayout relativeLayout = findViewById(R.id.card_container);
         mRecycler = findViewById(R.id.recyclerView);
+        if (getIntent().getStringExtra("image") != null) imageUri = getIntent().getStringExtra("image");
 
         AnimationDrawable animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
         animationDrawable.setEnterFadeDuration(2000);
@@ -108,12 +111,16 @@ public class TopicCards extends AppCompatActivity {
     public void feedActivity(View view) {
         if (mAdapter.getCardNames().size() > 0) {
             Intent feed = new Intent(this, Feed.class);
+            if (imageUri != null) feed.putExtra("image", imageUri);
             feed.putExtra("cards", mAdapter.getCardNames());
             startActivity(feed);
             setResult(Activity.RESULT_OK);
             finish();
         } else
-            Toast.makeText(getApplicationContext(), "Please select a Category!", Toast.LENGTH_SHORT).show();
+            Snackbar.make(findViewById(R.id.fab), "Please select a category!", Snackbar.LENGTH_SHORT)
+                    .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
+                    .setAnchorView(findViewById(R.id.fab))
+                    .show();
     }
 
     private void runLayoutAnimation(final RecyclerView recyclerView) {
