@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -130,21 +131,32 @@ public class LoginActivity extends AppCompatActivity {
                 .show();
         final String email = emailEditText.getText().toString();
         final String password = passwordEditText.getText().toString();
-        (mAuth.signInWithEmailAndPassword(email, password))
-                .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) topicActivity(mAuth.getCurrentUser());
-                    else
-                        mAuth.fetchSignInMethodsForEmail(email)
-                                .addOnCompleteListener(task1 -> {
-                                    if (Objects.requireNonNull(Objects.requireNonNull(task1.getResult()).getSignInMethods()).isEmpty())
-                                        addUser(email, password);
-                                    else
-                                        Snackbar.make(constraintLayout, "Incorrect Password! ", Snackbar.LENGTH_LONG)
-                                                .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
-                                                .setAnchorView(R.id.sign_up_window)
-                                                .show();
-                                });
-                });
+        if (emailEditText.getText().toString().length() == 0 || passwordEditText.getText().toString().length() == 0)
+            Snackbar.make(constraintLayout, "Fill both options!", Snackbar.LENGTH_LONG)
+                    .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
+                    .setAnchorView(R.id.sign_up_window)
+                    .show();
+        else if (!isValid(email))
+            Snackbar.make(constraintLayout, "Invalid email!", Snackbar.LENGTH_LONG)
+                    .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
+                    .setAnchorView(R.id.sign_up_window)
+                    .show();
+        else
+            (mAuth.signInWithEmailAndPassword(email, password))
+                    .addOnCompleteListener(this, task -> {
+                        if (task.isSuccessful()) topicActivity(mAuth.getCurrentUser());
+                        else
+                            mAuth.fetchSignInMethodsForEmail(email)
+                                    .addOnCompleteListener(task1 -> {
+                                        if (Objects.requireNonNull(Objects.requireNonNull(task1.getResult()).getSignInMethods()).isEmpty())
+                                            addUser(email, password);
+                                        else
+                                            Snackbar.make(constraintLayout, "Incorrect Password! ", Snackbar.LENGTH_LONG)
+                                                    .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
+                                                    .setAnchorView(R.id.sign_up_window)
+                                                    .show();
+                                    });
+                    });
     }
 
     public void resetPassword(View view) {
@@ -152,6 +164,18 @@ public class LoginActivity extends AppCompatActivity {
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, constraintLayout, "gradientShift");
         ActivityCompat.startActivity(this, forgotIntent, options.toBundle());
         setResult(Activity.RESULT_OK);
+    }
+
+    private boolean isValid(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
+                "[a-zA-Z0-9_+&*-]+)*@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                "A-Z]{2,7}$";
+
+        Pattern pat = Pattern.compile(emailRegex);
+        if (email == null)
+            return false;
+        return pat.matcher(email).matches();
     }
 }
 

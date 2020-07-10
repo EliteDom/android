@@ -117,7 +117,7 @@ public class TopicCards extends AppCompatActivity {
             setResult(Activity.RESULT_OK);
             finish();
         } else
-            Snackbar.make(findViewById(R.id.fab), "Invalid Message Body!", Snackbar.LENGTH_SHORT)
+            Snackbar.make(findViewById(R.id.fab), "Please select a category!", Snackbar.LENGTH_SHORT)
                     .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
                     .setAnchorView(findViewById(R.id.fab))
                     .show();
