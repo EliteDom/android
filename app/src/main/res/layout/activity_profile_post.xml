@@ -14,9 +14,9 @@
         android:id="@+id/profile_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="4dp"
         android:layout_margin="12dp"
-        android:gravity="center">
+        android:gravity="center"
+        android:paddingTop="4dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image"
@@ -169,7 +169,7 @@
                         android:layout_height="match_parent"
                         android:layout_below="@id/action_cards"
                         android:layout_alignParentBottom="true"
-                        android:background="@drawable/rounded_image"
+                        android:background="@drawable/custom_relativelayout"
                         android:scrollbars="none">
 
                         <TextView
@@ -178,14 +178,14 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="8dp"
+                            android:background="@drawable/custom_relativelayout"
                             android:paddingHorizontal="8dp"
                             android:paddingTop="8dp"
-                            android:background="@drawable/rounded_image"
                             android:textColor="@color/black"
+                            android:textIsSelectable="true"
                             android:textSize="14sp"
                             android:textStyle="bold" />
                     </ScrollView>
-
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
         </RelativeLayout>
