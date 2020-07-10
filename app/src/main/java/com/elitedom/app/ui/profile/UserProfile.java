@@ -112,8 +112,8 @@ public class UserProfile extends AppCompatActivity {
                         predictor.setText(Objects.requireNonNull(document.get("predictorPoints")).toString());
                         appreciation.setText(Objects.requireNonNull(document.get("appreciationPoints")).toString());
                         username.setText(Objects.requireNonNull(document.get("firstName")).toString() + " " + Objects.requireNonNull(document.get("lastName")).toString() + "'s Profile");
-                        String image = (String) document.get("image");
-                        if (image != null && image.length() > 0)
+                        String image = "" + document.get("image");
+                        if ( image.length() > 0)
                             Glide.with(UserProfile.this)
                                     .load(image)
                                     .fitCenter()

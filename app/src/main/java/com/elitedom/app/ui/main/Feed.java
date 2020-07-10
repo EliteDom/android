@@ -39,6 +39,7 @@ public class Feed extends AppCompatActivity {
     private FirebaseFirestore mDatabase;
     private ArrayList<String> mTopicNames;
     private RecyclerView mRecycler;
+    private Uri localUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,21 +73,27 @@ public class Feed extends AppCompatActivity {
         mAdapter = new PreviewAdapter(this, mTitleData, "post_expansion", 1);
         mRecycler.setAdapter(mAdapter);
         mTopicNames = getIntent().getStringArrayListExtra("cards");
+        if (getIntent().getStringExtra("image") != null) localUri = Uri.parse(getIntent().getStringExtra("image"));
         initializeData();
     }
 
     private void initializeData() {
         mTitleData.clear();
-        mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        assert document != null;
-                        mTitleData.add(new PreviewCard(Uri.parse("" + document.get("image"))));
-                        loadPosts();
-                    }
-                });
+        if (localUri != null) {
+            mTitleData.add(new PreviewCard(localUri));
+            loadPosts();
+        }
+        else
+            mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            assert document != null;
+                            mTitleData.add(new PreviewCard(Uri.parse("" + document.get("image"))));
+                            loadPosts();
+                        }
+                    });
     }
 
     private void loadPosts() {
@@ -97,8 +104,9 @@ public class Feed extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                 if (document.get("image") != null)
-                                mTitleData.add(new PreviewCard((String) document.get("title"), (String) document.get("postText"), document.get("author") + " | Authored " + document.get("timestamp") + " ago", document.getId(), i, Uri.parse((String) document.get("image"))));
-                                else mTitleData.add(new PreviewCard((String) document.get("title"), (String) document.get("postText"), document.get("author") + " | Authored " + document.get("timestamp") + " ago", document.getId(), i));
+                                    mTitleData.add(new PreviewCard((String) document.get("title"), (String) document.get("postText"), document.get("author") + " | Authored " + document.get("timestamp") + " ago", document.getId(), i, Uri.parse((String) document.get("image"))));
+                                else
+                                    mTitleData.add(new PreviewCard((String) document.get("title"), (String) document.get("postText"), document.get("author") + " | Authored " + document.get("timestamp") + " ago", document.getId(), i));
                             }
                             mAdapter.notifyDataSetChanged();
                             runLayoutAnimation(mRecycler);

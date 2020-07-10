@@ -79,7 +79,6 @@ public class NewUser extends AppCompatActivity {
             userData.put("firstName", mFirstName.getText().toString());
             userData.put("lastName", mLastName.getText().toString());
             userData.put("username", mUsername.getText().toString());
-            if (downloadUri != null) userData.put("image", downloadUri);
             userData.put("appreciationPoints", 0);
             userData.put("predictorPoints", 0);
 
@@ -87,7 +86,10 @@ public class NewUser extends AppCompatActivity {
                     .document(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
                     .set(userData);
 
-            startActivity(new Intent(this, TopicCards.class));
+            Intent intent = new Intent(this, TopicCards.class);
+            intent.putExtra("image", localUri.toString());
+            uploadImage();
+            startActivity(intent);
             setResult(Activity.RESULT_OK);
             finish();
         } else
@@ -122,8 +124,8 @@ public class NewUser extends AppCompatActivity {
                     .into(imageView);
             new MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
                     .setTitle("Update Profile")
-                    .setMessage("Change your profile picture??")
-                    .setPositiveButton("Replace", (dialogInterface, i) -> uploadImage())
+                    .setMessage("Change your profile picture?")
+                    .setPositiveButton("Update", (dialogInterface, i) -> {})
                     .setNeutralButton("Retain", (dialogInterface, i) -> retainProfilePicture())
                     .show();
         }
@@ -147,8 +149,11 @@ public class NewUser extends AppCompatActivity {
             }
             return ref.getDownloadUrl();
         }).addOnCompleteListener(task -> {
-            if (task.isSuccessful())
-                downloadUri = task.getResult();
+            if (task.isSuccessful()) {
+                mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
+                        .update("image", Objects.requireNonNull(task.getResult()).toString());
+                Toast.makeText(getApplicationContext(), FirebaseAuth.getInstance().getUid(), Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }

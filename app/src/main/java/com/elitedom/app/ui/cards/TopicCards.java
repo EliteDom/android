@@ -37,6 +37,7 @@ public class TopicCards extends AppCompatActivity {
     private ArrayList<Cards> mTopicData;
     private CardsAdapter mAdapter;
     private RecyclerView mRecycler;
+    private String imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,7 @@ public class TopicCards extends AppCompatActivity {
         mDatabase = FirebaseFirestore.getInstance();
         RelativeLayout relativeLayout = findViewById(R.id.card_container);
         mRecycler = findViewById(R.id.recyclerView);
+        if (getIntent().getStringExtra("image") != null) imageUri = getIntent().getStringExtra("image");
 
         AnimationDrawable animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
         animationDrawable.setEnterFadeDuration(2000);
@@ -108,6 +110,7 @@ public class TopicCards extends AppCompatActivity {
     public void feedActivity(View view) {
         if (mAdapter.getCardNames().size() > 0) {
             Intent feed = new Intent(this, Feed.class);
+            if (imageUri != null) feed.putExtra("image", imageUri);
             feed.putExtra("cards", mAdapter.getCardNames());
             startActivity(feed);
             setResult(Activity.RESULT_OK);
