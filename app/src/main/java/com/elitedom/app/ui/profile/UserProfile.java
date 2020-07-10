@@ -19,6 +19,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -43,6 +44,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class UserProfile extends AppCompatActivity {
 
     private TextView username, appreciation, predictor;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private static final int SELECT_PICTURE = 1;
     private ArrayList<PreviewCard> mTitleData;
     private FirebaseFirestore mDatabase;
@@ -95,6 +97,9 @@ public class UserProfile extends AppCompatActivity {
         mAdapter.sendContext(imageView, username, findViewById(R.id.user_profile_holder));
         mRecycler.setAdapter(mAdapter);
 
+
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout.setOnRefreshListener(this::initializeData);
         initializeData();
     }
 
@@ -147,6 +152,7 @@ public class UserProfile extends AppCompatActivity {
                     if (mAdapter.getItemCount() > 1)
                         runLayoutAnimation(mRecycler);
                     else mNoPosts.animate().alpha(1.0f);
+                    swipeRefreshLayout.setRefreshing(false);
                 });
     }
 

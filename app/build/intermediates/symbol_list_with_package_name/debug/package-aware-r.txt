@@ -1793,6 +1793,7 @@ id stretch
 id subTitle
 id submenuarrow
 id submit_area
+id swipe_refresh
 id tabMode
 id tag_accessibility_actions
 id tag_accessibility_clickable_spans

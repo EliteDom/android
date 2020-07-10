@@ -19,6 +19,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.elitedom.app.R;
 import com.elitedom.app.ui.cards.TopicCards;
@@ -34,10 +35,11 @@ import java.util.Objects;
 
 public class Feed extends AppCompatActivity {
 
+    private SwipeRefreshLayout swipeRefreshLayout;
     private ArrayList<PreviewCard> mTitleData;
-    private PreviewAdapter mAdapter;
-    private FirebaseFirestore mDatabase;
     private ArrayList<String> mTopicNames;
+    private FirebaseFirestore mDatabase;
+    private PreviewAdapter mAdapter;
     private RecyclerView mRecycler;
     private Uri localUri;
 
@@ -74,6 +76,9 @@ public class Feed extends AppCompatActivity {
         mRecycler.setAdapter(mAdapter);
         mTopicNames = getIntent().getStringArrayListExtra("cards");
         if (getIntent().getStringExtra("image") != null) localUri = Uri.parse(getIntent().getStringExtra("image"));
+
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout.setOnRefreshListener(this::initializeData);
         initializeData();
     }
 
@@ -110,6 +115,7 @@ public class Feed extends AppCompatActivity {
                             }
                             mAdapter.notifyDataSetChanged();
                             runLayoutAnimation(mRecycler);
+                            swipeRefreshLayout.setRefreshing(false);
                         }
                     });
         }
