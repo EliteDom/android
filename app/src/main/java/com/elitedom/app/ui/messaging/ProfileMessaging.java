@@ -151,6 +151,7 @@ public class ProfileMessaging extends AppCompatActivity {
                     .set(messageBlock);
             message.setText("");
             mAdapter.notifyDataSetChanged();
+            scrollToBottom();
             if (mAdapter.getItemCount() >= 0) mNoMessages.animate().alpha(0.0f);
         } else
             Snackbar.make(message, "Invalid Message Body!", Snackbar.LENGTH_SHORT)

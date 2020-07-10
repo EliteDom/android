@@ -99,7 +99,6 @@ public class FeedMessaging extends AppCompatActivity {
                 else mNoMessages.animate().alpha(1.0f);
             }
         });
-
         mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
                 .get()
                 .addOnCompleteListener(task -> {
@@ -110,8 +109,6 @@ public class FeedMessaging extends AppCompatActivity {
                         if (authorImage == null) authorImage = "";
                     }
                 });
-
-        message.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> scrollToBottom());
     }
 
     @Override
@@ -140,6 +137,7 @@ public class FeedMessaging extends AppCompatActivity {
                     .set(messageBlock);
             message.setText("");
             mAdapter.notifyDataSetChanged();
+            scrollToBottom();
             if (mAdapter.getItemCount() >= 0) mNoMessages.animate().alpha(0.0f);
         } else
             Snackbar.make(message, "Invalid Message Body!", Snackbar.LENGTH_SHORT)

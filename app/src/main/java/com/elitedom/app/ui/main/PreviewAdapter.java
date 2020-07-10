@@ -132,8 +132,8 @@ public class PreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 image.setContentDescription(currentPost.getImageResource().toString());
                 image.setClipToOutline(true);
 
-                itemView.setOnClickListener(this::createPost);
                 editor.setOnClickListener(this::createPost);
+                itemView.setOnClickListener(this::createPost);
             }
         }
 
