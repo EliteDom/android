@@ -1,21 +1,21 @@
 package com.elitedom.app.ui.login;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.elitedom.app.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
@@ -43,12 +43,16 @@ public class PasswordReset extends AppCompatActivity {
         animationDrawable.start();
     }
 
+    @SuppressLint("InflateParams")
     public void resetPassword(View view) {
         if (mEmail.getText().toString().length() > 0) {
             mAuth.sendPasswordResetEmail(mEmail.getText().toString())
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful())
-                            Toast.makeText(getApplicationContext(), "Check your inbox for password reset details!", Toast.LENGTH_LONG).show();
+                            Snackbar.make(findViewById(R.id.reset_layout), "Check your inbox for password reset details!", Snackbar.LENGTH_SHORT)
+                                    .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
+                                    .setAnchorView(LayoutInflater.from(this).inflate(R.layout.activity_login, null).findViewById(R.id.sign_up_window))
+                                    .show();
                     });
             startActivity(new Intent(this, LoginActivity.class));
             setResult(Activity.RESULT_OK);

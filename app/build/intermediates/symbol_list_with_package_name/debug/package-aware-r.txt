@@ -1648,7 +1648,6 @@ id image_message_profile
 id image_profile
 id image_url
 id info
-id information
 id invisible
 id italic
 id item_touch_helper_previous_elevation
@@ -1768,6 +1767,7 @@ id shortcut
 id showCustom
 id showHome
 id showTitle
+id sign_up_window
 id single_card
 id single_card_layout
 id single_received

@@ -8,13 +8,14 @@ import android.view.ViewOutlineProvider;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.elitedom.app.R;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -141,7 +142,10 @@ public class FeedMessaging extends AppCompatActivity {
             mAdapter.notifyDataSetChanged();
             if (mAdapter.getItemCount() >= 0) mNoMessages.animate().alpha(0.0f);
         } else
-            Toast.makeText(getApplicationContext(), "Invalid message body!", Toast.LENGTH_SHORT).show();
+            Snackbar.make(message, "Invalid Message Body!", Snackbar.LENGTH_SHORT)
+                    .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
+                    .setAnchorView(message)
+                    .show();
     }
 
     private String getDate(String time) {

@@ -118,13 +118,11 @@
                 app:strokeColor="@color/white"
                 app:strokeWidth="2dp"
                 tools:ignore="ButtonStyle" />
-
         </LinearLayout>
-
     </LinearLayout>
 
     <TextView
-        android:id="@+id/information"
+        android:id="@+id/sign_up_window"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

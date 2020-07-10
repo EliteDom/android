@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -19,6 +18,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.elitedom.app.R;
 import com.elitedom.app.ui.cards.TopicCards;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -36,17 +37,18 @@ public class NewUser extends AppCompatActivity {
 
     private EditText mUsername, mFirstName, mLastName;
     private static final int SELECT_PICTURE = 1;
+    private ConstraintLayout constraintLayout;
     private FirebaseFirestore mDatabase;
     private CircleImageView imageView;
     private StorageReference mStorage;
-    private Uri localUri, downloadUri;
+    private Uri localUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_user);
 
-        ConstraintLayout constraintLayout = findViewById(R.id.new_user_layout);
+        constraintLayout = findViewById(R.id.new_user_layout);
         mUsername = findViewById(R.id.username);
         mFirstName = findViewById(R.id.first_name);
         mLastName = findViewById(R.id.last_name);
@@ -93,9 +95,11 @@ public class NewUser extends AppCompatActivity {
             setResult(Activity.RESULT_OK);
             finish();
         } else
-            Toast.makeText(getApplicationContext(), "Please fill every field!", Toast.LENGTH_SHORT).show();
+            Snackbar.make(constraintLayout, "Please fill every field!", Snackbar.LENGTH_LONG)
+                    .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
+                    .setAnchorView(R.id.sign_up_window)
+                    .show();
     }
-
 
     @SuppressLint("IntentReset")
     public void newProfileImage(View view) {
@@ -125,7 +129,8 @@ public class NewUser extends AppCompatActivity {
             new MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
                     .setTitle("Update Profile")
                     .setMessage("Change your profile picture?")
-                    .setPositiveButton("Update", (dialogInterface, i) -> {})
+                    .setPositiveButton("Update", (dialogInterface, i) -> {
+                    })
                     .setNeutralButton("Retain", (dialogInterface, i) -> retainProfilePicture())
                     .show();
         }
@@ -152,7 +157,6 @@ public class NewUser extends AppCompatActivity {
             if (task.isSuccessful()) {
                 mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
                         .update("image", Objects.requireNonNull(task.getResult()).toString());
-                Toast.makeText(getApplicationContext(), FirebaseAuth.getInstance().getUid(), Toast.LENGTH_SHORT).show();
             }
         });
     }
