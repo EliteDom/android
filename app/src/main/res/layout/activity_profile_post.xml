@@ -183,8 +183,7 @@
                             android:paddingTop="8dp"
                             android:textColor="@color/black"
                             android:textIsSelectable="true"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
+                            android:textSize="14sp" />
                     </ScrollView>
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
