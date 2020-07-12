@@ -94,7 +94,6 @@ public class UserProfile extends AppCompatActivity {
         mAdapter.sendContext(imageView, username, findViewById(R.id.user_profile_holder));
         mRecycler.setAdapter(mAdapter);
 
-
         swipeRefreshLayout = findViewById(R.id.swipe_refresh);
         swipeRefreshLayout.setOnRefreshListener(this::initializeData);
         initializeData();
@@ -143,13 +142,13 @@ public class UserProfile extends AppCompatActivity {
                                             else
                                                 mTitleData.add(new PreviewCard((String) document1.get("title"), (String) document1.get("postText"), document1.get("author") + " | Authored " + document1.get("timestamp") + " ago", document1.getId(), (String) document.get("dormName")));
                                         }
+                                        mAdapter.notifyDataSetChanged();
+                                        if (mAdapter.getItemCount() > 1)
+                                            runLayoutAnimation(mRecycler);
+                                        else mNoPosts.animate().alpha(1.0f);
+                                        swipeRefreshLayout.setRefreshing(false);
                                     });
                         }
-                    mAdapter.notifyDataSetChanged();
-                    if (mAdapter.getItemCount() > 1)
-                        runLayoutAnimation(mRecycler);
-                    else mNoPosts.animate().alpha(1.0f);
-                    swipeRefreshLayout.setRefreshing(false);
                 });
     }
 
@@ -172,13 +171,11 @@ public class UserProfile extends AppCompatActivity {
     public void newProfileImage(View view) {
         Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
         getIntent.setType("image/*");
-
         Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         pickIntent.setType("image/*");
 
         Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
         chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
-
         startActivityForResult(chooserIntent, SELECT_PICTURE);
     }
 
