@@ -34,4 +34,5 @@
     <string name="text_url_prompt">You can also add the image url here!</string>
     <string name="search">Search</string>
     <string name="empty_search">No Results!</string>
+    <string name="about">About</string>
 </resources>
