@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,6 +29,8 @@ public class Search extends AppCompatActivity {
     private ArrayList<Result> resultArrayList;
     private FirebaseFirestore mDatabase;
     private ResultAdapter mAdapter;
+    private CardView mResultCard;
+    private TextView mNoResults;
     private EditText mQuery;
 
     @Override
@@ -48,6 +52,8 @@ public class Search extends AppCompatActivity {
         mAdapter = new ResultAdapter(this, resultArrayList);
         mDatabase = FirebaseFirestore.getInstance();
         mQuery = findViewById(R.id.search_text);
+        mResultCard = findViewById(R.id.result_card);
+        mNoResults = findViewById(R.id.no_results);
 
         RecyclerView mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
@@ -76,5 +82,13 @@ public class Search extends AppCompatActivity {
             if (dorm.getKey().toLowerCase().contains(query.toLowerCase()))
                 resultArrayList.add(new Result(dorm.getKey(), dorm.getValue()));
         mAdapter.notifyDataSetChanged();
+        if (resultArrayList.isEmpty()) {
+            mNoResults.animate().alpha(1.0f);
+            mResultCard.animate().alpha(0.0f);
+        }
+        else {
+            mNoResults.animate().alpha(0.0f);
+            mResultCard.animate().alpha(1.0f);
+        }
     }
 }

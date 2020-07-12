@@ -1714,6 +1714,7 @@ id new_user_layout
 id noScroll
 id no_messages
 id no_posts
+id no_results
 id none
 id normal
 id notification_background
@@ -2083,6 +2084,7 @@ string default_web_client_id
 string elite_name
 string elitedom
 string empty_chatroom
+string empty_search
 string error_icon_content_description
 string exposed_dropdown_menu_content_description
 string fab_transformation_scrim_behavior
