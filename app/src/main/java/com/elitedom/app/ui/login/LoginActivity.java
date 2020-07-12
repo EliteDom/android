@@ -17,7 +17,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 
 import com.elitedom.app.R;
-import com.elitedom.app.ui.cards.TopicCards;
+import com.elitedom.app.ui.dorms.TopicCards;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;

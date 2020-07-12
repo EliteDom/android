@@ -1603,6 +1603,8 @@ id dimensions
 id direct
 id disableHome
 id disliked
+id dormLabel
+id dorm_layout
 id dropdown_menu
 id edit_query
 id editor
@@ -1931,6 +1933,7 @@ layout abc_select_dialog_material
 layout abc_tooltip
 layout actionbar_mainfeed
 layout actionbar_topic_cards
+layout activity_dorm_profile
 layout activity_feed
 layout activity_feed_messaging
 layout activity_login

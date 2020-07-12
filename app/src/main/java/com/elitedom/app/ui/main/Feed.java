@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.elitedom.app.R;
-import com.elitedom.app.ui.cards.TopicCards;
+import com.elitedom.app.ui.dorms.TopicCards;
 import com.elitedom.app.ui.login.LoginActivity;
 import com.elitedom.app.ui.messaging.PersonalLanding;
 import com.elitedom.app.ui.profile.UserProfile;

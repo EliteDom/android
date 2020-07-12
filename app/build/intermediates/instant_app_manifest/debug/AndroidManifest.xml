@@ -30,6 +30,7 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/AppTheme" >
+        <activity android:name="com.elitedom.app.ui.dorms.DormProfile" />
         <activity android:name="com.elitedom.app.ui.messaging.PersonalLanding" />
         <activity android:name="com.elitedom.app.ui.search.Search" />
         <activity
@@ -49,7 +50,7 @@
             android:exported="true" />
         <activity android:name="com.elitedom.app.ui.main.PostView" />
         <activity
-            android:name="com.elitedom.app.ui.cards.TopicCards"
+            android:name="com.elitedom.app.ui.dorms.TopicCards"
             android:exported="true" />
         <activity android:name="com.elitedom.app.ui.login.NewUser" />
         <activity

@@ -1,6 +1,7 @@
 package com.elitedom.app.ui.search;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,10 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.elitedom.app.R;
+import com.elitedom.app.ui.dorms.DormProfile;
 
 import java.util.ArrayList;
 
@@ -47,11 +50,13 @@ class ResultAdapter extends RecyclerView.Adapter<com.elitedom.app.ui.search.Resu
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView name;
         private ImageView icon;
+        private CardView mCard;
+        private TextView name;
 
         ViewHolder(final View itemView) {
             super(itemView);
+            mCard = itemView.findViewById(R.id.single_card);
             icon = itemView.findViewById(R.id.icon);
             name = itemView.findViewById(R.id.name);
             icon.setClipToOutline(true);
@@ -62,6 +67,7 @@ class ResultAdapter extends RecyclerView.Adapter<com.elitedom.app.ui.search.Resu
             Glide.with(mContext)
                     .load(currentResult.getImageResource())
                     .into(icon);
+            mCard.setOnClickListener(v -> mContext.startActivity(new Intent(mContext, DormProfile.class).putExtra("name", currentResult.getName())));
         }
     }
 }
