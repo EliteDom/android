@@ -1280,6 +1280,8 @@ dimen notification_subtext_size
 dimen notification_top_pad
 dimen notification_top_pad_large_text
 dimen standard_115
+dimen standard_165
+dimen standard_215
 dimen standard_65
 dimen test_mtrl_calendar_day_cornerSize
 dimen tooltip_corner_radius
@@ -1442,6 +1444,7 @@ drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
 drawable ic_reset
+drawable ic_search_black_24dp
 drawable ic_send_black_24dp
 drawable ic_share_white_24dp
 drawable ic_thumb_down_black_24dp
@@ -1618,7 +1621,9 @@ id expanded_menu
 id fab
 id fabDecline
 id fabLogout
+id fabMessages
 id fabProfile
+id fabSearch
 id fabTick
 id fade
 id feed_container
@@ -1926,10 +1931,12 @@ layout activity_feed_messaging
 layout activity_login
 layout activity_new_user
 layout activity_password_reset
+layout activity_personal_landing
 layout activity_post_creator
 layout activity_post_view
 layout activity_profile_messaging
 layout activity_profile_post
+layout activity_search
 layout activity_topic_cards
 layout activity_user_profile
 layout custom_dialog

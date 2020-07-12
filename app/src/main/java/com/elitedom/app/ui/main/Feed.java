@@ -27,6 +27,7 @@ import com.elitedom.app.R;
 import com.elitedom.app.ui.cards.TopicCards;
 import com.elitedom.app.ui.login.LoginActivity;
 import com.elitedom.app.ui.profile.UserProfile;
+import com.elitedom.app.ui.search.Search;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -86,17 +87,22 @@ public class Feed extends AppCompatActivity {
         FloatingActionButton fab = findViewById(R.id.fab);
         FloatingActionButton fabLogout = findViewById(R.id.fabLogout);
         FloatingActionButton fabProfile = findViewById(R.id.fabProfile);
+        FloatingActionButton fabMessage = findViewById(R.id.fabMessages);
+        FloatingActionButton fabSearch = findViewById(R.id.fabSearch);
 
         fab.setOnClickListener(v -> {
             rotateFab(v, !isRotated);
             if (isRotated) {
                 fabLogout.animate().translationY(-getResources().getDimension(R.dimen.standard_65));
                 fabProfile.animate().translationY(-getResources().getDimension(R.dimen.standard_115));
+                fabMessage.animate().translationY(-getResources().getDimension(R.dimen.standard_165));
+                fabSearch.animate().translationY(-getResources().getDimension(R.dimen.standard_215));
             } else {
                 fabLogout.animate().translationY(0);
                 fabProfile.animate().translationY(0);
+                fabMessage.animate().translationY(0);
+                fabSearch.animate().translationY(0);
             }
-
         });
 
         swipeRefreshLayout = findViewById(R.id.swipe_refresh);
@@ -164,6 +170,18 @@ public class Feed extends AppCompatActivity {
         startActivity(new Intent(Feed.this, LoginActivity.class));
         setResult(RESULT_OK);
         finish();
+    }
+
+    public void searchActivity(View view) {
+        startActivity(new Intent(this, Search.class));
+        setResult(Activity.RESULT_OK);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+
+    public void personalMessages(View view) {
+        startActivity(new Intent(this, Search.class));
+        setResult(Activity.RESULT_OK);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
     private void runLayoutAnimation(final RecyclerView recyclerView) {
