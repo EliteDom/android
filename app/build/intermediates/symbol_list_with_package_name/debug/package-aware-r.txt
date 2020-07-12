@@ -1617,6 +1617,8 @@ id expand_activities_button
 id expanded_menu
 id fab
 id fabDecline
+id fabLogout
+id fabProfile
 id fabTick
 id fade
 id feed_container
@@ -1666,7 +1668,6 @@ id listMode
 id list_item
 id login
 id login_layout
-id main
 id masked
 id message
 id messageList
@@ -1733,7 +1734,6 @@ id post_text
 id post_view
 id predictor_score
 id predictor_text
-id profile
 id profile_data
 id profile_image
 id progress_circular

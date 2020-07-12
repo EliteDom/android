@@ -1,5 +1,7 @@
 package com.elitedom.app.ui.main;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -13,10 +15,10 @@ import android.view.ViewOutlineProvider;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
-import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -25,6 +27,7 @@ import com.elitedom.app.R;
 import com.elitedom.app.ui.cards.TopicCards;
 import com.elitedom.app.ui.login.LoginActivity;
 import com.elitedom.app.ui.profile.UserProfile;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -41,6 +44,7 @@ public class Feed extends AppCompatActivity {
     private FirebaseFirestore mDatabase;
     private PreviewAdapter mAdapter;
     private RecyclerView mRecycler;
+    private boolean isRotated;
     private Uri localUri;
 
     @Override
@@ -48,7 +52,7 @@ public class Feed extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
 
-        RelativeLayout relativeLayout = findViewById(R.id.feed_container);
+        ConstraintLayout constraintLayout = findViewById(R.id.feed_container);
         mDatabase = FirebaseFirestore.getInstance();
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
@@ -60,7 +64,7 @@ public class Feed extends AppCompatActivity {
         getSupportActionBar().setCustomView(R.layout.actionbar_mainfeed);
 //        Objects.requireNonNull(getSupportActionBar()).hide();
 
-        AnimationDrawable animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
+        AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
         animationDrawable.setEnterFadeDuration(2000);
         animationDrawable.setExitFadeDuration(4000);
         animationDrawable.start();
@@ -75,7 +79,25 @@ public class Feed extends AppCompatActivity {
         mAdapter = new PreviewAdapter(this, mTitleData, "post_expansion", 1);
         mRecycler.setAdapter(mAdapter);
         mTopicNames = getIntent().getStringArrayListExtra("cards");
-        if (getIntent().getStringExtra("image") != null) localUri = Uri.parse(getIntent().getStringExtra("image"));
+        if (getIntent().getStringExtra("image") != null)
+            localUri = Uri.parse(getIntent().getStringExtra("image"));
+
+        isRotated = false;
+        FloatingActionButton fab = findViewById(R.id.fab);
+        FloatingActionButton fabLogout = findViewById(R.id.fabLogout);
+        FloatingActionButton fabProfile = findViewById(R.id.fabProfile);
+
+        fab.setOnClickListener(v -> {
+            rotateFab(v, !isRotated);
+            if (isRotated) {
+                fabLogout.animate().translationY(-getResources().getDimension(R.dimen.standard_65));
+                fabProfile.animate().translationY(-getResources().getDimension(R.dimen.standard_115));
+            } else {
+                fabLogout.animate().translationY(0);
+                fabProfile.animate().translationY(0);
+            }
+
+        });
 
         swipeRefreshLayout = findViewById(R.id.swipe_refresh);
         swipeRefreshLayout.setOnRefreshListener(this::initializeData);
@@ -87,8 +109,7 @@ public class Feed extends AppCompatActivity {
         if (localUri != null) {
             mTitleData.add(new PreviewCard(localUri));
             loadPosts();
-        }
-        else
+        } else
             mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
                     .get()
                     .addOnCompleteListener(task -> {
@@ -153,5 +174,17 @@ public class Feed extends AppCompatActivity {
         recyclerView.setLayoutAnimation(controller);
         Objects.requireNonNull(recyclerView.getAdapter()).notifyDataSetChanged();
         recyclerView.scheduleLayoutAnimation();
+    }
+
+    private void rotateFab(final View v, boolean rotate) {
+        v.animate().setDuration(200)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                    }
+                })
+                .rotation(rotate ? 135f : 0f);
+        isRotated = rotate;
     }
 }
