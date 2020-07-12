@@ -150,7 +150,7 @@ public class PostCreator extends AppCompatActivity {
 
     public void submitPost(View view) {
         if (body.getText().toString().length() > 0 && title.getText().toString().length() > 0) {
-            new MaterialAlertDialogBuilder(this)
+            new MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
                     .setTitle("Pick a Dorm!")
                     .setItems(getStringArray(submitDorms), (dialog, which) -> {
                         supportFinishAfterTransition();
