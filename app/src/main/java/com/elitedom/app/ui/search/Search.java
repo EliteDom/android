@@ -1,9 +1,11 @@
 package com.elitedom.app.ui.search;
 
 import android.graphics.drawable.AnimationDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewOutlineProvider;
+import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -11,15 +13,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.elitedom.app.R;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Search extends AppCompatActivity {
 
-    private RecyclerView mRecyclerView;
+    private Map<String, Uri> dorms;
     private ArrayList<Result> resultArrayList;
+    private FirebaseFirestore mDatabase;
     private ResultAdapter mAdapter;
+    private EditText mQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,19 +44,37 @@ public class Search extends AppCompatActivity {
         animationDrawable.start();
 
         resultArrayList = new ArrayList<>();
+        dorms = new HashMap<>();
         mAdapter = new ResultAdapter(this, resultArrayList);
+        mDatabase = FirebaseFirestore.getInstance();
+        mQuery = findViewById(R.id.search_text);
 
-        mRecyclerView = findViewById(R.id.recyclerView);
+        RecyclerView mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
         mRecyclerView.setClipToOutline(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mAdapter);
+
         initializeData();
     }
 
     private void initializeData() {
+        mDatabase.collection("dorms")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult()))
+                            dorms.put(document.getId(), Uri.parse((String) document.get("image")));
+                    }
+                });
     }
 
     public void triggerSearch(View view) {
+        String query = mQuery.getText().toString();
+        resultArrayList.clear();
+        for (Map.Entry<String, Uri> dorm : dorms.entrySet())
+            if (dorm.getKey().toLowerCase().contains(query.toLowerCase()))
+                resultArrayList.add(new Result(dorm.getKey(), dorm.getValue()));
+        mAdapter.notifyDataSetChanged();
     }
 }

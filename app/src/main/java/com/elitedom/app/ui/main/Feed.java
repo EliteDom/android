@@ -44,6 +44,7 @@ public class Feed extends AppCompatActivity {
     private ArrayList<PreviewCard> mTitleData;
     private ArrayList<String> mTopicNames;
     private FirebaseFirestore mDatabase;
+    private FloatingActionButton fab;
     private PreviewAdapter mAdapter;
     private RecyclerView mRecycler;
     private boolean isRotated;
@@ -85,30 +86,31 @@ public class Feed extends AppCompatActivity {
             localUri = Uri.parse(getIntent().getStringExtra("image"));
 
         isRotated = false;
-        FloatingActionButton fab = findViewById(R.id.fab);
-        FloatingActionButton fabLogout = findViewById(R.id.fabLogout);
-        FloatingActionButton fabProfile = findViewById(R.id.fabProfile);
-        FloatingActionButton fabMessage = findViewById(R.id.fabMessages);
-        FloatingActionButton fabSearch = findViewById(R.id.fabSearch);
-
-        fab.setOnClickListener(v -> {
-            rotateFab(v, !isRotated);
-            if (isRotated) {
-                fabLogout.animate().translationY(-getResources().getDimension(R.dimen.standard_65));
-                fabProfile.animate().translationY(-getResources().getDimension(R.dimen.standard_115));
-                fabMessage.animate().translationY(-getResources().getDimension(R.dimen.standard_165));
-                fabSearch.animate().translationY(-getResources().getDimension(R.dimen.standard_215));
-            } else {
-                fabLogout.animate().translationY(0);
-                fabProfile.animate().translationY(0);
-                fabMessage.animate().translationY(0);
-                fabSearch.animate().translationY(0);
-            }
-        });
+        fab = findViewById(R.id.fab);
+        fab.setOnClickListener(this::rotateSequence);
 
         swipeRefreshLayout = findViewById(R.id.swipe_refresh);
         swipeRefreshLayout.setOnRefreshListener(this::initializeData);
         initializeData();
+    }
+
+    private void rotateSequence(View v) {
+        FloatingActionButton fabLogout = findViewById(R.id.fabLogout);
+        FloatingActionButton fabProfile = findViewById(R.id.fabProfile);
+        FloatingActionButton fabMessage = findViewById(R.id.fabMessages);
+        FloatingActionButton fabSearch = findViewById(R.id.fabSearch);
+        rotateFab(v, !isRotated);
+        if (isRotated) {
+            fabLogout.animate().translationY(-getResources().getDimension(R.dimen.standard_65));
+            fabProfile.animate().translationY(-getResources().getDimension(R.dimen.standard_115));
+            fabMessage.animate().translationY(-getResources().getDimension(R.dimen.standard_165));
+            fabSearch.animate().translationY(-getResources().getDimension(R.dimen.standard_215));
+        } else {
+            fabLogout.animate().translationY(0);
+            fabProfile.animate().translationY(0);
+            fabMessage.animate().translationY(0);
+            fabSearch.animate().translationY(0);
+        }
     }
 
     private void initializeData() {
@@ -158,6 +160,7 @@ public class Feed extends AppCompatActivity {
     public void profileUI(View view) {
         startActivity(new Intent(this, UserProfile.class));
         setResult(Activity.RESULT_OK);
+        rotateSequence(fab);
     }
 
     public void topicUI(View view) {
@@ -176,12 +179,14 @@ public class Feed extends AppCompatActivity {
     public void searchActivity(View view) {
         startActivity(new Intent(this, Search.class));
         setResult(Activity.RESULT_OK);
+        rotateSequence(fab);
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
     public void personalMessages(View view) {
         startActivity(new Intent(this, PersonalLanding.class));
         setResult(Activity.RESULT_OK);
+        rotateSequence(fab);
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
