@@ -1707,6 +1707,7 @@ id mtrl_picker_title_text
 id multiple_received
 id multiple_sent
 id multiply
+id name
 id navigation_header_container
 id never
 id new_user_layout
@@ -1746,6 +1747,7 @@ id progress_horizontal
 id radio
 id recyclerView
 id reset_layout
+id result_card
 id right
 id right_icon
 id right_side
@@ -1761,6 +1763,7 @@ id scrollView
 id scrollable
 id search_badge
 id search_bar
+id search_box
 id search_button
 id search_close_btn
 id search_edit_frame
@@ -1768,6 +1771,7 @@ id search_go_btn
 id search_mag_icon
 id search_plate
 id search_src_text
+id search_text
 id search_voice_btn
 id select_dialog_listview
 id selected
@@ -1962,6 +1966,7 @@ layout item_message_received
 layout item_message_sent
 layout item_post_creator
 layout item_post_preview
+layout item_search_result
 layout item_topic_card
 layout mtrl_alert_dialog
 layout mtrl_alert_dialog_actions
@@ -2147,6 +2152,7 @@ string project_id
 string prompt_email
 string prompt_password
 string reset_password
+string search
 string search_menu_title
 string status_bar_notification_info_overflow
 string subtitle_detail_text

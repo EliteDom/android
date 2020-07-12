@@ -26,6 +26,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.elitedom.app.R;
 import com.elitedom.app.ui.cards.TopicCards;
 import com.elitedom.app.ui.login.LoginActivity;
+import com.elitedom.app.ui.messaging.PersonalLanding;
 import com.elitedom.app.ui.profile.UserProfile;
 import com.elitedom.app.ui.search.Search;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -179,7 +180,7 @@ public class Feed extends AppCompatActivity {
     }
 
     public void personalMessages(View view) {
-        startActivity(new Intent(this, Search.class));
+        startActivity(new Intent(this, PersonalLanding.class));
         setResult(Activity.RESULT_OK);
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
