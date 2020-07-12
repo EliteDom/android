@@ -77,9 +77,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/text_url_prompt"
-                app:hintTextColor="@color/colorAccent"
-                app:boxStrokeColor="@color/colorAccent"
+                android:textColorHint="@color/colorAccent"
                 android:textCursorDrawable="@color/colorAccent"
+                app:boxStrokeColor="@color/colorAccent"
+                app:hintTextColor="@color/colorAccent"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginBottom="4dp"
                 app:layout_constraintBottom_toBottomOf="@id/postImage"
                 app:layout_constraintEnd_toEndOf="@id/postImage"
                 app:layout_constraintStart_toStartOf="@id/postImage">
@@ -88,8 +91,6 @@
                     android:id="@+id/image_url"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="8dp"
-                    android:layout_marginBottom="4dp"
                     android:clickable="false"
                     android:importantForAutofill="no"
                     android:inputType="textUri"
@@ -119,9 +120,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/post_body"
-                    app:hintTextColor="@color/colorAccent"
-                    app:boxStrokeColor="@color/colorAccent"
                     android:textCursorDrawable="@color/colorAccent"
+                    app:boxStrokeColor="@color/colorAccent"
+                    app:hintTextColor="@color/colorAccent"
                     app:layout_constraintBottom_toBottomOf="parent">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -133,8 +134,8 @@
                         android:inputType="textMultiLine|textCapSentences"
                         android:scrollbars="vertical"
                         android:textColor="@color/black"
-                        android:textStyle="normal"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="normal" />
                 </com.google.android.material.textfield.TextInputLayout>
             </ScrollView>
         </androidx.constraintlayout.widget.ConstraintLayout>
