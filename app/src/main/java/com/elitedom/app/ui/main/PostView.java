@@ -198,4 +198,14 @@ public class PostView extends AppCompatActivity {
                 .set(data, SetOptions.merge());
         appreciations -= 1;
     }
+
+    public void sharePost(View view) {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, mPostText.getText().toString());
+            sendIntent.setType("text/plain");
+
+            Intent shareIntent = Intent.createChooser(sendIntent, null);
+            startActivity(shareIntent);
+    }
 }
