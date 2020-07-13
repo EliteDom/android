@@ -1,13 +1,16 @@
 package com.elitedom.app.ui.dorms;
 
 import android.content.Context;
+import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -37,6 +40,8 @@ public class DormProfile extends AppCompatActivity {
     private RecyclerView mRecycler;
     private String dorm, imageUri;
     private ImageView dormBanner;
+    private ImageButton mFollow;
+    private int follow_status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,11 +58,12 @@ public class DormProfile extends AppCompatActivity {
         animationDrawable.start();
 
         dorm = getIntent().getStringExtra("dorm");
-        imageUri = getIntent().getStringExtra("image");
+        imageUri = getIntent().getStringExtra("im=-age");
         mDormTitle = findViewById(R.id.title);
         mDormAbout = findViewById(R.id.about_text);
         mDatabase = FirebaseFirestore.getInstance();
         mNoPosts = findViewById(R.id.no_posts);
+        mFollow = findViewById(R.id.follow_button);
         dormBanner = findViewById(R.id.dormBanner);
         dormBanner.setClipToOutline(true);
 
@@ -76,6 +82,7 @@ public class DormProfile extends AppCompatActivity {
     }
 
     private void initializeData() {
+        follow_status = 0;
         Glide.with(this)
                 .load(imageUri)
                 .into(dormBanner);
@@ -118,5 +125,23 @@ public class DormProfile extends AppCompatActivity {
         recyclerView.setLayoutAnimation(controller);
         Objects.requireNonNull(recyclerView.getAdapter()).notifyDataSetChanged();
         recyclerView.scheduleLayoutAnimation();
+    }
+
+    public void followButton(View view) {
+        if (follow_status == 1) {
+            AnimatedVectorDrawable animatedVectorDrawable =
+                    (AnimatedVectorDrawable) getDrawable(R.drawable.bookmark_out_24dp);
+            mFollow.setImageDrawable(animatedVectorDrawable);
+            assert animatedVectorDrawable != null;
+            animatedVectorDrawable.start();
+            follow_status = 0;
+        } else {
+            AnimatedVectorDrawable animatedVectorDrawable =
+                    (AnimatedVectorDrawable) getDrawable(R.drawable.bookmark_in_24dp);
+            mFollow.setImageDrawable(animatedVectorDrawable);
+            assert animatedVectorDrawable != null;
+            animatedVectorDrawable.start();
+            follow_status = 1;
+        }
     }
 }

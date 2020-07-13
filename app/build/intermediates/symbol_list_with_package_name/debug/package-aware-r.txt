@@ -1646,6 +1646,7 @@ id first_name
 id fitToContents
 id fixed
 id follow_button
+id follow_card
 id forever
 id forgot_password
 id fragment_container_view_tag
