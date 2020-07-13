@@ -3,14 +3,11 @@ package com.elitedom.app.ui.profile;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewOutlineProvider;
-import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.RelativeLayout;
@@ -76,10 +73,10 @@ public class UserProfile extends AppCompatActivity {
             imageView.setClickable(false);
         }
 
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        Objects.requireNonNull(getSupportActionBar()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
         AnimationDrawable animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
@@ -96,7 +93,6 @@ public class UserProfile extends AppCompatActivity {
         mAdapter = new PreviewAdapter(this, mTitleData, "post_expansion", 2);
         mAdapter.sendContext(imageView, username, findViewById(R.id.user_profile_holder));
         mRecycler.setAdapter(mAdapter);
-
 
         swipeRefreshLayout = findViewById(R.id.swipe_refresh);
         swipeRefreshLayout.setOnRefreshListener(this::initializeData);
@@ -146,13 +142,13 @@ public class UserProfile extends AppCompatActivity {
                                             else
                                                 mTitleData.add(new PreviewCard((String) document1.get("title"), (String) document1.get("postText"), document1.get("author") + " | Authored " + document1.get("timestamp") + " ago", document1.getId(), (String) document.get("dormName")));
                                         }
+                                        mAdapter.notifyDataSetChanged();
+                                        if (mAdapter.getItemCount() > 1)
+                                            runLayoutAnimation(mRecycler);
+                                        else mNoPosts.animate().alpha(1.0f);
+                                        swipeRefreshLayout.setRefreshing(false);
                                     });
                         }
-                    mAdapter.notifyDataSetChanged();
-                    if (mAdapter.getItemCount() > 1)
-                        runLayoutAnimation(mRecycler);
-                    else mNoPosts.animate().alpha(1.0f);
-                    swipeRefreshLayout.setRefreshing(false);
                 });
     }
 
@@ -175,13 +171,11 @@ public class UserProfile extends AppCompatActivity {
     public void newProfileImage(View view) {
         Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
         getIntent.setType("image/*");
-
         Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         pickIntent.setType("image/*");
 
         Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
         chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
-
         startActivityForResult(chooserIntent, SELECT_PICTURE);
     }
 

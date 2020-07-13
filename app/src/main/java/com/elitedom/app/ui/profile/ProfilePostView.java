@@ -8,7 +8,6 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -61,8 +60,9 @@ public class ProfilePostView extends AppCompatActivity {
         mDisliked = findViewById(R.id.disliked);
         mDatabase = FirebaseFirestore.getInstance();
 
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+//        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
         AnimationDrawable animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
@@ -103,7 +103,8 @@ public class ProfilePostView extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
-                        if (document != null && document.exists()) appreciations = (long) document.get("apprs");
+                        if (document != null && document.exists())
+                            appreciations = (long) document.get("apprs");
                     }
                 });
 
@@ -117,8 +118,7 @@ public class ProfilePostView extends AppCompatActivity {
                             if (status == 0) {
                                 dislike_status = 1;
                                 mDisliked.setImageResource(R.drawable.ic_thumb_down_black_24dp);
-                            }
-                            else if (status == 1) {
+                            } else if (status == 1) {
                                 like_status = 1;
                                 mLiked.setImageResource(R.drawable.ic_thumb_up_black_24dp);
                             }
@@ -228,5 +228,15 @@ public class ProfilePostView extends AppCompatActivity {
         mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).collection("postActions").document(mPostTitle.getContentDescription().toString())
                 .set(data, SetOptions.merge());
         appreciations -= 1;
+    }
+
+    public void sharePost(View view) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, mPostText.getText().toString());
+        sendIntent.setType("text/plain");
+
+        Intent shareIntent = Intent.createChooser(sendIntent, null);
+        startActivity(shareIntent);
     }
 }

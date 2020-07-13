@@ -637,6 +637,7 @@ attr subtitleTextAppearance
 attr subtitleTextColor
 attr subtitleTextStyle
 attr suggestionRowLayout
+attr swipeRefreshLayoutProgressSpinnerBackgroundColor
 attr switchMinWidth
 attr switchPadding
 attr switchStyle
@@ -1279,6 +1280,8 @@ dimen notification_subtext_size
 dimen notification_top_pad
 dimen notification_top_pad_large_text
 dimen standard_115
+dimen standard_165
+dimen standard_215
 dimen standard_65
 dimen test_mtrl_calendar_day_cornerSize
 dimen tooltip_corner_radius
@@ -1377,6 +1380,8 @@ drawable abc_textfield_search_material
 drawable abc_vector_test
 drawable avd_hide_password
 drawable avd_show_password
+drawable bookmark_in_24dp
+drawable bookmark_out_24dp
 drawable btn_checkbox_checked_mtrl
 drawable btn_checkbox_checked_to_unchecked_mtrl_animation
 drawable btn_checkbox_unchecked_mtrl
@@ -1421,6 +1426,8 @@ drawable gradient_3
 drawable gradient_list
 drawable ic_account_circle_white_24dp
 drawable ic_add_black_24dp
+drawable ic_bookmark_black_24dp
+drawable ic_bookmark_border_black_24dp
 drawable ic_calendar_black_24dp
 drawable ic_chat_white_24dp
 drawable ic_clear_black_18dp
@@ -1429,6 +1436,7 @@ drawable ic_done_black_18dp
 drawable ic_done_outline_white_24dp
 drawable ic_edit_black_24dp
 drawable ic_exit_to_app_white_24dp
+drawable ic_fact_check_black_24dp
 drawable ic_keyboard_arrow_left_black_24dp
 drawable ic_keyboard_arrow_right_black_24dp
 drawable ic_keyboard_arrow_right_white_24dp
@@ -1441,6 +1449,7 @@ drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
 drawable ic_reset
+drawable ic_search_black_24dp
 drawable ic_send_black_24dp
 drawable ic_share_white_24dp
 drawable ic_thumb_down_black_24dp
@@ -1487,6 +1496,9 @@ id SHIFT
 id SYM
 id TOP_END
 id TOP_START
+id about_card
+id about_text
+id about_title
 id accessibility_action_clickable_span
 id accessibility_custom_action_0
 id accessibility_custom_action_1
@@ -1599,6 +1611,8 @@ id dimensions
 id direct
 id disableHome
 id disliked
+id dormBanner
+id dorm_layout
 id dropdown_menu
 id edit_query
 id editor
@@ -1616,6 +1630,10 @@ id expand_activities_button
 id expanded_menu
 id fab
 id fabDecline
+id fabLogout
+id fabMessages
+id fabProfile
+id fabSearch
 id fabTick
 id fade
 id feed_container
@@ -1627,6 +1645,8 @@ id filter_chip
 id first_name
 id fitToContents
 id fixed
+id follow_button
+id follow_card
 id forever
 id forgot_password
 id fragment_container_view_tag
@@ -1665,7 +1685,6 @@ id listMode
 id list_item
 id login
 id login_layout
-id main
 id masked
 id message
 id messageList
@@ -1700,12 +1719,14 @@ id mtrl_picker_title_text
 id multiple_received
 id multiple_sent
 id multiply
+id name
 id navigation_header_container
 id never
 id new_user_layout
 id noScroll
 id no_messages
 id no_posts
+id no_results
 id none
 id normal
 id notification_background
@@ -1714,6 +1735,8 @@ id notification_main_column_container
 id off
 id on
 id outline
+id outlinedTextField
+id outlined_image_url
 id packed
 id parallax
 id parent
@@ -1730,14 +1753,15 @@ id post_text
 id post_view
 id predictor_score
 id predictor_text
-id profile
 id profile_data
 id profile_image
 id progress_circular
 id progress_horizontal
+id quiz_button
 id radio
 id recyclerView
 id reset_layout
+id result_card
 id right
 id right_icon
 id right_side
@@ -1753,6 +1777,7 @@ id scrollView
 id scrollable
 id search_badge
 id search_bar
+id search_box
 id search_button
 id search_close_btn
 id search_edit_frame
@@ -1760,6 +1785,7 @@ id search_go_btn
 id search_mag_icon
 id search_plate
 id search_src_text
+id search_text
 id search_voice_btn
 id select_dialog_listview
 id selected
@@ -1918,15 +1944,18 @@ layout abc_select_dialog_material
 layout abc_tooltip
 layout actionbar_mainfeed
 layout actionbar_topic_cards
+layout activity_dorm_profile
 layout activity_feed
 layout activity_feed_messaging
 layout activity_login
 layout activity_new_user
 layout activity_password_reset
+layout activity_personal_landing
 layout activity_post_creator
 layout activity_post_view
 layout activity_profile_messaging
 layout activity_profile_post
+layout activity_search
 layout activity_topic_cards
 layout activity_user_profile
 layout custom_dialog
@@ -1952,6 +1981,7 @@ layout item_message_received
 layout item_message_sent
 layout item_post_creator
 layout item_post_preview
+layout item_search_result
 layout item_topic_card
 layout mtrl_alert_dialog
 layout mtrl_alert_dialog_actions
@@ -2033,6 +2063,7 @@ string abc_searchview_description_voice
 string abc_shareactionprovider_share_with
 string abc_shareactionprovider_share_with_application
 string abc_toolbar_collapse_description
+string about
 string action_sign_in
 string action_sign_in_short
 string app_name
@@ -2068,6 +2099,8 @@ string default_web_client_id
 string elite_name
 string elitedom
 string empty_chatroom
+string empty_dorm
+string empty_search
 string error_icon_content_description
 string exposed_dropdown_menu_content_description
 string fab_transformation_scrim_behavior
@@ -2137,6 +2170,7 @@ string project_id
 string prompt_email
 string prompt_password
 string reset_password
+string search
 string search_menu_title
 string status_bar_notification_info_overflow
 string subtitle_detail_text
@@ -2599,6 +2633,7 @@ style Theme_MaterialComponents_Light_NoActionBar
 style Theme_MaterialComponents_Light_NoActionBar_Bridge
 style Theme_MaterialComponents_NoActionBar
 style Theme_MaterialComponents_NoActionBar_Bridge
+style ThemeOverlay_App_Snackbar
 style ThemeOverlay_AppCompat
 style ThemeOverlay_AppCompat_ActionBar
 style ThemeOverlay_AppCompat_Dark
@@ -2644,6 +2679,7 @@ style ThemeOverlay_MaterialComponents_TextInputEditText_OutlinedBox
 style ThemeOverlay_MaterialComponents_TextInputEditText_OutlinedBox_Dense
 style ThemeOverlay_MaterialComponents_Toolbar_Primary
 style ThemeOverlay_MaterialComponents_Toolbar_Surface
+style Widget_App_Snackbar
 style Widget_AppCompat_ActionBar
 style Widget_AppCompat_ActionBar_Solid
 style Widget_AppCompat_ActionBar_TabBar
@@ -2906,6 +2942,7 @@ styleable SnackbarLayout android_maxWidth actionTextColorAlpha animationMode bac
 styleable Spinner android_entries android_popupBackground android_prompt android_dropDownWidth popupTheme
 styleable StateListDrawable android_dither android_visible android_variablePadding android_constantSize android_enterFadeDuration android_exitFadeDuration
 styleable StateListDrawableItem android_drawable
+styleable SwipeRefreshLayout swipeRefreshLayoutProgressSpinnerBackgroundColor
 styleable SwitchCompat android_textOn android_textOff android_thumb showText splitTrack switchMinWidth switchPadding switchTextAppearance thumbTextPadding thumbTint thumbTintMode track trackTint trackTintMode
 styleable SwitchMaterial useMaterialThemeColors
 styleable TabItem android_icon android_layout android_text
