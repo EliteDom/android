@@ -67,7 +67,12 @@ class ResultAdapter extends RecyclerView.Adapter<com.elitedom.app.ui.search.Resu
             Glide.with(mContext)
                     .load(currentResult.getImageResource())
                     .into(icon);
-            mCard.setOnClickListener(v -> mContext.startActivity(new Intent(mContext, DormProfile.class).putExtra("name", currentResult.getName())));
+            mCard.setOnClickListener(v -> {
+                Intent intent = new Intent(mContext, DormProfile.class);
+                intent.putExtra("dorm", currentResult.getName());
+                intent.putExtra("image", currentResult.getImageResource());
+                mContext.startActivity(intent);
+            });
         }
     }
 }

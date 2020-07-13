@@ -24,24 +24,24 @@
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/layout/activity_feed.xml"
     },
     {
-        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_ic_thumb_up_liked_24dp.xml.flat",
-        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/ic_thumb_up_liked_24dp.xml"
-    },
-    {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable-v24_ic_launcher_foreground.xml.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable-v24/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_ic_thumb_up_liked_24dp.xml.flat",
+        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/ic_thumb_up_liked_24dp.xml"
     },
     {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_ic_thumb_up_unliked_24dp.xml.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/ic_thumb_up_unliked_24dp.xml"
     },
     {
-        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/anim_atg.xml.flat",
-        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/anim/atg.xml"
-    },
-    {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_ic_done_black_18dp.xml.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/ic_done_black_18dp.xml"
+    },
+    {
+        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/anim_atg.xml.flat",
+        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/anim/atg.xml"
     },
     {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/layout_activity_profile_post.xml.flat",
@@ -60,12 +60,20 @@
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/layout/activity_new_user.xml"
     },
     {
+        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_bookmark_in_24dp.xml.flat",
+        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/bookmark_in_24dp.xml"
+    },
+    {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/layout_activity_dorm_profile.xml.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/layout/activity_dorm_profile.xml"
     },
     {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/layout_activity_post_view.xml.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/layout/activity_post_view.xml"
+    },
+    {
+        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_ic_fact_check_black_24dp.xml.flat",
+        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/ic_fact_check_black_24dp.xml"
     },
     {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/layout_item_topic_card.xml.flat",
@@ -184,6 +192,10 @@
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/ic_thumb_down_black_24dp.xml"
     },
     {
+        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_bookmark_out_24dp.xml.flat",
+        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/bookmark_out_24dp.xml"
+    },
+    {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/layout_activity_personal_landing.xml.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/layout/activity_personal_landing.xml"
     },
@@ -240,6 +252,10 @@
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/layout/item_message_multiple_received.xml"
     },
     {
+        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_ic_bookmark_border_black_24dp.xml.flat",
+        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/ic_bookmark_border_black_24dp.xml"
+    },
+    {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/anim_slide_out_left.xml.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/anim/slide_out_left.xml"
     },
@@ -278,6 +294,10 @@
     {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/layout_activity_login.xml.flat",
         "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/layout/activity_login.xml"
+    },
+    {
+        "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_ic_bookmark_black_24dp.xml.flat",
+        "source": "/home/jinen/AndroidStudioProjects/Elitedom/app/src/main/res/drawable/ic_bookmark_black_24dp.xml"
     },
     {
         "merged": "/home/jinen/AndroidStudioProjects/Elitedom/app/build/intermediates/res/merged/debug/drawable_ic_account_circle_white_24dp.xml.flat",

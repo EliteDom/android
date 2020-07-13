@@ -1380,6 +1380,8 @@ drawable abc_textfield_search_material
 drawable abc_vector_test
 drawable avd_hide_password
 drawable avd_show_password
+drawable bookmark_in_24dp
+drawable bookmark_out_24dp
 drawable btn_checkbox_checked_mtrl
 drawable btn_checkbox_checked_to_unchecked_mtrl_animation
 drawable btn_checkbox_unchecked_mtrl
@@ -1424,6 +1426,8 @@ drawable gradient_3
 drawable gradient_list
 drawable ic_account_circle_white_24dp
 drawable ic_add_black_24dp
+drawable ic_bookmark_black_24dp
+drawable ic_bookmark_border_black_24dp
 drawable ic_calendar_black_24dp
 drawable ic_chat_white_24dp
 drawable ic_clear_black_18dp
@@ -1432,6 +1436,7 @@ drawable ic_done_black_18dp
 drawable ic_done_outline_white_24dp
 drawable ic_edit_black_24dp
 drawable ic_exit_to_app_white_24dp
+drawable ic_fact_check_black_24dp
 drawable ic_keyboard_arrow_left_black_24dp
 drawable ic_keyboard_arrow_right_black_24dp
 drawable ic_keyboard_arrow_right_white_24dp
@@ -1491,7 +1496,9 @@ id SHIFT
 id SYM
 id TOP_END
 id TOP_START
-id about
+id about_card
+id about_text
+id about_title
 id accessibility_action_clickable_span
 id accessibility_custom_action_0
 id accessibility_custom_action_1
@@ -1604,7 +1611,7 @@ id dimensions
 id direct
 id disableHome
 id disliked
-id dormLabel
+id dormBanner
 id dorm_layout
 id dropdown_menu
 id edit_query
@@ -1638,6 +1645,7 @@ id filter_chip
 id first_name
 id fitToContents
 id fixed
+id follow_button
 id forever
 id forgot_password
 id fragment_container_view_tag
@@ -1748,6 +1756,7 @@ id profile_data
 id profile_image
 id progress_circular
 id progress_horizontal
+id quiz_button
 id radio
 id recyclerView
 id reset_layout
@@ -2053,6 +2062,7 @@ string abc_searchview_description_voice
 string abc_shareactionprovider_share_with
 string abc_shareactionprovider_share_with_application
 string abc_toolbar_collapse_description
+string about
 string action_sign_in
 string action_sign_in_short
 string app_name
@@ -2088,6 +2098,7 @@ string default_web_client_id
 string elite_name
 string elitedom
 string empty_chatroom
+string empty_dorm
 string empty_search
 string error_icon_content_description
 string exposed_dropdown_menu_content_description
