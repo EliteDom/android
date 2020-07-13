@@ -37,12 +37,12 @@ import java.util.UUID;
 public class PostCreator extends AppCompatActivity {
 
     private static final int SELECT_PICTURE = 1;
-    private ImageView postImage;
+    private EditText title, body, imageUri;
     private FirebaseFirestore mDatabase;
     private StorageReference mStorage;
     private Uri localUri, downloadUri;
     private ArrayList submitDorms;
-    private EditText title, body, imageUri;
+    private ImageView postImage;
     private boolean isRotated;
 
     @Override

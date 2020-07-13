@@ -24,12 +24,17 @@ import com.bumptech.glide.Glide;
 import com.elitedom.app.R;
 import com.elitedom.app.ui.main.PreviewAdapter;
 import com.elitedom.app.ui.main.PreviewCard;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
+@SuppressWarnings("rawtypes")
 public class DormProfile extends AppCompatActivity {
 
     private TextView mNoPosts, mDormTitle, mDormAbout;
@@ -37,6 +42,7 @@ public class DormProfile extends AppCompatActivity {
     private ArrayList<PreviewCard> mTitleData;
     private FirebaseFirestore mDatabase;
     private PreviewAdapter mAdapter;
+    private ArrayList followedDorms;
     private RecyclerView mRecycler;
     private String dorm, imageUri;
     private ImageView dormBanner;
@@ -73,6 +79,7 @@ public class DormProfile extends AppCompatActivity {
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
 
         mTitleData = new ArrayList<>();
+        followedDorms = new ArrayList<>();
         mAdapter = new PreviewAdapter(this, mTitleData, "post_expansion", 1);
         mRecycler.setAdapter(mAdapter);
 
@@ -90,9 +97,28 @@ public class DormProfile extends AppCompatActivity {
         mDatabase.collection("dorms").document(dorm)
                 .get()
                 .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) mDormAbout.setText((String) Objects.requireNonNull(task.getResult()).get("description"));
+                    if (task.isSuccessful())
+                        mDormAbout.setText((String) Objects.requireNonNull(task.getResult()).get("description"));
                 });
 
+        mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document != null && document.exists())
+                            followedDorms = (ArrayList) document.get("followedDorms");
+                        else followedDorms = new ArrayList<>();
+                        assert followedDorms != null;
+                        if (followedDorms.contains(dorm)) {
+                            follow_status = 1;
+                            mFollow.setImageResource(R.drawable.ic_bookmark_black_24dp);
+                        } else {
+                            follow_status = 0;
+                            mFollow.setImageResource(R.drawable.ic_bookmark_border_black_24dp);
+                        }
+                    }
+                });
         loadPosts();
     }
 
@@ -134,14 +160,29 @@ public class DormProfile extends AppCompatActivity {
             mFollow.setImageDrawable(animatedVectorDrawable);
             assert animatedVectorDrawable != null;
             animatedVectorDrawable.start();
+            followedDorms.remove(dorm);
             follow_status = 0;
+            Snackbar.make(mRecycler, "Unfollowed " + dorm + "!", Snackbar.LENGTH_LONG)
+                    .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
+                    .show();
         } else {
             AnimatedVectorDrawable animatedVectorDrawable =
                     (AnimatedVectorDrawable) getDrawable(R.drawable.bookmark_in_24dp);
             mFollow.setImageDrawable(animatedVectorDrawable);
             assert animatedVectorDrawable != null;
             animatedVectorDrawable.start();
+            followedDorms.add(dorm);
             follow_status = 1;
+            Snackbar.make(mRecycler, "Followed " + dorm + "!", Snackbar.LENGTH_LONG)
+                    .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
+                    .show();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
+                .update("followedDorms", followedDorms);
     }
 }
