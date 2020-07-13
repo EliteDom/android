@@ -58,7 +58,7 @@ public class DormProfile extends AppCompatActivity {
         animationDrawable.start();
 
         dorm = getIntent().getStringExtra("dorm");
-        imageUri = getIntent().getStringExtra("im=-age");
+        imageUri = getIntent().getStringExtra("image");
         mDormTitle = findViewById(R.id.title);
         mDormAbout = findViewById(R.id.about_text);
         mDatabase = FirebaseFirestore.getInstance();
@@ -90,7 +90,7 @@ public class DormProfile extends AppCompatActivity {
         mDatabase.collection("dorms").document(dorm)
                 .get()
                 .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) mDormAbout.setText((String) Objects.requireNonNull(task.getResult()).get("about"));
+                    if (task.isSuccessful()) mDormAbout.setText((String) Objects.requireNonNull(task.getResult()).get("description"));
                 });
 
         loadPosts();

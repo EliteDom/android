@@ -70,7 +70,7 @@ class ResultAdapter extends RecyclerView.Adapter<com.elitedom.app.ui.search.Resu
             mCard.setOnClickListener(v -> {
                 Intent intent = new Intent(mContext, DormProfile.class);
                 intent.putExtra("dorm", currentResult.getName());
-                intent.putExtra("image", currentResult.getImageResource());
+                intent.putExtra("image", currentResult.getImageResource().toString());
                 mContext.startActivity(intent);
             });
         }
