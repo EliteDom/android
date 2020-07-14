@@ -121,8 +121,6 @@ public class ProfileMessaging extends AppCompatActivity {
                         if (authorImage == null) authorImage = "";
                     }
                 });
-
-        message.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> scrollToBottom());
     }
 
     @Override
