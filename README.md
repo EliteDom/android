@@ -14,7 +14,7 @@ Elitedom values upholds privacy of its users to the highest pedestal. Our applic
 
 ## Licensing 
 
-Elitedom is an open source app and is licensed under Apache 2.0. Everyone viewing the repository is free to use and modify the software for their private or commercial use, with no liability or warranty for modified software. The Elitedom trademark cannot be on modifier software.
+The app has no license. While the code is source readable, it is not an open source software. Please check LICENSE for further details.
 
 ## Mission Statement
 
