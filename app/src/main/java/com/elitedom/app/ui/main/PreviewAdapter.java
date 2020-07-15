@@ -177,12 +177,18 @@ public class PreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             mInfoText.setContentDescription(currentPost.getDorm());
             mInfoText.setText(currentPost.getBody());
             mAuthor.setText(currentPost.getAuthor());
-            if (currentPost.getImageResource() != null && currentPost.getImageResource().toString().length() > 0)
+            if (currentPost.getImageResource() != null && currentPost.getImageResource().toString().length() > 0) {
+                itemView.findViewById(R.id.postImage).setVisibility(View.VISIBLE);
+                itemView.findViewById(R.id.post_text).setVisibility(View.GONE);
                 Glide.with(mContext)
                         .load(currentPost.getImageResource())
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(mPostImage);
-            else itemView.findViewById(R.id.post_text).setVisibility(View.VISIBLE);
+            }
+            else {
+                itemView.findViewById(R.id.post_text).setVisibility(View.VISIBLE);
+                itemView.findViewById(R.id.postImage).setVisibility(View.GONE);
+            }
             mPostImage.setContentDescription(currentPost.getImageResource().toString());
         }
 
