@@ -161,36 +161,29 @@
                         <ImageView
                             android:id="@+id/postImage"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="180dp"
                             android:layout_below="@id/author"
                             android:layout_marginHorizontal="6dp"
                             android:layout_marginBottom="6dp"
                             android:adjustViewBounds="true"
                             android:background="@drawable/rounded_image"
+                            android:scaleType="centerCrop"
+                            android:visibility="gone"
                             tools:ignore="ContentDescription" />
 
-                        <ScrollView
-                            android:id="@+id/text_scroll"
+                        <TextView
+                            android:id="@+id/post_text"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_below="@id/action_cards"
-                            android:layout_alignParentBottom="true"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
                             android:background="@drawable/custom_relativelayout"
-                            android:scrollbars="none">
-
-                            <TextView
-                                android:id="@+id/post_text"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:layout_marginEnd="8dp"
-                                android:background="@drawable/custom_relativelayout"
-                                android:paddingHorizontal="8dp"
-                                android:paddingTop="8dp"
-                                android:textColor="@color/black"
-                                android:textIsSelectable="true"
-                                android:textSize="14sp" />
-                        </ScrollView>
+                            android:paddingHorizontal="8dp"
+                            android:paddingTop="8dp"
+                            android:textColor="@color/black"
+                            android:textIsSelectable="true"
+                            android:textSize="14sp" />
                     </RelativeLayout>
                 </ScrollView>
             </androidx.cardview.widget.CardView>

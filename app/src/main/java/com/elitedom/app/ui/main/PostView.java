@@ -67,6 +67,8 @@ public class PostView extends AppCompatActivity {
         mPostText.setText(intent.getStringExtra("subtext"));
         mPostText.setContentDescription(intent.getStringExtra("dorm"));
         mAuthor.setText(intent.getStringExtra("author"));
+        if (Objects.requireNonNull(intent.getStringExtra("image")).length() > 0)
+            mPostImage.setVisibility(View.VISIBLE);
         Glide.with(this)
                 .load(intent.getStringExtra("image"))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -93,8 +95,7 @@ public class PostView extends AppCompatActivity {
                             if (status == 0) {
                                 dislike_status = 1;
                                 mDisliked.setImageResource(R.drawable.ic_thumb_down_black_24dp);
-                            }
-                            else if (status == 1) {
+                            } else if (status == 1) {
                                 like_status = 1;
                                 mLiked.setImageResource(R.drawable.ic_thumb_up_black_24dp);
                             }
@@ -200,12 +201,12 @@ public class PostView extends AppCompatActivity {
     }
 
     public void sharePost(View view) {
-            Intent sendIntent = new Intent();
-            sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT, mPostText.getText().toString());
-            sendIntent.setType("text/plain");
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, mPostText.getText().toString());
+        sendIntent.setType("text/plain");
 
-            Intent shareIntent = Intent.createChooser(sendIntent, null);
-            startActivity(shareIntent);
+        Intent shareIntent = Intent.createChooser(sendIntent, null);
+        startActivity(shareIntent);
     }
 }
