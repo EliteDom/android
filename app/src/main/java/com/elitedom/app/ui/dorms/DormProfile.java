@@ -25,6 +25,7 @@ import com.bumptech.glide.Glide;
 import com.elitedom.app.R;
 import com.elitedom.app.ui.main.PreviewAdapter;
 import com.elitedom.app.ui.main.PreviewCard;
+import com.elitedom.app.ui.quiz.Quiz;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;

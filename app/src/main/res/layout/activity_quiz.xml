@@ -8,7 +8,32 @@
     android:animateLayoutChanges="true"
     android:background="@drawable/gradient_list"
     android:fitsSystemWindows="true"
-    tools:context=".ui.dorms.Quiz">
+    tools:context=".ui.quiz.Quiz">
+
+    <ProgressBar
+        android:id="@+id/timer"
+        style="?android:progressBarStyleHorizontal"
+        android:layout_width="175dp"
+        android:layout_height="175dp"
+        android:layout_gravity="center_horizontal"
+        android:progress="100"
+        android:progressDrawable="@drawable/custom_progressbar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/quiz_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:text="10"
+        android:textSize="64sp"
+        app:layout_constraintBottom_toBottomOf="@+id/timer"
+        app:layout_constraintEnd_toEndOf="@+id/timer"
+        app:layout_constraintStart_toStartOf="@+id/timer"
+        app:layout_constraintTop_toTopOf="@+id/timer" />
 
     <LinearLayout
         android:id="@+id/quiz_container"
@@ -21,15 +46,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <ProgressBar
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            style="?android:progressBarStyleHorizontal"
-            android:progress="75"
-            android:progressDrawable="@drawable/custom_progressbar"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="64dp" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/question_card"

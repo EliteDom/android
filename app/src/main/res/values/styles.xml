@@ -45,7 +45,9 @@
     <style name="Widget.App.Snackbar" parent="Widget.MaterialComponents.Snackbar">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.Snackbar</item>
         <item name="color">@color/black</item>
+        <item name="android:textStyle">bold</item>
         <item name="actionTextColorAlpha">1</item>
+        <item name="android:layout_margin">8dp</item>
     </style>
 
     <style name="ImageView.Editing" parent="Theme.MaterialComponents.Light.NoActionBar">

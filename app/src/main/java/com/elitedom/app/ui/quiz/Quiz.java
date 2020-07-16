@@ -1,12 +1,15 @@
-package com.elitedom.app.ui.dorms;
+package com.elitedom.app.ui.quiz;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.animation.ObjectAnimator;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
+import android.widget.ProgressBar;
 
 import com.elitedom.app.R;
 
@@ -28,5 +31,13 @@ public class Quiz extends AppCompatActivity {
         animationDrawable.setExitFadeDuration(4000);
         animationDrawable.start();
         animationDrawable.setColorFilter(Color.rgb(190, 190, 190), android.graphics.PorterDuff.Mode.MULTIPLY);
+
+        ProgressBar timer = findViewById(R.id.timer);
+        timer.setMax(100000);
+
+        ObjectAnimator animation = ObjectAnimator.ofInt(timer, "timer", 0, 100 * 1000);
+        animation.setDuration(10000);
+        animation.setInterpolator(new LinearInterpolator());
+        animation.start();
     }
 }
