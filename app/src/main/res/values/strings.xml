@@ -36,4 +36,5 @@
     <string name="empty_search">No Results!</string>
     <string name="about">About</string>
     <string name="empty_dorm">This dorm has no posts!</string>
+    <string name="initial_time_quiz">10</string>
 </resources>

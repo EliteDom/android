@@ -189,6 +189,8 @@ public class DormProfile extends AppCompatActivity {
     }
 
     public void quizUI(View view) {
-        startActivity(new Intent(this, Quiz.class));
+        Intent quiz = new Intent(this, Quiz.class);
+        quiz.putExtra("dorm", dorm);
+        startActivity(quiz);
     }
 }
