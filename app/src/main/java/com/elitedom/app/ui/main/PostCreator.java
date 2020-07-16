@@ -102,11 +102,11 @@ public class PostCreator extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
+            localUri = data.getData();
             Glide.with(this)
-                    .load(data.getData())
+                    .load(localUri)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(postImage);
-            localUri = data.getData();
         }
     }
 
