@@ -149,17 +149,17 @@ public class PostCreator extends AppCompatActivity {
     }
 
     public void submitPost(View view) {
-        if (body.getText().toString().length() > 0 && title.getText().toString().length() > 0) {
+        if (body.getText().toString().length() > 0 && title.getText().toString().length() > 0)
             new MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
                     .setTitle("Pick a Dorm!")
                     .setItems(getStringArray(submitDorms), (dialog, which) -> {
                         supportFinishAfterTransition();
-                        if (downloadUri != null) sendData(which); // Added same as else statement for prioritization
+                        if (downloadUri != null)
+                            sendData(which); // Added same as else statement for single case prioritization
                         else if (localUri != null) uploadImage(which);
                         else sendData(which);
                     })
                     .show();
-        }
     }
 
     public void discardPost(View view) {
