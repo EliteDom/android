@@ -3,11 +3,15 @@ package com.elitedom.app.ui.main;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.OpenableColumns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -26,7 +30,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.yalantis.ucrop.UCrop;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -101,12 +108,22 @@ public class PostCreator extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            localUri = data.getData();
+        if (requestCode == UCrop.REQUEST_CROP && resultCode == RESULT_OK) {
             Glide.with(this)
-                    .load(localUri)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .load(UCrop.getOutput(data))
                     .into(postImage);
+        } else if (resultCode == RESULT_OK && data.getData() != null) {
+            localUri = data.getData();
+            File file = null;
+            try {
+                file = File.createTempFile("temp", ".jpg");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Uri destinationUri = Uri.fromFile(file);
+            UCrop.of(localUri, destinationUri)
+                    .withAspectRatio(16, 9)
+                    .start(this);
         }
     }
 
@@ -172,7 +189,8 @@ public class PostCreator extends AppCompatActivity {
                 .setTitle("Discard Post")
                 .setMessage("Confirm Discard?")
                 .setPositiveButton("Exit", (dialogInterface, i) -> supportFinishAfterTransition())
-                .setNeutralButton("Continue Editing", (dialogInterface, i) -> {})
+                .setNeutralButton("Continue Editing", (dialogInterface, i) -> {
+                })
                 .show();
     }
 
