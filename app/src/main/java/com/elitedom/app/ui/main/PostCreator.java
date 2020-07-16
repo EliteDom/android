@@ -43,7 +43,7 @@ public class PostCreator extends AppCompatActivity {
     private EditText title, body, imageUri;
     private FirebaseFirestore mDatabase;
     private StorageReference mStorage;
-    private Uri localUri, downloadUri;
+    private Uri localUri, destinationUri, downloadUri;
     private ArrayList submitDorms;
     private ImageView postImage;
     private boolean isRotated;
@@ -117,7 +117,7 @@ public class PostCreator extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Uri destinationUri = Uri.fromFile(file);
+            destinationUri = Uri.fromFile(file);
             UCrop.of(localUri, destinationUri)
                     .withAspectRatio(16, 9)
                     .start(this);
@@ -201,7 +201,7 @@ public class PostCreator extends AppCompatActivity {
 
     private void uploadImage(int which) {
         final StorageReference ref = mStorage.child("posts/" + UUID.randomUUID().toString() + ".jpg");
-        UploadTask uploadTask = ref.putFile(localUri);
+        UploadTask uploadTask = ref.putFile(destinationUri);
         uploadTask.continueWithTask(task -> {
             if (!task.isSuccessful()) {
                 throw Objects.requireNonNull(task.getException());
