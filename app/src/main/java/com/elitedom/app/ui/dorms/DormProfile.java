@@ -1,6 +1,7 @@
 package com.elitedom.app.ui.dorms;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
@@ -184,5 +185,9 @@ public class DormProfile extends AppCompatActivity {
         super.onBackPressed();
         mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
                 .update("followedDorms", followedDorms);
+    }
+
+    public void quizUI(View view) {
+        startActivity(new Intent(this, Quiz.class));
     }
 }
