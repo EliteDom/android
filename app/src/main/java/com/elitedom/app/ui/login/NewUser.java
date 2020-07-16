@@ -25,7 +25,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.yalantis.ucrop.UCrop;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -115,24 +118,30 @@ public class NewUser extends AppCompatActivity {
         startActivityForResult(chooserIntent, SELECT_PICTURE);
     }
 
-    @SuppressLint("InflateParams")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            localUri = data.getData();
+        if (requestCode == UCrop.REQUEST_CROP && resultCode == RESULT_OK) {
             Glide.with(this)
-                    .load(localUri)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .fitCenter()
+                    .load(UCrop.getOutput(data))
                     .into(imageView);
             new MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
                     .setTitle("Update Profile")
-                    .setMessage("Change your profile picture?")
-                    .setPositiveButton("Update", (dialogInterface, i) -> {
-                    })
+                    .setMessage("Change your profile picture??")
+                    .setPositiveButton("Replace", (dialogInterface, i) -> uploadImage())
                     .setNeutralButton("Retain", (dialogInterface, i) -> retainProfilePicture())
                     .show();
+        } else if (resultCode == RESULT_OK && data.getData() != null) {
+            localUri = data.getData();
+            File file = null;
+            try {
+                file = File.createTempFile("temp", ".jpg");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Uri destinationUri = Uri.fromFile(file);
+            UCrop.of(localUri, destinationUri)
+                    .start(this);
         }
     }
 

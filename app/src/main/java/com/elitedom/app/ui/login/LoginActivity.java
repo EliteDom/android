@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
-        Objects.requireNonNull(getSupportActionBar()).hide();
+//        Objects.requireNonNull(getSupportActionBar()).hide();
 
         Button loginButton = findViewById(R.id.login);
         final Button passwordReset = findViewById(R.id.forgot_password);

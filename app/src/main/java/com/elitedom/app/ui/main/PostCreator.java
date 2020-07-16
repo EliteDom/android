@@ -26,7 +26,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.yalantis.ucrop.UCrop;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -101,12 +104,23 @@ public class PostCreator extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
+        if (requestCode == UCrop.REQUEST_CROP && resultCode == RESULT_OK) {
+            localUri = UCrop.getOutput(data);
             Glide.with(this)
-                    .load(data.getData())
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .load(localUri)
                     .into(postImage);
+        } else if (resultCode == RESULT_OK && data.getData() != null) {
             localUri = data.getData();
+            File file = null;
+            try {
+                file = File.createTempFile("temp", ".jpg");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Uri destinationUri = Uri.fromFile(file);
+            UCrop.of(localUri, destinationUri)
+                    .withAspectRatio(16, 9)
+                    .start(this);
         }
     }
 
@@ -149,17 +163,17 @@ public class PostCreator extends AppCompatActivity {
     }
 
     public void submitPost(View view) {
-        if (body.getText().toString().length() > 0 && title.getText().toString().length() > 0) {
+        if (body.getText().toString().length() > 0 && title.getText().toString().length() > 0)
             new MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
                     .setTitle("Pick a Dorm!")
                     .setItems(getStringArray(submitDorms), (dialog, which) -> {
                         supportFinishAfterTransition();
-                        if (downloadUri != null) sendData(which); // Added same as else statement for prioritization
+                        if (downloadUri != null)
+                            sendData(which); // Added same as else statement for single case prioritization
                         else if (localUri != null) uploadImage(which);
                         else sendData(which);
                     })
                     .show();
-        }
     }
 
     public void discardPost(View view) {
@@ -172,7 +186,8 @@ public class PostCreator extends AppCompatActivity {
                 .setTitle("Discard Post")
                 .setMessage("Confirm Discard?")
                 .setPositiveButton("Exit", (dialogInterface, i) -> supportFinishAfterTransition())
-                .setNeutralButton("Continue Editing", (dialogInterface, i) -> {})
+                .setNeutralButton("Continue Editing", (dialogInterface, i) -> {
+                })
                 .show();
     }
 

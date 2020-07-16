@@ -31,7 +31,10 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.yalantis.ucrop.UCrop;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
@@ -179,25 +182,31 @@ public class UserProfile extends AppCompatActivity {
         startActivityForResult(chooserIntent, SELECT_PICTURE);
     }
 
-    @SuppressLint("InflateParams")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            localUri = data.getData();
+        if (requestCode == UCrop.REQUEST_CROP && resultCode == RESULT_OK) {
+            localUri = UCrop.getOutput(data);
             Glide.with(this)
                     .load(localUri)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .fitCenter()
                     .into(imageView);
-//            mTitleData.clear();
-//            mAdapter.notifyDataSetChanged();
             new MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
                     .setTitle("Update Profile")
                     .setMessage("Change your profile picture??")
                     .setPositiveButton("Replace", (dialogInterface, i) -> uploadImage())
                     .setNeutralButton("Retain", (dialogInterface, i) -> retainProfilePicture())
                     .show();
+        } else if (resultCode == RESULT_OK && data.getData() != null) {
+            localUri = data.getData();
+            File file = null;
+            try {
+                file = File.createTempFile("temp", ".jpg");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Uri destinationUri = Uri.fromFile(file);
+            UCrop.of(localUri, destinationUri)
+                    .start(this);
         }
     }
 

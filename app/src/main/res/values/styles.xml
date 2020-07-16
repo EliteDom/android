@@ -48,6 +48,10 @@
         <item name="actionTextColorAlpha">1</item>
     </style>
 
+    <style name="ImageView.Editing" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
     <style name="ThemeOverlay.App.Snackbar" parent="">
         <item name="colorOnSurface">@color/white</item>
         <item name="colorSurface">@color/white</item>
