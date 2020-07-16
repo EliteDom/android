@@ -3,15 +3,11 @@ package com.elitedom.app.ui.main;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.OpenableColumns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -109,8 +105,9 @@ public class PostCreator extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == UCrop.REQUEST_CROP && resultCode == RESULT_OK) {
+            localUri = UCrop.getOutput(data);
             Glide.with(this)
-                    .load(UCrop.getOutput(data))
+                    .load(localUri)
                     .into(postImage);
         } else if (resultCode == RESULT_OK && data.getData() != null) {
             localUri = data.getData();
