@@ -13,8 +13,8 @@
     <ProgressBar
         android:id="@+id/ring"
         style="?android:progressBarStyleHorizontal"
-        android:layout_width="175dp"
-        android:layout_height="175dp"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
         android:layout_gravity="center_horizontal"
         android:progress="100"
         android:progressDrawable="@drawable/custom_progressbar"
@@ -36,10 +36,9 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/time"
+        android:id="@+id/score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
         android:textColor="@color/white"
         android:textSize="64sp"
         android:textStyle="bold"
@@ -49,12 +48,13 @@
         app:layout_constraintTop_toTopOf="@+id/ring" />
 
     <TextView
+        android:id="@+id/result_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
         android:textColor="@color/white"
-        android:textSize="64sp"
+        android:textSize="24sp"
         android:textStyle="bold"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

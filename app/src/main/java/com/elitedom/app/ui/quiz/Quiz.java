@@ -31,11 +31,11 @@ public class Quiz extends AppCompatActivity {
     private TextView time, question, option_1, option_2, option_3, option_4;
     private Iterator<HashMap.Entry<String, ArrayList<String>>> iterator;
     private HashMap<String, ArrayList<String>> quiz;
-    private ObjectAnimator animation;
     private FirebaseFirestore mDatabase;
+    private ObjectAnimator animation;
+    private boolean answered, correct;
     private ProgressBar timer;
     private String dorm, ans;
-    private boolean answered;
     private int score;
 
     @Override
@@ -91,7 +91,8 @@ public class Quiz extends AppCompatActivity {
 
     private void quizResult() {
         Intent intent = new Intent(Quiz.this, Result.class);
-        intent.putExtra("score", score);
+        intent.putExtra("score", Integer.toString(score));
+        intent.putExtra("dorm", dorm);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         finish();
@@ -155,6 +156,7 @@ public class Quiz extends AppCompatActivity {
             for (int i = 9; i >= 0; i--) {
                 if (answered) {
                     answered = false;
+                    if (correct) score += i;
                     this.runOnUiThread(() -> animation.cancel());
                     break;
                 }
@@ -227,7 +229,6 @@ public class Quiz extends AppCompatActivity {
     }
 
     private void correctAnswer(int which) {
-        score++;
         switch (which) {
             case 1:
                 setCardColorTran(findViewById(R.id.color_1), Color.GREEN);
@@ -241,6 +242,7 @@ public class Quiz extends AppCompatActivity {
             case 4:
                 setCardColorTran(findViewById(R.id.color_4), Color.GREEN);
         }
+        correct = true;
     }
 
     private void wrongAnswer(int which) {
@@ -257,6 +259,7 @@ public class Quiz extends AppCompatActivity {
             case 4:
                 setCardColorTran(findViewById(R.id.color_4), Color.RED);
         }
+        correct = false;
     }
 
     private void setCardColorTran(CardView card, int newColor) {
