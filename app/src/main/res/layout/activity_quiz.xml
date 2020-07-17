@@ -47,7 +47,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/timer">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/question_card"
@@ -62,10 +62,9 @@
 
             <TextView
                 android:id="@+id/question"
-                android:layout_width="wrap_content"
+                android:layout_width="325dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:maxWidth="325dp"
                 android:padding="8dp"
                 android:textColor="@color/black"
                 android:textSize="24sp"
@@ -84,9 +83,8 @@
 
             <TextView
                 android:id="@+id/option_1"
-                android:layout_width="wrap_content"
+                android:layout_width="375dp"
                 android:layout_height="wrap_content"
-                android:maxWidth="375dp"
                 android:gravity="center"
                 android:padding="8dp"
                 android:textColor="@color/black"
@@ -105,9 +103,8 @@
 
             <TextView
                 android:id="@+id/option_2"
-                android:layout_width="wrap_content"
+                android:layout_width="375dp"
                 android:layout_height="wrap_content"
-                android:maxWidth="375dp"
                 android:padding="8dp"
                 android:gravity="center"
                 android:textColor="@color/black"
@@ -126,9 +123,8 @@
 
             <TextView
                 android:id="@+id/option_3"
-                android:layout_width="wrap_content"
+                android:layout_width="375dp"
                 android:layout_height="wrap_content"
-                android:maxWidth="375dp"
                 android:padding="8dp"
                 android:gravity="center"
                 android:textColor="@color/black"
@@ -147,9 +143,8 @@
 
             <TextView
                 android:id="@+id/option_4"
-                android:layout_width="wrap_content"
+                android:layout_width="375dp"
                 android:layout_height="wrap_content"
-                android:maxWidth="375dp"
                 android:gravity="center"
                 android:padding="8dp"
                 android:textColor="@color/black"
