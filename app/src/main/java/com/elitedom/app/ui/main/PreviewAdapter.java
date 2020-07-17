@@ -31,14 +31,14 @@ import java.util.Objects;
 
 public class PreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private static final int VIEW_TYPE_POST = 1;
     private static final int VIEW_TYPE_CREATOR = 2;
-    private String profileUri;
-    private FirebaseFirestore mDatabase;
+    private static final int VIEW_TYPE_POST = 1;
     private ArrayList<PreviewCard> mTopicsData;
-    private Context mContext;
-    private String transitionType;
+    private FirebaseFirestore mDatabase;
     private View image, name, card;
+    private String transitionType;
+    private String profileUri;
+    private Context mContext;
     private int intentID;
 
     public PreviewAdapter(Context context, ArrayList<PreviewCard> topicData, String transitionType, int intentID) {

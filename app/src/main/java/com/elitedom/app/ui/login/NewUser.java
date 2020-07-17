@@ -44,7 +44,7 @@ public class NewUser extends AppCompatActivity {
     private FirebaseFirestore mDatabase;
     private CircleImageView imageView;
     private StorageReference mStorage;
-    private Uri localUri;
+    private Uri localUri, destinationUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,7 +139,7 @@ public class NewUser extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Uri destinationUri = Uri.fromFile(file);
+            destinationUri = Uri.fromFile(file);
             UCrop.of(localUri, destinationUri)
                     .start(this);
         }
@@ -156,7 +156,7 @@ public class NewUser extends AppCompatActivity {
 
     private void uploadImage() {
         final StorageReference ref = mStorage.child("profiles/" + UUID.randomUUID().toString() + ".jpg");
-        UploadTask uploadTask = ref.putFile(localUri);
+        UploadTask uploadTask = ref.putFile(destinationUri);
         uploadTask.continueWithTask(task -> {
             if (!task.isSuccessful()) {
                 throw Objects.requireNonNull(task.getException());

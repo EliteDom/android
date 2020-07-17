@@ -1,6 +1,7 @@
 package com.elitedom.app.ui.dorms;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
@@ -24,6 +25,7 @@ import com.bumptech.glide.Glide;
 import com.elitedom.app.R;
 import com.elitedom.app.ui.main.PreviewAdapter;
 import com.elitedom.app.ui.main.PreviewCard;
+import com.elitedom.app.ui.quiz.Quiz;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -184,5 +186,11 @@ public class DormProfile extends AppCompatActivity {
         super.onBackPressed();
         mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
                 .update("followedDorms", followedDorms);
+    }
+
+    public void quizUI(View view) {
+        Intent quiz = new Intent(this, Quiz.class);
+        quiz.putExtra("dorm", dorm);
+        startActivity(quiz);
     }
 }

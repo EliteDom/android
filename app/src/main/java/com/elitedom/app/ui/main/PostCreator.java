@@ -43,7 +43,7 @@ public class PostCreator extends AppCompatActivity {
     private EditText title, body, imageUri;
     private FirebaseFirestore mDatabase;
     private StorageReference mStorage;
-    private Uri localUri, downloadUri;
+    private Uri localUri, destinationUri, downloadUri;
     private ArrayList submitDorms;
     private ImageView postImage;
     private boolean isRotated;
@@ -52,11 +52,11 @@ public class PostCreator extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_creator);
-        ConstraintLayout constraintLayout = findViewById(R.id.feed_container);
 
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
+        ConstraintLayout constraintLayout = findViewById(R.id.feed_container);
         AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
         animationDrawable.setEnterFadeDuration(2000);
         animationDrawable.setExitFadeDuration(4000);
@@ -117,7 +117,7 @@ public class PostCreator extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Uri destinationUri = Uri.fromFile(file);
+            destinationUri = Uri.fromFile(file);
             UCrop.of(localUri, destinationUri)
                     .withAspectRatio(16, 9)
                     .start(this);
@@ -186,8 +186,7 @@ public class PostCreator extends AppCompatActivity {
                 .setTitle("Discard Post")
                 .setMessage("Confirm Discard?")
                 .setPositiveButton("Exit", (dialogInterface, i) -> supportFinishAfterTransition())
-                .setNeutralButton("Continue Editing", (dialogInterface, i) -> {
-                })
+                .setNeutralButton("Continue Editing", (dialogInterface, i) -> dialogInterface.dismiss())
                 .show();
     }
 
@@ -201,7 +200,7 @@ public class PostCreator extends AppCompatActivity {
 
     private void uploadImage(int which) {
         final StorageReference ref = mStorage.child("posts/" + UUID.randomUUID().toString() + ".jpg");
-        UploadTask uploadTask = ref.putFile(localUri);
+        UploadTask uploadTask = ref.putFile(destinationUri);
         uploadTask.continueWithTask(task -> {
             if (!task.isSuccessful()) {
                 throw Objects.requireNonNull(task.getException());

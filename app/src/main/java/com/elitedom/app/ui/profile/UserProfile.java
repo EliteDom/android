@@ -53,7 +53,7 @@ public class UserProfile extends AppCompatActivity {
     private PreviewAdapter mAdapter;
     private RecyclerView mRecycler;
     private TextView mNoPosts;
-    private Uri localUri;
+    private Uri localUri, destinationUri;
     private String uid;
 
 
@@ -204,7 +204,7 @@ public class UserProfile extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Uri destinationUri = Uri.fromFile(file);
+            destinationUri = Uri.fromFile(file);
             UCrop.of(localUri, destinationUri)
                     .start(this);
         }
@@ -223,7 +223,7 @@ public class UserProfile extends AppCompatActivity {
 
     private void uploadImage() {
         final StorageReference ref = mStorage.child("profiles/" + UUID.randomUUID().toString() + ".jpg");
-        UploadTask uploadTask = ref.putFile(localUri);
+        UploadTask uploadTask = ref.putFile(destinationUri);
         uploadTask.continueWithTask(task -> {
             if (!task.isSuccessful()) {
                 throw Objects.requireNonNull(task.getException());
