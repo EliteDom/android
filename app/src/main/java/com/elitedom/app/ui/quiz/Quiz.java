@@ -2,6 +2,7 @@ package com.elitedom.app.ui.quiz;
 
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
@@ -84,7 +85,15 @@ public class Quiz extends AppCompatActivity {
             ans = options.get(0);
             Collections.shuffle(options);
             animateText(entry.getKey(), options);
-        }
+        } else quizResult();
+    }
+
+    private void quizResult() {
+        Intent intent = new Intent(Quiz.this, Result.class);
+        intent.putExtra("score", score);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        finish();
     }
 
     private void initializeData() {
