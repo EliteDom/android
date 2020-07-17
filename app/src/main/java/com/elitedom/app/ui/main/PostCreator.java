@@ -186,8 +186,7 @@ public class PostCreator extends AppCompatActivity {
                 .setTitle("Discard Post")
                 .setMessage("Confirm Discard?")
                 .setPositiveButton("Exit", (dialogInterface, i) -> supportFinishAfterTransition())
-                .setNeutralButton("Continue Editing", (dialogInterface, i) -> {
-                })
+                .setNeutralButton("Continue Editing", (dialogInterface, i) -> dialogInterface.dismiss())
                 .show();
     }
 

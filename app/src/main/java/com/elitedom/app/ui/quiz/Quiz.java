@@ -1,39 +1,35 @@
 package com.elitedom.app.ui.quiz;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.elitedom.app.R;
-import com.elitedom.app.ui.dorms.DormProfile;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Objects;
 
 public class Quiz extends AppCompatActivity {
 
     private TextView time, question, option_1, option_2, option_3, option_4;
-    private FirebaseFirestore mDatabase;
+    private Iterator<HashMap.Entry<String, ArrayList<String>>> iterator;
     private HashMap<String, ArrayList<String>> quiz;
+    private FirebaseFirestore mDatabase;
+    private ProgressBar timer;
     private String dorm;
 
     @Override
@@ -51,35 +47,35 @@ public class Quiz extends AppCompatActivity {
         animationDrawable.start();
         animationDrawable.setColorFilter(Color.rgb(190, 190, 190), android.graphics.PorterDuff.Mode.MULTIPLY);
 
+        dorm = getIntent().getStringExtra("dorm");
         mDatabase = FirebaseFirestore.getInstance();
-        time = findViewById(R.id.time);
         question = findViewById(R.id.question);
         option_1 = findViewById(R.id.option_1);
         option_2 = findViewById(R.id.option_2);
         option_3 = findViewById(R.id.option_3);
         option_4 = findViewById(R.id.option_4);
-        dorm = getIntent().getStringExtra("dorm");
+        timer = findViewById(R.id.timer);
+        time = findViewById(R.id.time);
         quiz = new HashMap<>();
 
         initializeData();
         new MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
                 .setTitle("Start Quiz?")
                 .setMessage("Succeed to get post access to " + dorm + "!")
-                .setPositiveButton("Attempt", (dialogInterface, i) -> quizHandler())
+                .setPositiveButton("Attempt", (dialogInterface, i) -> {
+                    dialogInterface.dismiss();
+                    iterator = quiz.entrySet().iterator();
+                    runQuestion();
+                })
                 .setNeutralButton("Return", (dialogInterface, i) -> finish())
                 .show();
     }
 
-    private void quizHandler() {
-        final int[] b = {0};
-        quiz.forEach((key,value) -> {
-            if (b[0] == 0) b[0] = 1;
-            animateText(question, key);
-            animateText(option_1, value.get(0));
-            animateText(option_2, value.get(1));
-            animateText(option_3, value.get(2));
-            animateText(option_4, value.get(3));
-        });
+    private void runQuestion() {
+        if (iterator.hasNext()) {
+            HashMap.Entry<String, ArrayList<String>> entry = iterator.next();
+            animateText(entry.getKey(), entry.getValue());
+        }
     }
 
     private void initializeData() {
@@ -92,30 +88,45 @@ public class Quiz extends AppCompatActivity {
                 });
     }
 
-    private void removeTextAnimation(final TextView view) {
+    private void removeTextAnimation() {
         new Thread(() -> {
-            while (view.getText().toString().length() > 1) {
+            while (question.getText().toString().length() > 1) {
                 try {
                     Thread.sleep(50);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                view.post(() -> view.setText(view.getText().toString().substring(0, view.getText().toString().length() - 1)));
+                question.post(() -> question.setText(question.getText().toString().substring(0, question.getText().toString().length() - 1)));
+                option_1.post(() -> {
+                    if (option_1.getText().toString().length() > 0)
+                        option_1.setText(option_1.getText().toString().substring(0, option_1.getText().toString().length() - 1));
+                });
+                option_2.post(() -> {
+                    if (option_2.getText().toString().length() > 0)
+                        option_2.setText(option_2.getText().toString().substring(0, option_2.getText().toString().length() - 1));
+                });
+                option_3.post(() -> {
+                    if (option_3.getText().toString().length() > 0)
+                        option_3.setText(option_3.getText().toString().substring(0, option_3.getText().toString().length() - 1));
+                });
+                option_4.post(() -> {
+                    if (option_4.getText().toString().length() > 0)
+                        option_4.setText(option_4.getText().toString().substring(0, option_4.getText().toString().length() - 1));
+                });
             }
+            runQuestion();
         }).start();
     }
 
     @SuppressLint("SetTextI18n")
     private void countDown(final TextView view) {
-        ProgressBar timer = findViewById(R.id.timer);
         timer.setMax(100000);
-
-        ObjectAnimator animation = ObjectAnimator.ofInt(timer, "progress", 100 * 1000, 0);
-        animation.setDuration(10000);
-        animation.setInterpolator(new LinearInterpolator());
-        animation.start();
-
-        view.setText("10");
+        this.runOnUiThread(() -> {
+            ObjectAnimator animation = ObjectAnimator.ofInt(timer, "progress", 100 * 1000, 0);
+            animation.setDuration(10000);
+            animation.setInterpolator(new LinearInterpolator());
+            animation.start();
+        });
         new Thread(() -> {
             for (int i = 9; i >= 0; i--) {
                 try {
@@ -126,25 +137,47 @@ public class Quiz extends AppCompatActivity {
                 String finalI = String.valueOf(i);
                 view.post(() -> view.setText(finalI));
             }
+            removeTextAnimation();
         }).start();
     }
 
-    private void animateText(final TextView view, String text) {
-        final char[] s = text.toCharArray();
-        try {
-            Thread.sleep(300);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    @SuppressLint("SetTextI18n")
+    private void animateText(String key, ArrayList<String> value) {
+        final char[] q = key.toCharArray();
+        final char[] o1 = value.get(0).toCharArray();
+        final char[] o2 = value.get(1).toCharArray();
+        final char[] o3 = value.get(2).toCharArray();
+        final char[] o4 = value.get(3).toCharArray();
         new Thread(() -> {
-            for (final char ch : s) {
+            this.runOnUiThread(() -> {
+                ObjectAnimator animation = ObjectAnimator.ofInt(timer, "progress", 0, 100 * 1000);
+                animation.setDuration(1000);
+                animation.setInterpolator(new LinearInterpolator());
+                animation.start();
+                time.setText("10");
+            });
+            for (int i = 0; i < q.length; i++) {
                 try {
-                    Thread.sleep(150);
+                    Thread.sleep(50);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                view.post(() -> view.append("" + ch));
+                int finalI = i;
+                question.post(() -> question.append("" + q[finalI]));
+                option_1.post(() -> {
+                    if (o1.length > finalI) option_1.append("" + o1[finalI]);
+                });
+                option_2.post(() -> {
+                    if (o2.length > finalI) option_2.append("" + o2[finalI]);
+                });
+                option_3.post(() -> {
+                    if (o3.length > finalI) option_3.append("" + o3[finalI]);
+                });
+                option_4.post(() -> {
+                    if (o4.length > finalI) option_4.append("" + o4[finalI]);
+                });
             }
+            countDown(time);
         }).start();
     }
 }
