@@ -178,22 +178,3 @@ public class LoginActivity extends AppCompatActivity {
         return pat.matcher(email).matches();
     }
 }
-
-/*    private void removeTextAnimation(final EditText txt_view) {
-        new Thread(new Runnable() {
-            public void run() {
-                while (txt_view.getText().toString().length() > 1) {
-                    try {
-                        Thread.sleep(50);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    txt_view.post(new Runnable() {
-                        public void run() {
-                            txt_view.setText(txt_view.getText().toString().substring(0, txt_view.getText().toString().length() - 1));
-                        }
-                    });
-                }
-            }
-        }).start();
-    }*/

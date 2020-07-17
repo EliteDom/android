@@ -4,6 +4,8 @@ import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
@@ -11,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.elitedom.app.R;
@@ -19,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Objects;
@@ -30,7 +34,8 @@ public class Quiz extends AppCompatActivity {
     private HashMap<String, ArrayList<String>> quiz;
     private FirebaseFirestore mDatabase;
     private ProgressBar timer;
-    private String dorm;
+    private String dorm, ans;
+    private int score;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +62,7 @@ public class Quiz extends AppCompatActivity {
         timer = findViewById(R.id.timer);
         time = findViewById(R.id.time);
         quiz = new HashMap<>();
+        score = 0;
 
         initializeData();
         new MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
@@ -74,7 +80,10 @@ public class Quiz extends AppCompatActivity {
     private void runQuestion() {
         if (iterator.hasNext()) {
             HashMap.Entry<String, ArrayList<String>> entry = iterator.next();
-            animateText(entry.getKey(), entry.getValue());
+            ArrayList<String> options = entry.getValue();
+            ans = options.get(0);
+            Collections.shuffle(options);
+            animateText(entry.getKey(), options);
         }
     }
 
@@ -179,5 +188,65 @@ public class Quiz extends AppCompatActivity {
             }
             countDown(time);
         }).start();
+    }
+
+    public void checkAnswer(View view) {
+        switch (Integer.parseInt(view.getTag().toString())) {
+            case 1:
+                if (ans.equals(option_1.getText().toString())) correctAnswer(1);
+                else wrongAnswer(1);
+                break;
+            case 2:
+                if (ans.equals(option_2.getText().toString())) correctAnswer(2);
+                else wrongAnswer(2);
+                break;
+            case 3:
+                if (ans.equals(option_3.getText().toString())) correctAnswer(3);
+                else wrongAnswer(3);
+                break;
+            case 4:
+                if (ans.equals(option_4.getText().toString())) correctAnswer(4);
+                else wrongAnswer(4);
+        }
+    }
+
+    private void correctAnswer(int which) {
+        score++;
+        switch (which) {
+            case 1:
+                setCardColorTran(findViewById(R.id.card_1), new ColorDrawable(Color.GREEN));
+                break;
+            case 2:
+                setCardColorTran(findViewById(R.id.card_2), new ColorDrawable(Color.GREEN));
+                break;
+            case 3:
+                setCardColorTran(findViewById(R.id.card_3), new ColorDrawable(Color.GREEN));
+                break;
+            case 4:
+                setCardColorTran(findViewById(R.id.card_4), new ColorDrawable(Color.GREEN));
+        }
+    }
+
+    private void wrongAnswer(int which) {
+        switch (which) {
+            case 1:
+                setCardColorTran(findViewById(R.id.card_1), new ColorDrawable(Color.RED));
+                break;
+            case 2:
+                setCardColorTran(findViewById(R.id.card_2), new ColorDrawable(Color.RED));
+                break;
+            case 3:
+                setCardColorTran(findViewById(R.id.card_3), new ColorDrawable(Color.RED));
+                break;
+            case 4:
+                setCardColorTran(findViewById(R.id.card_4), new ColorDrawable(Color.RED));
+        }
+    }
+
+    public void setCardColorTran(CardView card, ColorDrawable newColor) {
+        ColorDrawable[] color = {new ColorDrawable(Color.WHITE), newColor};
+        TransitionDrawable trans = new TransitionDrawable(color);
+        card.setForeground(trans);
+        trans.startTransition(500);
     }
 }
