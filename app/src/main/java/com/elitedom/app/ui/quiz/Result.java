@@ -30,3 +30,5 @@ public class Result extends AppCompatActivity {
         animationDrawable.setColorFilter(Color.rgb(190, 190, 190), android.graphics.PorterDuff.Mode.MULTIPLY);
     }
 }
+
+// TODO: Kill Tasks

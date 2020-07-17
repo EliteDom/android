@@ -31,6 +31,7 @@ public class Quiz extends AppCompatActivity {
     private TextView time, question, option_1, option_2, option_3, option_4;
     private Iterator<HashMap.Entry<String, ArrayList<String>>> iterator;
     private HashMap<String, ArrayList<String>> quiz;
+    private ObjectAnimator animation;
     private FirebaseFirestore mDatabase;
     private ProgressBar timer;
     private String dorm, ans;
@@ -106,63 +107,6 @@ public class Quiz extends AppCompatActivity {
                 });
     }
 
-    private void removeTextAnimation() {
-        new Thread(() -> {
-            while (question.getText().toString().length() > 1) {
-                try {
-                    Thread.sleep(50);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                question.post(() -> question.setText(question.getText().toString().substring(0, question.getText().toString().length() - 1)));
-                option_1.post(() -> {
-                    if (option_1.getText().toString().length() > 0)
-                        option_1.setText(option_1.getText().toString().substring(0, option_1.getText().toString().length() - 1));
-                });
-                option_2.post(() -> {
-                    if (option_2.getText().toString().length() > 0)
-                        option_2.setText(option_2.getText().toString().substring(0, option_2.getText().toString().length() - 1));
-                });
-                option_3.post(() -> {
-                    if (option_3.getText().toString().length() > 0)
-                        option_3.setText(option_3.getText().toString().substring(0, option_3.getText().toString().length() - 1));
-                });
-                option_4.post(() -> {
-                    if (option_4.getText().toString().length() > 0)
-                        option_4.setText(option_4.getText().toString().substring(0, option_4.getText().toString().length() - 1));
-                });
-            }
-            runQuestion();
-        }).start();
-    }
-
-    @SuppressLint("SetTextI18n")
-    private void countDown(final TextView view) {
-        timer.setMax(100000);
-        this.runOnUiThread(() -> {
-            ObjectAnimator animation = ObjectAnimator.ofInt(timer, "progress", 100 * 1000, 0);
-            animation.setDuration(10000);
-            animation.setInterpolator(new LinearInterpolator());
-            animation.start();
-        });
-        new Thread(() -> {
-            for (int i = 9; i >= 0; i--) {
-                if (answered) {
-                    answered = false;
-                    Thread.currentThread().interrupt();
-                }
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                String finalI = String.valueOf(i);
-                view.post(() -> view.setText(finalI));
-            }
-            removeTextAnimation();
-        }).start();
-    }
-
     @SuppressLint("SetTextI18n")
     private void animateText(String key, ArrayList<String> value) {
         final char[] q = key.toCharArray();
@@ -172,7 +116,7 @@ public class Quiz extends AppCompatActivity {
         final char[] o4 = value.get(3).toCharArray();
         new Thread(() -> {
             this.runOnUiThread(() -> {
-                ObjectAnimator animation = ObjectAnimator.ofInt(timer, "progress", 0, 100 * 1000);
+                animation = ObjectAnimator.ofInt(timer, "progress", 0, 100 * 1000);
                 animation.setDuration(1000);
                 animation.setInterpolator(new LinearInterpolator());
                 animation.start();
@@ -199,7 +143,65 @@ public class Quiz extends AppCompatActivity {
                     if (o4.length > finalI) option_4.append("" + o4[finalI]);
                 });
             }
-            countDown(time);
+
+            timer.setMax(100000);
+            this.runOnUiThread(() -> {
+                animation = ObjectAnimator.ofInt(timer, "progress", 100 * 1000, 0);
+                animation.setDuration(10000);
+                animation.setInterpolator(new LinearInterpolator());
+                animation.start();
+            });
+
+            for (int i = 9; i >= 0; i--) {
+                if (answered) {
+                    answered = false;
+                    this.runOnUiThread(() -> animation.cancel());
+                    break;
+                }
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                String finalI = String.valueOf(i);
+                time.post(() -> time.setText(finalI));
+            }
+
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            reset();
+            while (question.getText().toString().length() > 1) {
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                question.post(() -> {
+                    if (question.getText().toString().length() > 0)
+                        question.setText(question.getText().toString().substring(0, question.getText().toString().length() - 1));
+                });
+                option_1.post(() -> {
+                    if (option_1.getText().toString().length() > 0)
+                        option_1.setText(option_1.getText().toString().substring(0, option_1.getText().toString().length() - 1));
+                });
+                option_2.post(() -> {
+                    if (option_2.getText().toString().length() > 0)
+                        option_2.setText(option_2.getText().toString().substring(0, option_2.getText().toString().length() - 1));
+                });
+                option_3.post(() -> {
+                    if (option_3.getText().toString().length() > 0)
+                        option_3.setText(option_3.getText().toString().substring(0, option_3.getText().toString().length() - 1));
+                });
+                option_4.post(() -> {
+                    if (option_4.getText().toString().length() > 0)
+                        option_4.setText(option_4.getText().toString().substring(0, option_4.getText().toString().length() - 1));
+                });
+            }
+            Thread.currentThread().interrupt();
+            runQuestion();
         }).start();
     }
 
@@ -239,7 +241,6 @@ public class Quiz extends AppCompatActivity {
             case 4:
                 setCardColorTran(findViewById(R.id.color_4), Color.GREEN);
         }
-        removeTextAnimation();
     }
 
     private void wrongAnswer(int which) {
@@ -256,11 +257,17 @@ public class Quiz extends AppCompatActivity {
             case 4:
                 setCardColorTran(findViewById(R.id.color_4), Color.RED);
         }
-        removeTextAnimation();
     }
 
-    public void setCardColorTran(CardView card, int newColor) {
+    private void setCardColorTran(CardView card, int newColor) {
         card.setCardBackgroundColor(newColor);
+    }
+
+    private void reset() {
+        setCardColorTran(findViewById(R.id.color_1), getColor(R.color.colorAccent));
+        setCardColorTran(findViewById(R.id.color_2), getColor(R.color.colorAccent));
+        setCardColorTran(findViewById(R.id.color_3), getColor(R.color.colorAccent));
+        setCardColorTran(findViewById(R.id.color_4), getColor(R.color.colorAccent));
     }
 }
 /*
