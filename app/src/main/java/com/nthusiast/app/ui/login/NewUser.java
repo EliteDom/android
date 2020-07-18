@@ -40,7 +40,7 @@ public class NewUser extends AppCompatActivity {
     private EditText mUsername, mFirstName, mLastName;
     private static final int SELECT_PICTURE = 1;
     private ConstraintLayout constraintLayout;
-    private Uri localUri, destinationUri;
+    private Uri destinationUri;
     private FirebaseFirestore mDatabase;
     private CircleImageView imageView;
     private StorageReference mStorage;
@@ -102,11 +102,11 @@ public class NewUser extends AppCompatActivity {
 
                             Intent intent = new Intent(this, TopicCards.class);
                             try {
-                                intent.putExtra("image", localUri.toString());
+                                intent.putExtra("image", destinationUri.toString());
+                                uploadImage();
                             } catch (Exception e) {
                                 intent.putExtra("image", "");
                             }
-                            uploadImage();
                             startActivity(intent);
                             setResult(Activity.RESULT_OK);
                             finish();
@@ -151,7 +151,7 @@ public class NewUser extends AppCompatActivity {
                     .setNeutralButton("Retain", (dialogInterface, i) -> dialogInterface.dismiss())
                     .show();
         } else if (resultCode == RESULT_OK && data.getData() != null) {
-            localUri = data.getData();
+            Uri localUri = data.getData();
             File file = null;
             try {
                 file = File.createTempFile("temp", ".jpg");

@@ -205,7 +205,6 @@ public class PostView extends AppCompatActivity {
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, mPostText.getText().toString());
         sendIntent.setType("text/plain");
-
         Intent shareIntent = Intent.createChooser(sendIntent, null);
         startActivity(shareIntent);
     }
