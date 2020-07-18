@@ -108,7 +108,7 @@ public class DormProfile extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
-                        if (document != null && document.exists())
+                        if (document != null && document.get("followedDorms") != null)
                             followedDorms = (ArrayList) document.get("followedDorms");
                         else followedDorms = new ArrayList<>();
                         assert followedDorms != null;
