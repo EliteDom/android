@@ -116,6 +116,7 @@ public class Quiz extends AppCompatActivity {
         final char[] o3 = value.get(2).toCharArray();
         final char[] o4 = value.get(3).toCharArray();
         new Thread(() -> {
+            clickStatus(true);
             this.runOnUiThread(() -> {
                 animation = ObjectAnimator.ofInt(timer, "progress", 0, 100 * 1000);
                 animation.setDuration(1000);
@@ -208,6 +209,7 @@ public class Quiz extends AppCompatActivity {
     }
 
     public void checkAnswer(View view) {
+        clickStatus(false);
         switch (Integer.parseInt(view.getTag().toString())) {
             case 1:
                 if (ans.equals(option_1.getText().toString())) correctAnswer(1);
@@ -271,6 +273,13 @@ public class Quiz extends AppCompatActivity {
         setCardColorTran(findViewById(R.id.color_2), getColor(R.color.colorAccent));
         setCardColorTran(findViewById(R.id.color_3), getColor(R.color.colorAccent));
         setCardColorTran(findViewById(R.id.color_4), getColor(R.color.colorAccent));
+    }
+
+    private void clickStatus(boolean clickable) {
+        option_1.setClickable(clickable);
+        option_2.setClickable(clickable);
+        option_3.setClickable(clickable);
+        option_4.setClickable(clickable);
     }
 }
 /*
