@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
-//        Objects.requireNonNull(getSupportActionBar()).hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         Button loginButton = findViewById(R.id.login);
         final Button passwordReset = findViewById(R.id.forgot_password);
@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void animateText(final TextView view) {
-        final char[] s = "Elitedom".toCharArray();
+        final char[] s = "Nthusiast".toCharArray();
         try {
             Thread.sleep(300);
         } catch (InterruptedException e) {
@@ -95,25 +95,13 @@ public class LoginActivity extends AppCompatActivity {
                 .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
                 .setAnchorView(R.id.sign_up_window)
                 .show();
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(LoginActivity.this, task -> {
-                    if (task.isSuccessful()) {
-                        Snackbar.make(constraintLayout, "Success ", Snackbar.LENGTH_LONG)
-                                .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
-                                .setAnchorView(R.id.sign_up_window)
-                                .show();
-                        Intent mainscreen = new Intent(LoginActivity.this, NewUser.class);
-                        startActivity(mainscreen);
-//                        overridePendingTransition(0, 0);
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-                        setResult(Activity.RESULT_OK);
-                        finish();
-                    } else
-                        Snackbar.make(constraintLayout, "Unsuccessful - try again later?", Snackbar.LENGTH_LONG)
-                                .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
-                                .setAnchorView(R.id.sign_up_window)
-                                .show();
-                });
+        Intent mainscreen = new Intent(LoginActivity.this, NewUser.class);
+        mainscreen.putExtra("email", email);
+        mainscreen.putExtra("password", password);
+        startActivity(mainscreen);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+        setResult(Activity.RESULT_OK);
+
     }
 
     private void topicActivity(FirebaseUser user) {
