@@ -19,12 +19,12 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
-        android:layout_width="wrap_content"
+        android:layout_width="144dp"
         android:layout_height="144dp"
         android:backgroundTint="@android:color/darker_gray"
         android:onClick="newProfileImage"
         android:scaleType="centerCrop"
-        android:src="@drawable/default_image"
+        android:src="@drawable/ic_solid_grey"
         android:transitionName="image"
         app:civ_border_color="@color/colorAccent"
         app:civ_border_width="6dp" />

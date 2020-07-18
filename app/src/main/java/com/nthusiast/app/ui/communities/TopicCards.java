@@ -125,7 +125,8 @@ public class TopicCards extends AppCompatActivity {
                                                         if (task.isSuccessful()) {
                                                             mTopicData.add(new Card("Recommended Dorms"));
                                                             for (QueryDocumentSnapshot document2 : Objects.requireNonNull(task2.getResult()))
-                                                                if (!followedDorms.contains((String) document2.get("name")))
+                                                                //noinspection SuspiciousMethodCalls
+                                                                if (!followedDorms.contains(document2.get("name")))
                                                                     mTopicData.add(new Card((String) document2.get("name"), (String) document2.get("description"), Uri.parse((String) document2.get("image"))));
                                                             mAdapter.notifyDataSetChanged();
                                                             runLayoutAnimation(mRecycler);

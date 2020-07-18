@@ -67,7 +67,7 @@
                 android:background="@drawable/rounded_image"
                 android:onClick="imageInput"
                 android:scaleType="centerCrop"
-                android:src="@drawable/default_image"
+                android:src="@drawable/ic_solid_grey"
                 app:layout_constraintTop_toBottomOf="@id/editor_title"
                 tools:ignore="ContentDescription" />
 

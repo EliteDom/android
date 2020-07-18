@@ -16,12 +16,12 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 
-import com.nthusiast.app.R;
-import com.nthusiast.app.ui.communities.TopicCards;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.nthusiast.app.R;
+import com.nthusiast.app.ui.communities.TopicCards;
 
 import java.util.Objects;
 import java.util.regex.Pattern;
