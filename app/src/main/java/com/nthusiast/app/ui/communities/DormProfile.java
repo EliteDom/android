@@ -203,7 +203,7 @@ public class DormProfile extends AppCompatActivity {
     }
 
     public void quizUI(View view) {
-        if (elite) {
+        if (!elite) {
             Intent quiz = new Intent(this, Quiz.class);
             quiz.putExtra("dorm", dorm);
             startActivity(quiz);
