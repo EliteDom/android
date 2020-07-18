@@ -53,7 +53,7 @@ public class UserProfile extends AppCompatActivity {
     private PreviewAdapter mAdapter;
     private RecyclerView mRecycler;
     private TextView mNoPosts;
-    private Uri localUri, destinationUri;
+    private Uri destinationUri;
     private String uid;
 
 
@@ -123,6 +123,7 @@ public class UserProfile extends AppCompatActivity {
                         mTitleData.clear();
                         if (uid.equals(FirebaseAuth.getInstance().getUid()))
                             mTitleData.add(new PreviewCard(Uri.parse(image)));
+                        mAdapter.notifyDataSetChanged();
                         loadPosts();
                     }
                 });
@@ -146,12 +147,12 @@ public class UserProfile extends AppCompatActivity {
                                                 mTitleData.add(new PreviewCard((String) document1.get("title"), (String) document1.get("postText"), document1.get("author") + " | Authored " + document1.get("timestamp") + " ago", document1.getId(), (String) document.get("dormName")));
                                         }
                                         mAdapter.notifyDataSetChanged();
-                                        if (mAdapter.getItemCount() > 1)
-                                            runLayoutAnimation(mRecycler);
-                                        else mNoPosts.animate().alpha(1.0f);
-                                        swipeRefreshLayout.setRefreshing(false);
                                     });
                         }
+                    swipeRefreshLayout.setRefreshing(false);
+                    if (mAdapter.getItemCount() > 1)
+                        runLayoutAnimation(mRecycler);
+                    else mNoPosts.animate().alpha(1.0f);
                 });
     }
 
@@ -185,6 +186,7 @@ public class UserProfile extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Uri localUri;
         if (requestCode == UCrop.REQUEST_CROP && resultCode == RESULT_OK) {
             localUri = UCrop.getOutput(data);
             Glide.with(this)
