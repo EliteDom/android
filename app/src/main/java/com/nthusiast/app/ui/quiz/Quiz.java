@@ -30,6 +30,7 @@ public class Quiz extends AppCompatActivity {
 
     private TextView time, question, option_1, option_2, option_3, option_4;
     private Iterator<HashMap.Entry<String, ArrayList<String>>> iterator;
+    private CardView card_1, card_2, card_3, card_4;
     private HashMap<String, ArrayList<String>> quiz;
     private FirebaseFirestore mDatabase;
     private boolean answered, correct;
@@ -60,6 +61,10 @@ public class Quiz extends AppCompatActivity {
         option_2 = findViewById(R.id.option_2);
         option_3 = findViewById(R.id.option_3);
         option_4 = findViewById(R.id.option_4);
+        card_1 = findViewById(R.id.card_1);
+        card_2 = findViewById(R.id.card_2);
+        card_3 = findViewById(R.id.card_3);
+        card_4 = findViewById(R.id.card_4);
         timer = findViewById(R.id.timer);
         time = findViewById(R.id.time);
         quiz = new HashMap<>();
@@ -276,10 +281,10 @@ public class Quiz extends AppCompatActivity {
     }
 
     private void clickStatus(boolean clickable) {
-        option_1.setClickable(clickable);
-        option_2.setClickable(clickable);
-        option_3.setClickable(clickable);
-        option_4.setClickable(clickable);
+        card_1.setClickable(clickable);
+        card_2.setClickable(clickable);
+        card_3.setClickable(clickable);
+        card_4.setClickable(clickable);
     }
 }
 /*
