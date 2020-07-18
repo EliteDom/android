@@ -1,4 +1,4 @@
-package com.nthusiast.app.ui.dorms;
+package com.nthusiast.app.ui.communities;
 
 import android.app.Activity;
 import android.content.Context;
@@ -23,7 +23,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nthusiast.app.R;
-import com.nthusiast.app.ui.dorms.CardsAdapter;
 import com.nthusiast.app.ui.main.Feed;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
@@ -36,7 +35,7 @@ import java.util.Objects;
 public class TopicCards extends AppCompatActivity {
 
     private FirebaseFirestore mDatabase;
-    private ArrayList<com.nthusiast.app.ui.dorms.Cards> mTopicData;
+    private ArrayList<com.nthusiast.app.ui.communities.Cards> mTopicData;
     private CardsAdapter mAdapter;
     private RecyclerView mRecycler;
     private String imageUri;

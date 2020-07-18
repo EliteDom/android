@@ -23,19 +23,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.nthusiast.app.R;
-import com.nthusiast.app.ui.dorms.TopicCards;
-import com.nthusiast.app.ui.login.LoginActivity;
-import com.nthusiast.app.ui.main.PreviewAdapter;
-import com.nthusiast.app.ui.main.PreviewCard;
-import com.nthusiast.app.ui.messaging.PersonalLanding;
-import com.nthusiast.app.ui.profile.UserProfile;
-import com.nthusiast.app.ui.search.Search;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.nthusiast.app.R;
+import com.nthusiast.app.ui.communities.TopicCards;
+import com.nthusiast.app.ui.login.LoginActivity;
+import com.nthusiast.app.ui.profile.UserProfile;
+import com.nthusiast.app.ui.search.Search;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -99,18 +96,15 @@ public class Feed extends AppCompatActivity {
     private void rotateSequence(View v) {
         FloatingActionButton fabLogout = findViewById(R.id.fabLogout);
         FloatingActionButton fabProfile = findViewById(R.id.fabProfile);
-        FloatingActionButton fabMessage = findViewById(R.id.fabMessages);
         FloatingActionButton fabSearch = findViewById(R.id.fabSearch);
         rotateFab(v, !isRotated);
         if (isRotated) {
             fabLogout.animate().translationY(-getResources().getDimension(R.dimen.standard_65));
             fabProfile.animate().translationY(-getResources().getDimension(R.dimen.standard_115));
-            fabMessage.animate().translationY(-getResources().getDimension(R.dimen.standard_165));
-            fabSearch.animate().translationY(-getResources().getDimension(R.dimen.standard_215));
+            fabSearch.animate().translationY(-getResources().getDimension(R.dimen.standard_165));
         } else {
             fabLogout.animate().translationY(0);
             fabProfile.animate().translationY(0);
-            fabMessage.animate().translationY(0);
             fabSearch.animate().translationY(0);
         }
     }
@@ -180,13 +174,6 @@ public class Feed extends AppCompatActivity {
 
     public void searchActivity(View view) {
         startActivity(new Intent(this, Search.class));
-        setResult(Activity.RESULT_OK);
-        rotateSequence(fab);
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-    }
-
-    public void personalMessages(View view) {
-        startActivity(new Intent(this, PersonalLanding.class));
         setResult(Activity.RESULT_OK);
         rotateSequence(fab);
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);

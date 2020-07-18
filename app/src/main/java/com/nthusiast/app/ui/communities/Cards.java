@@ -1,4 +1,4 @@
-package com.nthusiast.app.ui.dorms;
+package com.nthusiast.app.ui.communities;
 
 import android.net.Uri;
 

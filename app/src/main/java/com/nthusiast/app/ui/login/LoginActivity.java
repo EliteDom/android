@@ -17,7 +17,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 
 import com.nthusiast.app.R;
-import com.nthusiast.app.ui.dorms.TopicCards;
+import com.nthusiast.app.ui.communities.TopicCards;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;

@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.nthusiast.app.R;
-import com.nthusiast.app.ui.dorms.DormProfile;
+import com.nthusiast.app.ui.communities.DormProfile;
 
 import java.util.ArrayList;
 

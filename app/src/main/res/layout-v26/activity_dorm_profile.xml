@@ -8,7 +8,7 @@
     android:background="@drawable/gradient_list"
     android:fitsSystemWindows="true"
     android:paddingBottom="24dp"
-    tools:context=".ui.dorms.DormProfile">
+    tools:context=".ui.communities.DormProfile">
 
     <ImageView
         android:id="@+id/dormBanner"

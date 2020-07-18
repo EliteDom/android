@@ -57,20 +57,6 @@
         app:layout_constraintTop_toTopOf="@id/fab" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabMessages"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
-        android:onClick="personalMessages"
-        android:src="@drawable/ic_chat_white_24dp"
-        app:borderWidth="0dp"
-        app:fabSize="mini"
-        app:layout_constraintBottom_toBottomOf="@id/fab"
-        app:layout_constraintLeft_toLeftOf="@id/fab"
-        app:layout_constraintRight_toRightOf="@id/fab"
-        app:layout_constraintTop_toTopOf="@id/fab" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
