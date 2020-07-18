@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.nthusiast.app.R;
 
@@ -51,14 +52,18 @@ public class Result extends AppCompatActivity {
     private void displayResults() {
         mScore.setText(score + "/50");
 
-        if (Integer.parseInt(Objects.requireNonNull(score)) < 40) mResultText.setText("Unsuccessful Attempt");
+        if (Integer.parseInt(Objects.requireNonNull(score)) < 25)
+            mResultText.setText("Unsuccessful Attempt");
         else {
             mResultText.setText("You are now eligible to post at " + dorm + "!");
             mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
                     .get()
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
-                            ArrayList<String> dorms = (ArrayList<String>) Objects.requireNonNull(task.getResult()).get("eliteDorms");
+                            DocumentSnapshot document = task.getResult();
+                            ArrayList<String> dorms = new ArrayList<>();
+                            if (document != null && document.get("eliteDorms") != null)
+                                dorms = (ArrayList<String>) Objects.requireNonNull(task.getResult()).get("eliteDorms");
                             Objects.requireNonNull(dorms).add(dorm);
                             mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
                                     .update("eliteDorms", dorms);

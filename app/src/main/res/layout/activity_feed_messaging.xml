@@ -111,6 +111,7 @@
                         android:layout_height="48dp"
                         android:layout_gravity="bottom"
                         android:background="@drawable/circle"
+                        android:backgroundTint="@color/white"
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center"
