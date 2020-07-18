@@ -81,7 +81,7 @@ public class PostView extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
-                        if (document != null && document.exists())
+                        if (document != null && document.get("apprs") != null)
                             appreciations = (long) document.get("apprs");
                     }
                 });

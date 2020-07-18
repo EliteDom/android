@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.elitedom.app.R;
 import com.elitedom.app.ui.dorms.TopicCards;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -41,10 +40,12 @@ public class NewUser extends AppCompatActivity {
     private EditText mUsername, mFirstName, mLastName;
     private static final int SELECT_PICTURE = 1;
     private ConstraintLayout constraintLayout;
+    private Uri localUri, destinationUri;
     private FirebaseFirestore mDatabase;
     private CircleImageView imageView;
     private StorageReference mStorage;
-    private Uri localUri, destinationUri;
+    private String email, password;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,9 @@ public class NewUser extends AppCompatActivity {
         mDatabase = FirebaseFirestore.getInstance();
         mStorage = FirebaseStorage.getInstance().getReference();
         imageView = findViewById(R.id.profile_image);
+        mAuth = FirebaseAuth.getInstance();
+        email = getIntent().getStringExtra("email");
+        password = getIntent().getStringExtra("password");
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         Objects.requireNonNull(getSupportActionBar()).hide();
@@ -71,7 +75,7 @@ public class NewUser extends AppCompatActivity {
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(0, 0);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     public void submitData(View view) {
@@ -79,28 +83,42 @@ public class NewUser extends AppCompatActivity {
         String username = mUsername.getText().toString();
         String first = mFirstName.getText().toString();
         String last = mLastName.getText().toString();
-
         if (username.length() > 0 && first.length() > 0 && last.length() > 0) {
-            userData.put("firstName", mFirstName.getText().toString());
-            userData.put("lastName", mLastName.getText().toString());
-            userData.put("username", mUsername.getText().toString());
-            userData.put("appreciationPoints", 0);
-            userData.put("predictorPoints", 0);
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, task -> {
+                        if (task.isSuccessful()) {
+                            Snackbar.make(constraintLayout, "Welcome!", Snackbar.LENGTH_LONG)
+                                    .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
+                                    .show();
+                            userData.put("firstName", mFirstName.getText().toString());
+                            userData.put("lastName", mLastName.getText().toString());
+                            userData.put("username", mUsername.getText().toString());
+                            userData.put("appreciationPoints", 0);
+                            userData.put("predictorPoints", 0);
 
-            mDatabase.collection("users")
-                    .document(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
-                    .set(userData);
+                            mDatabase.collection("users")
+                                    .document(Objects.requireNonNull(mAuth.getUid()))
+                                    .set(userData);
 
-            Intent intent = new Intent(this, TopicCards.class);
-            intent.putExtra("image", localUri.toString());
-            uploadImage();
-            startActivity(intent);
-            setResult(Activity.RESULT_OK);
-            finish();
+                            Intent intent = new Intent(this, TopicCards.class);
+                            try {
+                                intent.putExtra("image", localUri.toString());
+                            } catch (Exception e) {
+                                intent.putExtra("image", "");
+                            }
+                            uploadImage();
+                            startActivity(intent);
+                            setResult(Activity.RESULT_OK);
+                            finish();
+
+                        } else
+                            Snackbar.make(constraintLayout, "Unsuccessful - try again later?", Snackbar.LENGTH_LONG)
+                                    .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
+                                    .show();
+                    });
         } else
             Snackbar.make(constraintLayout, "Please fill every field!", Snackbar.LENGTH_LONG)
                     .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
-                    .setAnchorView(R.id.sign_up_window)
                     .show();
     }
 
@@ -129,7 +147,7 @@ public class NewUser extends AppCompatActivity {
                     .setTitle("Update Profile")
                     .setMessage("Change your profile picture??")
                     .setPositiveButton("Replace", (dialogInterface, i) -> uploadImage())
-                    .setNeutralButton("Retain", (dialogInterface, i) -> retainProfilePicture())
+                    .setNeutralButton("Retain", (dialogInterface, i) -> dialogInterface.dismiss())
                     .show();
         } else if (resultCode == RESULT_OK && data.getData() != null) {
             localUri = data.getData();
@@ -143,15 +161,6 @@ public class NewUser extends AppCompatActivity {
             UCrop.of(localUri, destinationUri)
                     .start(this);
         }
-    }
-
-    @SuppressLint("InflateParams")
-    private void retainProfilePicture() {
-        Glide.with(this)
-                .load(imageView.getContentDescription().toString())
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .fitCenter()
-                .into(imageView);
     }
 
     private void uploadImage() {

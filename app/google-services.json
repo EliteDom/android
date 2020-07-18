@@ -1,42 +1,35 @@
 {
   "project_info": {
-    "project_number": "217667091499",
-    "firebase_url": "https://elitedom-14ace.firebaseio.com",
-    "project_id": "elitedom-14ace",
-    "storage_bucket": "elitedom-14ace.appspot.com"
+    "project_number": "1005716261829",
+    "firebase_url": "https://geekdb21.firebaseio.com",
+    "project_id": "geekdb21",
+    "storage_bucket": "geekdb21.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:217667091499:android:da3a1425ba82d4b105be6e",
+        "mobilesdk_app_id": "1:1005716261829:android:226fffead1ce3c5b98d9ac",
         "android_client_info": {
-          "package_name": "com.elitedom.app"
+          "package_name": "com.nthusiast.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "217667091499-mm1e1ra81llrq3mf9ms4qp0vbbc5jsmc.apps.googleusercontent.com",
+          "client_id": "1005716261829-5jo84cpcj3dbcsk0cirlldoa1qatlg5k.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDsLEMTJ797XL-U_i21CFOd_v2LEimE3K0"
+          "current_key": "AIzaSyD9_SalVsXBwhdOpatiLidujU9CPw8lb9c"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "217667091499-mm1e1ra81llrq3mf9ms4qp0vbbc5jsmc.apps.googleusercontent.com",
+              "client_id": "1005716261829-5jo84cpcj3dbcsk0cirlldoa1qatlg5k.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "217667091499-h75r39890qkl05cbqfuenot39t089r5g.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "bleh.EliteDom"
-              }
             }
           ]
         }

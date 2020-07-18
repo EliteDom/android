@@ -32,8 +32,8 @@ public class Quiz extends AppCompatActivity {
     private Iterator<HashMap.Entry<String, ArrayList<String>>> iterator;
     private HashMap<String, ArrayList<String>> quiz;
     private FirebaseFirestore mDatabase;
-    private ObjectAnimator animation;
     private boolean answered, correct;
+    private ObjectAnimator animation;
     private ProgressBar timer;
     private String dorm, ans;
     private int score;
