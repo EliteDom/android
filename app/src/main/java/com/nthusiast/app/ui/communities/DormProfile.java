@@ -22,16 +22,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
-import com.nthusiast.app.R;
-import com.nthusiast.app.ui.main.PreviewAdapter;
-import com.nthusiast.app.ui.main.PreviewCard;
-import com.nthusiast.app.ui.quiz.Quiz;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.nthusiast.app.R;
+import com.nthusiast.app.ui.main.PreviewAdapter;
+import com.nthusiast.app.ui.main.PreviewCard;
+import com.nthusiast.app.ui.quiz.Quiz;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -43,13 +43,13 @@ public class DormProfile extends AppCompatActivity {
     private SwipeRefreshLayout swipeRefreshLayout;
     private ArrayList<PreviewCard> mTitleData;
     private FirebaseFirestore mDatabase;
+    private boolean following, elite;
     private PreviewAdapter mAdapter;
     private ArrayList followedDorms;
     private RecyclerView mRecycler;
     private String dorm, imageUri;
     private ImageView dormBanner;
     private ImageButton mFollow;
-    private int follow_status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +91,9 @@ public class DormProfile extends AppCompatActivity {
     }
 
     private void initializeData() {
-        follow_status = 0;
+        following = false;
+        elite = false;
+
         Glide.with(this)
                 .load(imageUri)
                 .into(dormBanner);
@@ -108,15 +110,27 @@ public class DormProfile extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
+                        ArrayList<String> submitDorms = new ArrayList<>();
+                        if (document != null && document.get("eliteDorms") != null)
+                            submitDorms = (ArrayList) document.get("eliteDorms");
+                        if (Objects.requireNonNull(submitDorms).contains(dorm)) elite = true;
+                    }
+                });
+
+        mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
                         if (document != null && document.get("followedDorms") != null)
                             followedDorms = (ArrayList) document.get("followedDorms");
                         else followedDorms = new ArrayList<>();
                         assert followedDorms != null;
                         if (followedDorms.contains(dorm)) {
-                            follow_status = 1;
+                            following = true;
                             mFollow.setImageResource(R.drawable.ic_bookmark_black_24dp);
                         } else {
-                            follow_status = 0;
+                            following = false;
                             mFollow.setImageResource(R.drawable.ic_bookmark_border_black_24dp);
                         }
                     }
@@ -156,14 +170,14 @@ public class DormProfile extends AppCompatActivity {
     }
 
     public void followButton(View view) {
-        if (follow_status == 1) {
+        if (following) {
             AnimatedVectorDrawable animatedVectorDrawable =
                     (AnimatedVectorDrawable) getDrawable(R.drawable.bookmark_out_24dp);
             mFollow.setImageDrawable(animatedVectorDrawable);
             assert animatedVectorDrawable != null;
             animatedVectorDrawable.start();
             followedDorms.remove(dorm);
-            follow_status = 0;
+            following = false;
             Snackbar.make(mRecycler, "Unfollowed " + dorm + "!", Snackbar.LENGTH_LONG)
                     .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
                     .show();
@@ -174,7 +188,7 @@ public class DormProfile extends AppCompatActivity {
             assert animatedVectorDrawable != null;
             animatedVectorDrawable.start();
             followedDorms.add(dorm);
-            follow_status = 1;
+            following = true;
             Snackbar.make(mRecycler, "Followed " + dorm + "!", Snackbar.LENGTH_LONG)
                     .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
                     .show();
@@ -189,8 +203,25 @@ public class DormProfile extends AppCompatActivity {
     }
 
     public void quizUI(View view) {
-        Intent quiz = new Intent(this, Quiz.class);
-        quiz.putExtra("dorm", dorm);
-        startActivity(quiz);
+        if (elite) {
+            Intent quiz = new Intent(this, Quiz.class);
+            quiz.putExtra("dorm", dorm);
+            startActivity(quiz);
+        } else {
+            mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document != null) {
+                                Intent post = new Intent(DormProfile.this, Quiz.class);
+                                if (document.get("image") != null)
+                                    post.putExtra("image", (String) document.get("image"));
+                                else post.putExtra("image", "");
+                                startActivity(post);
+                            }
+                        }
+                    });
+        }
     }
 }

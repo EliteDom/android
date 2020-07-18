@@ -130,7 +130,7 @@ public class PostCreator extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
-                        if (document != null) submitDorms = (ArrayList) document.get("eliteDorms");
+                        if (document != null && document.get("eliteDorms") != null) submitDorms = (ArrayList) document.get("eliteDorms");
                         else submitDorms = new ArrayList<>();
                     }
                 });
@@ -165,7 +165,7 @@ public class PostCreator extends AppCompatActivity {
     public void submitPost(View view) {
         if (body.getText().toString().length() > 0 && title.getText().toString().length() > 0)
             new MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
-                    .setTitle("Pick a Dorm!")
+                    .setTitle("Pick a Community!")
                     .setItems(getStringArray(submitDorms), (dialog, which) -> {
                         supportFinishAfterTransition();
                         if (downloadUri != null)
