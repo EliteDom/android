@@ -32,6 +32,7 @@
             android:onClick="newProfileImage"
             android:src="@drawable/wp_linux"
             android:transitionName="image"
+            android:scaleType="centerCrop"
             app:civ_border_color="@color/colorAccent"
             app:civ_border_width="6dp" />
 
