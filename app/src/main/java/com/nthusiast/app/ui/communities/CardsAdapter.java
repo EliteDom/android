@@ -18,18 +18,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.nthusiast.app.R;
+import com.nthusiast.app.ui.main.PreviewCard;
 
 import java.util.ArrayList;
 
 import static android.view.View.GONE;
 
-class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
+class CardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private ArrayList<Cards> mTopicsData;
-    private Context mContext;
+    private static final int VIEW_TYPE_CARD = 1;
+    private static final int VIEW_TYPE_TEXT = 2;
     private ArrayList<String> mTickedNames;
+    private ArrayList<Card> mTopicsData;
+    private Context mContext;
 
-    CardsAdapter(Context context, ArrayList<Cards> topicData) {
+    CardsAdapter(Context context, ArrayList<Card> topicData) {
         this.mTopicsData = topicData;
         this.mContext = context;
         mTickedNames = new ArrayList<>();
@@ -37,22 +40,43 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
 
     @NonNull
     @Override
-    public CardsAdapter.ViewHolder onCreateViewHolder(
-            @NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(mContext).
-                inflate(R.layout.item_topic_card, parent, false));
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view;
+        if (viewType == VIEW_TYPE_CARD) {
+            view = LayoutInflater.from(mContext)
+                    .inflate(R.layout.item_topic_card, parent, false);
+            return new CardsAdapter.CardViewHolder(view);
+        } else if (viewType == VIEW_TYPE_TEXT) {
+            view = LayoutInflater.from(mContext)
+                    .inflate(R.layout.item_label_text, parent, false);
+            return new TextViewHolder(view);
+        } else //noinspection ConstantConditions
+            return null;
     }
 
     @Override
-    public void onBindViewHolder(CardsAdapter.ViewHolder holder,
+    public void onBindViewHolder(RecyclerView.ViewHolder holder,
                                  int position) {
-        Cards currentTopic = mTopicsData.get(position);
-        holder.bindTo(currentTopic);
+        Card card = mTopicsData.get(position);
+        switch (holder.getItemViewType()) {
+            case VIEW_TYPE_CARD:
+                ((CardsAdapter.CardViewHolder) holder).bindTo(card);
+                break;
+            case VIEW_TYPE_TEXT:
+                ((CardsAdapter.TextViewHolder) holder).bindTo(card);
+        }
     }
 
     @Override
     public int getItemCount() {
         return mTopicsData.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        Card card = mTopicsData.get(position);
+        if (card.getInfo() == null) return VIEW_TYPE_TEXT;
+        else return VIEW_TYPE_CARD;
     }
 
     private void updateCardNames(String s, int n) {
@@ -64,7 +88,22 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
         return mTickedNames;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    static class TextViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView mLabel;
+
+        TextViewHolder(final View itemView) {
+            super(itemView);
+
+            mLabel = itemView.findViewById(R.id.label);
+        }
+
+        void bindTo(Card card) {
+            mLabel.setText(card.getTitle());
+        }
+    }
+
+    class CardViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView mTitleText, mInfoText;
         private ImageView mTopicImage, mTickView;
@@ -73,7 +112,7 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
         private com.google.android.material.floatingactionbutton.FloatingActionButton fab;
         private int flag;
 
-        ViewHolder(final View itemView) {
+        CardViewHolder(final View itemView) {
             super(itemView);
 
             mTitleText = itemView.findViewById(R.id.title);
@@ -137,7 +176,7 @@ class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
             });
         }
 
-        void bindTo(Cards currentTopic) {
+        void bindTo(Card currentTopic) {
             mTitleText.setText(currentTopic.getTitle());
             mInfoText.setText(currentTopic.getInfo());
             Glide.with(mContext)

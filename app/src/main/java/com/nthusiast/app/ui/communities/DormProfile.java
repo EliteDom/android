@@ -29,6 +29,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.nthusiast.app.R;
+import com.nthusiast.app.ui.main.PostCreator;
 import com.nthusiast.app.ui.main.PreviewAdapter;
 import com.nthusiast.app.ui.main.PreviewCard;
 import com.nthusiast.app.ui.quiz.Quiz;
@@ -214,7 +215,7 @@ public class DormProfile extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
                             if (document != null) {
-                                Intent post = new Intent(DormProfile.this, Quiz.class);
+                                Intent post = new Intent(DormProfile.this, PostCreator.class);
                                 if (document.get("image") != null)
                                     post.putExtra("image", (String) document.get("image"));
                                 else post.putExtra("image", "");

@@ -22,22 +22,25 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.nthusiast.app.R;
-import com.nthusiast.app.ui.main.Feed;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.nthusiast.app.R;
+import com.nthusiast.app.ui.main.Feed;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class TopicCards extends AppCompatActivity {
 
+    private ArrayList<String> followedDorms;
     private FirebaseFirestore mDatabase;
-    private ArrayList<com.nthusiast.app.ui.communities.Cards> mTopicData;
-    private CardsAdapter mAdapter;
+    private ArrayList<Card> mTopicData;
     private RecyclerView mRecycler;
+    private CardsAdapter mAdapter;
     private String imageUri;
 
     @Override
@@ -57,7 +60,8 @@ public class TopicCards extends AppCompatActivity {
         mDatabase = FirebaseFirestore.getInstance();
         RelativeLayout relativeLayout = findViewById(R.id.card_container);
         mRecycler = findViewById(R.id.recyclerView);
-        if (getIntent().getStringExtra("image") != null) imageUri = getIntent().getStringExtra("image");
+        if (getIntent().getStringExtra("image") != null)
+            imageUri = getIntent().getStringExtra("image");
 
         AnimationDrawable animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
         animationDrawable.setEnterFadeDuration(2000);
@@ -96,14 +100,51 @@ public class TopicCards extends AppCompatActivity {
 
     private void initializeData() {
         mTopicData.clear();
-        mDatabase.collection("dorms")
+        mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult()))
-                            mTopicData.add(new Cards((String) document.get("name"), (String) document.get("description"), Uri.parse((String) document.get("image"))));
-                        mAdapter.notifyDataSetChanged();
-                        runLayoutAnimation(mRecycler);
+                        DocumentSnapshot document = task.getResult();
+                        followedDorms = new ArrayList<>();
+                        if (document != null && document.get("followedDorms") != null) {
+                            mTopicData.add(new Card("Followed Dorms"));
+                            followedDorms = (ArrayList<String>) document.get("followedDorms");
+                        }
+                        for (String i : Objects.requireNonNull(followedDorms)) {
+                            mDatabase.collection("dorms").document(i)
+                                    .get()
+                                    .addOnCompleteListener(task1 -> {
+                                        if (task1.isSuccessful()) {
+                                            DocumentSnapshot document1 = Objects.requireNonNull(task1.getResult());
+                                            mTopicData.add(new Card((String) document1.get("name"), (String) document1.get("description"), Uri.parse((String) document1.get("image"))));
+                                        }
+                                        if (followedDorms.indexOf(i) == followedDorms.size() - 1)
+                                            mDatabase.collection("dorms")
+                                                    .get()
+                                                    .addOnCompleteListener(task2 -> {
+                                                        if (task.isSuccessful()) {
+                                                            mTopicData.add(new Card("Recommended Dorms"));
+                                                            for (QueryDocumentSnapshot document2 : Objects.requireNonNull(task2.getResult()))
+                                                                if (!followedDorms.contains((String) document2.get("name")))
+                                                                    mTopicData.add(new Card((String) document2.get("name"), (String) document2.get("description"), Uri.parse((String) document2.get("image"))));
+                                                            mAdapter.notifyDataSetChanged();
+                                                            runLayoutAnimation(mRecycler);
+                                                        }
+                                                    });
+                                    });
+                        }
+                        if (followedDorms.size() == 0)
+                            mDatabase.collection("dorms")
+                                    .get()
+                                    .addOnCompleteListener(task2 -> {
+                                        if (task.isSuccessful()) {
+                                            mTopicData.add(new Card("Recommended Dorms"));
+                                            for (QueryDocumentSnapshot document2 : Objects.requireNonNull(task2.getResult()))
+                                                mTopicData.add(new Card((String) document2.get("name"), (String) document2.get("description"), Uri.parse((String) document2.get("image"))));
+                                            mAdapter.notifyDataSetChanged();
+                                            runLayoutAnimation(mRecycler);
+                                        }
+                                    });
                     }
                 });
     }
