@@ -30,6 +30,7 @@ public class Quiz extends AppCompatActivity {
 
     private TextView time, question, option_1, option_2, option_3, option_4;
     private Iterator<HashMap.Entry<String, ArrayList<String>>> iterator;
+    private CardView card_1, card_2, card_3, card_4;
     private HashMap<String, ArrayList<String>> quiz;
     private FirebaseFirestore mDatabase;
     private boolean answered, correct;
@@ -60,6 +61,10 @@ public class Quiz extends AppCompatActivity {
         option_2 = findViewById(R.id.option_2);
         option_3 = findViewById(R.id.option_3);
         option_4 = findViewById(R.id.option_4);
+        card_1 = findViewById(R.id.card_1);
+        card_2 = findViewById(R.id.card_2);
+        card_3 = findViewById(R.id.card_3);
+        card_4 = findViewById(R.id.card_4);
         timer = findViewById(R.id.timer);
         time = findViewById(R.id.time);
         quiz = new HashMap<>();
@@ -116,6 +121,7 @@ public class Quiz extends AppCompatActivity {
         final char[] o3 = value.get(2).toCharArray();
         final char[] o4 = value.get(3).toCharArray();
         new Thread(() -> {
+            clickStatus(true);
             this.runOnUiThread(() -> {
                 animation = ObjectAnimator.ofInt(timer, "progress", 0, 100 * 1000);
                 animation.setDuration(1000);
@@ -208,6 +214,7 @@ public class Quiz extends AppCompatActivity {
     }
 
     public void checkAnswer(View view) {
+        clickStatus(false);
         switch (Integer.parseInt(view.getTag().toString())) {
             case 1:
                 if (ans.equals(option_1.getText().toString())) correctAnswer(1);
@@ -271,6 +278,13 @@ public class Quiz extends AppCompatActivity {
         setCardColorTran(findViewById(R.id.color_2), getColor(R.color.colorAccent));
         setCardColorTran(findViewById(R.id.color_3), getColor(R.color.colorAccent));
         setCardColorTran(findViewById(R.id.color_4), getColor(R.color.colorAccent));
+    }
+
+    private void clickStatus(boolean clickable) {
+        card_1.setClickable(clickable);
+        card_2.setClickable(clickable);
+        card_3.setClickable(clickable);
+        card_4.setClickable(clickable);
     }
 }
 /*

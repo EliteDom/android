@@ -7,15 +7,12 @@ import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
-import com.nthusiast.app.R;
-import com.nthusiast.app.ui.communities.TopicCards;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
@@ -24,6 +21,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.nthusiast.app.R;
+import com.nthusiast.app.ui.communities.TopicCards;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
@@ -39,20 +38,20 @@ public class NewUser extends AppCompatActivity {
 
     private EditText mUsername, mFirstName, mLastName;
     private static final int SELECT_PICTURE = 1;
-    private ConstraintLayout constraintLayout;
-    private Uri destinationUri;
+    private LinearLayout linearLayout;
     private FirebaseFirestore mDatabase;
     private CircleImageView imageView;
     private StorageReference mStorage;
     private String email, password;
     private FirebaseAuth mAuth;
+    private Uri destinationUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_user);
 
-        constraintLayout = findViewById(R.id.new_user_layout);
+        linearLayout = findViewById(R.id.linearLayout);
         mUsername = findViewById(R.id.username);
         mFirstName = findViewById(R.id.first_name);
         mLastName = findViewById(R.id.last_name);
@@ -63,10 +62,10 @@ public class NewUser extends AppCompatActivity {
         email = getIntent().getStringExtra("email");
         password = getIntent().getStringExtra("password");
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
-        AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
+        AnimationDrawable animationDrawable = (AnimationDrawable) linearLayout.getBackground();
         animationDrawable.setEnterFadeDuration(2000);
         animationDrawable.setExitFadeDuration(4000);
         animationDrawable.start();
@@ -87,7 +86,7 @@ public class NewUser extends AppCompatActivity {
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, task -> {
                         if (task.isSuccessful()) {
-                            Snackbar.make(constraintLayout, "Welcome!", Snackbar.LENGTH_LONG)
+                            Snackbar.make(linearLayout, "Welcome!", Snackbar.LENGTH_LONG)
                                     .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
                                     .show();
                             userData.put("firstName", mFirstName.getText().toString());
@@ -112,12 +111,12 @@ public class NewUser extends AppCompatActivity {
                             finish();
 
                         } else
-                            Snackbar.make(constraintLayout, "Unsuccessful - try again later?", Snackbar.LENGTH_LONG)
+                            Snackbar.make(linearLayout, "Unsuccessful - try again later?", Snackbar.LENGTH_LONG)
                                     .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
                                     .show();
                     });
         } else
-            Snackbar.make(constraintLayout, "Please fill every field!", Snackbar.LENGTH_LONG)
+            Snackbar.make(linearLayout, "Please fill every field!", Snackbar.LENGTH_LONG)
                     .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
                     .show();
     }
