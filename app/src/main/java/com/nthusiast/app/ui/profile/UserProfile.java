@@ -20,9 +20,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.nthusiast.app.R;
-import com.nthusiast.app.ui.main.PreviewAdapter;
-import com.nthusiast.app.ui.main.PreviewCard;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -31,6 +28,9 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.nthusiast.app.R;
+import com.nthusiast.app.ui.main.PreviewAdapter;
+import com.nthusiast.app.ui.main.PreviewCard;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
@@ -52,8 +52,8 @@ public class UserProfile extends AppCompatActivity {
     private CircleImageView imageView;
     private PreviewAdapter mAdapter;
     private RecyclerView mRecycler;
-    private TextView mNoPosts;
     private Uri destinationUri;
+    private TextView mNoPosts;
     private String uid;
 
 
@@ -115,10 +115,13 @@ public class UserProfile extends AppCompatActivity {
                         username.setText(Objects.requireNonNull(document.get("firstName")).toString() + " " + Objects.requireNonNull(document.get("lastName")).toString() + "'s Profile");
                         String image = "" + document.get("image");
                         if (image.length() > 0)
-                            Glide.with(UserProfile.this)
-                                    .load(image)
-                                    .fitCenter()
-                                    .into(imageView);
+                            try {
+                                Glide.with(UserProfile.this)
+                                        .load(image)
+                                        .fitCenter()
+                                        .into(imageView);
+                            } catch (IllegalArgumentException ignored) {} // Started load when activity destroyed
+
                         imageView.setContentDescription(image);
                         mTitleData.clear();
                         if (uid.equals(FirebaseAuth.getInstance().getUid()))
