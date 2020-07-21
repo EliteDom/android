@@ -20,13 +20,16 @@
         android:textColor="@color/black"
         android:textStyle="bold" />
 
-    <androidx.cardview.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+    <com.google.android.material.card.MaterialCardView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:layout_marginBottom="6dp"
         android:animateLayoutChanges="false"
+        android:checkable="true"
+        android:clickable="true"
+        android:focusable="true"
         app:cardBackgroundColor="@android:color/transparent"
         app:cardCornerRadius="8dp"
         app:cardElevation="0dp">
@@ -57,17 +60,6 @@
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark" />
-
-            <ImageView
-                android:id="@+id/tick"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@id/topicImage"
-                android:layout_alignEnd="@id/topicImage"
-                android:layout_margin="8dp"
-                android:src="@drawable/ic_done_outline_white_24dp"
-                android:visibility="visible"
-                tools:ignore="ContentDescription" />
         </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 </RelativeLayout>
