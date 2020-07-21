@@ -69,16 +69,16 @@
 
         <LinearLayout
             android:id="@+id/actions"
+            android:layout_marginStart="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <Button
                 android:id="@+id/forgot_password"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
-                android:layout_weight="2"
                 android:backgroundTint="@android:color/transparent"
                 android:fontFamily="monospace"
                 android:onClick="resetPassword"
@@ -96,10 +96,9 @@
             <Button
                 android:id="@+id/login"
                 style="Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:layout_weight="1"
                 android:backgroundTint="@android:color/transparent"
                 android:fontFamily="monospace"
                 android:onClick="loginButton"
