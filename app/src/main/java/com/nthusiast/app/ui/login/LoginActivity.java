@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
@@ -47,19 +48,21 @@ public class LoginActivity extends AppCompatActivity {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
-        Button loginButton = findViewById(R.id.login);
-        final Button passwordReset = findViewById(R.id.forgot_password);
-        TextView title = findViewById(R.id.title);
+        mAuth = FirebaseAuth.getInstance();
         emailEditText = findViewById(R.id.email);
+        TextView title = findViewById(R.id.title);
+        Button loginButton = findViewById(R.id.login);
         passwordEditText = findViewById(R.id.password);
         constraintLayout = findViewById(R.id.login_layout);
-        mAuth = FirebaseAuth.getInstance();
+        CardView emailCard = findViewById(R.id.email_card);
+        CardView passwordCard = findViewById(R.id.password_card);
+        final Button passwordReset = findViewById(R.id.forgot_password);
 
-        Animation atg = AnimationUtils.loadAnimation(this, R.anim.atg);
+        Animation atg1 = AnimationUtils.loadAnimation(this, R.anim.atg);
         Animation atg2 = AnimationUtils.loadAnimation(this, R.anim.atg2);
         Animation atg3 = AnimationUtils.loadAnimation(this, R.anim.atg3);
-        emailEditText.startAnimation(atg);
-        passwordEditText.startAnimation(atg2);
+        emailCard.startAnimation(atg1);
+        passwordCard.startAnimation(atg2);
         loginButton.startAnimation(atg3);
         passwordReset.startAnimation(atg3);
 
@@ -101,7 +104,6 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(mainscreen);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
         setResult(Activity.RESULT_OK);
-
     }
 
     private void topicActivity(FirebaseUser user) {
