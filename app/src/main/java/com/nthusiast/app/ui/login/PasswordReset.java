@@ -7,16 +7,15 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.nthusiast.app.R;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.nthusiast.app.R;
 
 import java.util.Objects;
 
@@ -30,7 +29,7 @@ public class PasswordReset extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password_reset);
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
         mEmail = findViewById(R.id.email);
@@ -58,5 +57,11 @@ public class PasswordReset extends AppCompatActivity {
             setResult(Activity.RESULT_OK);
             finish();
         }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }

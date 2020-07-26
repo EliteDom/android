@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.nthusiast.app.R;
-import com.nthusiast.app.ui.communities.DormProfile;
+import com.nthusiast.app.ui.communities.CommunityProfile;
 
 import java.util.ArrayList;
 
@@ -68,7 +68,7 @@ class ResultAdapter extends RecyclerView.Adapter<com.nthusiast.app.ui.search.Res
                     .load(currentResult.getImageResource())
                     .into(icon);
             mCard.setOnClickListener(v -> {
-                Intent intent = new Intent(mContext, DormProfile.class);
+                Intent intent = new Intent(mContext, CommunityProfile.class);
                 intent.putExtra("dorm", currentResult.getName());
                 intent.putExtra("image", currentResult.getImageResource().toString());
                 mContext.startActivity(intent);

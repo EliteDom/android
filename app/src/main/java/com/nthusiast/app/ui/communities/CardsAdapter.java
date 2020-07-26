@@ -1,24 +1,20 @@
 package com.nthusiast.app.ui.communities;
 
-import android.animation.LayoutTransition;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.card.MaterialCardView;
 import com.nthusiast.app.R;
-import com.nthusiast.app.ui.main.PreviewCard;
 
 import java.util.ArrayList;
 
@@ -105,75 +101,26 @@ class CardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     class CardViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        private MaterialCardView mCard;
         private TextView mTitleText, mInfoText;
-        private ImageView mTopicImage, mTickView;
-        private Animation in, out;
-        private RelativeLayout mCardLayout;
-        private com.google.android.material.floatingactionbutton.FloatingActionButton fab;
-        private int flag;
+        private ImageView mTopicImage;
 
         CardViewHolder(final View itemView) {
             super(itemView);
 
+            mCard = itemView.findViewById(R.id.card_view);
             mTitleText = itemView.findViewById(R.id.title);
             mInfoText = itemView.findViewById(R.id.subTitle);
             mTopicImage = itemView.findViewById(R.id.topicImage);
-            mCardLayout = itemView.findViewById(R.id.singlecardlayout);
-            mTickView = itemView.findViewById(R.id.tick);
 
             @SuppressLint("InflateParams") View myLayout = LayoutInflater.from(mContext).inflate(R.layout.activity_topic_cards, null);
-            fab = myLayout.findViewById(R.id.fab);
+            com.google.android.material.floatingactionbutton.FloatingActionButton fab = myLayout.findViewById(R.id.fab);
 
             fab.animate().alpha(0.0f);
-            mTickView.animate().alpha(0.0f);
-            flag = 0;
-
-            in = AnimationUtils.loadAnimation(mContext, R.anim.cards_subtext_in);
-            out = AnimationUtils.loadAnimation(mContext, R.anim.cards_subtext_out);
-
-            in.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-                    mCardLayout.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    mCardLayout.setLayoutTransition(null);
-                    mInfoText.setVisibility(GONE);
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-                }
-            });
-            out.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-                    mCardLayout.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    mCardLayout.setLayoutTransition(null);
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-                }
-            });
 
             mInfoText.setTranslationY(-170f);
             mInfoText.setVisibility(GONE);
-            itemView.setOnClickListener(this);
-            itemView.setOnLongClickListener(v -> {
-                mCardLayout.setLayoutTransition(new LayoutTransition());
-                if (mInfoText.getVisibility() != View.VISIBLE) {
-                    mInfoText.setVisibility(View.VISIBLE);
-                    mInfoText.startAnimation(out);
-                } else mInfoText.startAnimation(in);
-                return true;
-            });
+            mCard.setOnClickListener(this);
         }
 
         void bindTo(Card currentTopic) {
@@ -187,16 +134,11 @@ class CardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         @Override
         public void onClick(View view) {
-            if (flag == 0) {
-                Animation expandIn = AnimationUtils.loadAnimation(mContext, R.anim.fab_pop);
-                fab.startAnimation(expandIn);
-                flag = 1;
-            }
-            if (mTickView.getAlpha() == 1.0f) {
-                mTickView.animate().alpha(0.0f);
+            if (mCard.isChecked()) {
+                mCard.setChecked(false);
                 CardsAdapter.this.updateCardNames(mTitleText.getText().toString(), 2);
             } else {
-                mTickView.animate().alpha(1.0f);
+                mCard.setChecked(true);
                 CardsAdapter.this.updateCardNames(mTitleText.getText().toString(), 1);
             }
         }

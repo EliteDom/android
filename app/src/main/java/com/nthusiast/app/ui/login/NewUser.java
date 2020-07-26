@@ -8,9 +8,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -38,7 +38,7 @@ public class NewUser extends AppCompatActivity {
 
     private EditText mUsername, mFirstName, mLastName;
     private static final int SELECT_PICTURE = 1;
-    private LinearLayout linearLayout;
+    private ConstraintLayout constraintLayout;
     private FirebaseFirestore mDatabase;
     private CircleImageView imageView;
     private StorageReference mStorage;
@@ -51,7 +51,7 @@ public class NewUser extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_user);
 
-        linearLayout = findViewById(R.id.linearLayout);
+        constraintLayout = findViewById(R.id.constraint_layout);
         mUsername = findViewById(R.id.username);
         mFirstName = findViewById(R.id.first_name);
         mLastName = findViewById(R.id.last_name);
@@ -65,7 +65,7 @@ public class NewUser extends AppCompatActivity {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
-        AnimationDrawable animationDrawable = (AnimationDrawable) linearLayout.getBackground();
+        AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
         animationDrawable.setEnterFadeDuration(2000);
         animationDrawable.setExitFadeDuration(4000);
         animationDrawable.start();
@@ -74,7 +74,7 @@ public class NewUser extends AppCompatActivity {
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
     public void submitData(View view) {
@@ -86,7 +86,7 @@ public class NewUser extends AppCompatActivity {
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, task -> {
                         if (task.isSuccessful()) {
-                            Snackbar.make(linearLayout, "Welcome!", Snackbar.LENGTH_LONG)
+                            Snackbar.make(constraintLayout, "Welcome!", Snackbar.LENGTH_LONG)
                                     .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
                                     .show();
                             userData.put("firstName", mFirstName.getText().toString());
@@ -111,12 +111,12 @@ public class NewUser extends AppCompatActivity {
                             finish();
 
                         } else
-                            Snackbar.make(linearLayout, "Unsuccessful - try again later?", Snackbar.LENGTH_LONG)
+                            Snackbar.make(constraintLayout, "Unsuccessful - try again later?", Snackbar.LENGTH_LONG)
                                     .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
                                     .show();
                     });
         } else
-            Snackbar.make(linearLayout, "Please fill every field!", Snackbar.LENGTH_LONG)
+            Snackbar.make(constraintLayout, "Please fill every field!", Snackbar.LENGTH_LONG)
                     .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
                     .show();
     }
