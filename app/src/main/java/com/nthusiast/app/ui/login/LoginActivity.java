@@ -14,8 +14,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.ActivityOptionsCompat;
 
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
@@ -150,10 +148,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void resetPassword(View view) {
-        Intent forgotIntent = new Intent(this, PasswordReset.class);
-        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, constraintLayout, "gradientShift");
-        ActivityCompat.startActivity(this, forgotIntent, options.toBundle());
+        startActivity(new Intent(this, PasswordReset.class));
         setResult(Activity.RESULT_OK);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
     private boolean isValid(String email) {

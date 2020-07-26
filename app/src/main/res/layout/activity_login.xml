@@ -43,7 +43,7 @@
                 android:animateLayoutChanges="true"
                 android:clipToPadding="false"
                 app:cardCornerRadius="8dp"
-                app:cardElevation="4dp">
+                app:cardElevation="6dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/email"

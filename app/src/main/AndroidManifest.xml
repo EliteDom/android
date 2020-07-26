@@ -22,7 +22,9 @@
             android:name=".ui.main.PostCreator"
             android:exported="true"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".ui.login.PasswordReset" />
+        <activity
+            android:name=".ui.login.PasswordReset"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.messaging.ProfileMessaging"
             android:windowSoftInputMode="adjustResize" />
