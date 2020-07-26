@@ -107,7 +107,7 @@ public class TopicCards extends AppCompatActivity {
                         DocumentSnapshot document = task.getResult();
                         followedDorms = new ArrayList<>();
                         if (document != null && document.get("followedDorms") != null) {
-                            mTopicData.add(new Card("Followed Dorms"));
+                            mTopicData.add(new Card("Followed Communities"));
                             followedDorms = (ArrayList<String>) document.get("followedDorms");
                         }
                         for (String i : Objects.requireNonNull(followedDorms)) {
@@ -123,7 +123,7 @@ public class TopicCards extends AppCompatActivity {
                                                     .get()
                                                     .addOnCompleteListener(task2 -> {
                                                         if (task.isSuccessful()) {
-                                                            mTopicData.add(new Card("Recommended Dorms"));
+                                                            mTopicData.add(new Card("Recommended Communities"));
                                                             for (QueryDocumentSnapshot document2 : Objects.requireNonNull(task2.getResult()))
                                                                 //noinspection SuspiciousMethodCalls
                                                                 if (!followedDorms.contains(document2.get("name")))

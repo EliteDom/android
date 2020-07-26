@@ -4,7 +4,7 @@
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Log in</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
+    <string name="welcome">"Welcome!"</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
@@ -18,7 +18,6 @@
     <string name="topic_info_placeholder">Here is some news</string>
     <string name="subtitle_detail_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ultrices congue rutrum. Phasellus elementum ipsum ac convallis aliquam. Suspendisse eleifend eros a enim faucibus mollis. Nunc placerat, est vitae vestibulum blandit, dolor diam fringilla tellus, eu euismod mauris neque at neque.</string>
     <string name="topic_cards_action_bar">Select Interesting Categories!</string>
-    <string name="profile_name">Jinen Setpal\'s Profile</string>
     <string name="predictor_text">Predictor Score</string>
     <string name="appreciation_points">Appreciation Points</string>
     <string name="chatroom">The Chatroom</string>
@@ -33,7 +32,7 @@
     <string name="search">Search</string>
     <string name="empty_search">No Results!</string>
     <string name="about">About</string>
-    <string name="empty_dorm">This dorm has no posts!</string>
+    <string name="empty_community">This community has no posts!</string>
     <string name="initial_time_quiz">10</string>
     <string name="result">Result</string>
 </resources>

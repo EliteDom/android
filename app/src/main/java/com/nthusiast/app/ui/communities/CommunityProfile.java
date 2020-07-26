@@ -38,7 +38,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 @SuppressWarnings("rawtypes")
-public class DormProfile extends AppCompatActivity {
+public class CommunityProfile extends AppCompatActivity {
 
     private TextView mNoPosts, mDormTitle, mDormAbout;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -215,7 +215,7 @@ public class DormProfile extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
                             if (document != null) {
-                                Intent post = new Intent(DormProfile.this, PostCreator.class);
+                                Intent post = new Intent(CommunityProfile.this, PostCreator.class);
                                 if (document.get("image") != null)
                                     post.putExtra("image", (String) document.get("image"));
                                 else post.putExtra("image", "");
