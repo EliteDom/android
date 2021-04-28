@@ -33,6 +33,4 @@
     <string name="empty_search">No Results!</string>
     <string name="about">About</string>
     <string name="empty_community">This community has no posts!</string>
-    <string name="initial_time_quiz">10</string>
-    <string name="result">Result</string>
 </resources>
