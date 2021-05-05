@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -17,6 +18,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.nthusiast.app.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -125,13 +127,14 @@ public class PostCreator extends AppCompatActivity {
     }
 
     public void getDorms() {
-        mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
+        mDatabase.collection("dorms")
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document != null && document.get("eliteDorms") != null) submitDorms = (ArrayList) document.get("eliteDorms");
-                        else submitDorms = new ArrayList<>();
+                        submitDorms = new ArrayList <String>();
+                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                            submitDorms.add(document.get("name"));
+                        }
                     }
                 });
     }
