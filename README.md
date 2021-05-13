@@ -33,3 +33,16 @@ EliteNthusiastdom envisions a social media environment of specialisation where p
 ## Contributing, Feature Request & Issues
 
 Guidelines for the same are outlined on their seperate .md files - check them out!
+
+
+## Our Team
+
+### Developers 
+
+- Jinen Setpal [Android]
+- Ruthvik Rajesh [iOS] 
+
+### Media & Business
+
+- Ishan Yellurkar 
+- Atharva Karkhanis

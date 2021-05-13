@@ -32,7 +32,6 @@ import com.nthusiast.app.R;
 import com.nthusiast.app.ui.main.PostCreator;
 import com.nthusiast.app.ui.main.PreviewAdapter;
 import com.nthusiast.app.ui.main.PreviewCard;
-import com.nthusiast.app.ui.quiz.Quiz;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -203,26 +202,4 @@ public class CommunityProfile extends AppCompatActivity {
                 .update("followedDorms", followedDorms);
     }
 
-    public void quizUI(View view) {
-        if (!elite) {
-            Intent quiz = new Intent(this, Quiz.class);
-            quiz.putExtra("dorm", dorm);
-            startActivity(quiz);
-        } else {
-            mDatabase.collection("users").document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
-                    .get()
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document != null) {
-                                Intent post = new Intent(CommunityProfile.this, PostCreator.class);
-                                if (document.get("image") != null)
-                                    post.putExtra("image", (String) document.get("image"));
-                                else post.putExtra("image", "");
-                                startActivity(post);
-                            }
-                        }
-                    });
-        }
-    }
 }

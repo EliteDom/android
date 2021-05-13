@@ -79,7 +79,7 @@ public class Search extends AppCompatActivity {
     }
 
     public void triggerSearch(View view) {
-        String query = mQuery.getText().toString();
+        String query = mQuery.getText().toString().trim();
         if (query.length() > 0) {
             resultArrayList.clear();
             for (Map.Entry<String, Uri> dorm : dorms.entrySet())
